@@ -1,0 +1,36 @@
+{
+  "max_workers": 2,
+  "tasks": [
+    {
+      "id": "api",
+      "goal": "Implement the search endpoint against the agreed contract",
+      "context": "The contract in docs/search.md is frozen for this wave.",
+      "reads": ["docs/search.md"],
+      "writes": ["src/api/search", "tests/api/search"],
+      "checks": ["API tests cover empty, valid, and invalid queries"]
+    },
+    {
+      "id": "ui",
+      "goal": "Build the search interface using the agreed contract",
+      "context": "Use the contract fixtures until the API is integrated.",
+      "reads": ["docs/search.md"],
+      "writes": ["src/ui/search", "tests/ui/search"],
+      "checks": ["UI tests cover loading, success, empty, and error states"]
+    },
+    {
+      "id": "docs",
+      "goal": "Document search setup and a minimal working request",
+      "reads": ["docs/search.md", "src/api/search"],
+      "writes": ["docs/quickstart.md"],
+      "after": ["api"],
+      "checks": ["The documented request matches the implemented API"]
+    },
+    {
+      "id": "review",
+      "goal": "Independently check the integrated feature against the search contract",
+      "reads": ["docs/search.md", "src/api/search", "src/ui/search", "docs/quickstart.md"],
+      "after": ["api", "ui", "docs"],
+      "checks": ["Report concrete contract regressions with file locations, or state that none were found"]
+    }
+  ]
+}

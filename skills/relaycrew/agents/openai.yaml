@@ -1,0 +1,4 @@
+interface:
+  display_name: "RelayCrew"
+  short_description: "Small coding teams with bounded context"
+  default_prompt: "Use $relaycrew to split this coding task into independent work and coordinate the smallest useful team."
