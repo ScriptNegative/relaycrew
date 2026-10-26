@@ -1,0 +1,46 @@
+{
+  "label": "next-after-docs-v2",
+  "command": [
+    "node",
+    "<skill-dir>/scripts/session.mjs",
+    "next",
+    "new-plan.json",
+    "checkpoint-main.json"
+  ],
+  "cwd": ".",
+  "exit_code": 0,
+  "checkpoint": "checkpoint-main.json",
+  "checkpoint_sha256_before": "7c4e2bea6f67544e4e94bdd25a98f11d2c9b191367f5aa826e1778d03062bfe2",
+  "checkpoint_sha256_after": "7c4e2bea6f67544e4e94bdd25a98f11d2c9b191367f5aa826e1778d03062bfe2",
+  "revision_before": 19,
+  "revision_after": 19,
+  "stdout": "{\n  \"status\": \"ready\",\n  \"max_workers\": 2,\n  \"max_brief_chars\": 2400,\n  \"task_ids\": [\n    \"review\"\n  ],\n  \"completed\": [\n    \"api\",\n    \"ui\",\n    \"docs\"\n  ],\n  \"failed\": [],\n  \"blocked\": [],\n  \"briefs\": [\n    {\n      \"id\": \"review\",\n      \"characters\": 370,\n      \"text\": \"Task: review — Independently review the revised API and documentation\\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\\nRead: src/api, tests/api, docs/api.md\\nWrite: review/findings.md\\nResources: none\\nDone when: SYNTHETIC API and documentation review check\\nReturn: changed paths; evidence and checks; blockers; follow-up needed\"\n    }\n  ],\n  \"in_progress\": [],\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"revision\": 19,\n  \"plan_hash\": \"402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a\",\n  \"active\": []\n}\n",
+  "stderr": "",
+  "result": {
+    "status": "ready",
+    "max_workers": 2,
+    "max_brief_chars": 2400,
+    "task_ids": [
+      "review"
+    ],
+    "completed": [
+      "api",
+      "ui",
+      "docs"
+    ],
+    "failed": [],
+    "blocked": [],
+    "briefs": [
+      {
+        "id": "review",
+        "characters": 370,
+        "text": "Task: review — Independently review the revised API and documentation\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\nRead: src/api, tests/api, docs/api.md\nWrite: review/findings.md\nResources: none\nDone when: SYNTHETIC API and documentation review check\nReturn: changed paths; evidence and checks; blockers; follow-up needed"
+      }
+    ],
+    "in_progress": [],
+    "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+    "revision": 19,
+    "plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+    "active": []
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "type": "accept",
+  "task_id": "api",
+  "attempt_id": "236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e",
+  "worker_stopped": true,
+  "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+}

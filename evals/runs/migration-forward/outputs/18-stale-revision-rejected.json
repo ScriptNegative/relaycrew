@@ -1,0 +1,24 @@
+{
+  "label": "stale-revision-rejected",
+  "command": [
+    "node",
+    "<skill-dir>/scripts/session.mjs",
+    "migrate",
+    "old-plan.json",
+    "new-plan.json",
+    "checkpoint-main.json",
+    "migration-request.json",
+    "--revision",
+    "11"
+  ],
+  "cwd": ".",
+  "exit_code": 1,
+  "checkpoint": "checkpoint-main.json",
+  "checkpoint_sha256_before": "9bc964718543d94cd33f67814c73207cbcfe5671dba80edeac5f2ec28e15356a",
+  "checkpoint_sha256_after": "9bc964718543d94cd33f67814c73207cbcfe5671dba80edeac5f2ec28e15356a",
+  "revision_before": 12,
+  "revision_after": 12,
+  "stdout": "",
+  "stderr": "RelayCrew: Stale revision: expected 11, current 12\n",
+  "result": null
+}

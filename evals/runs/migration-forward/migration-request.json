@@ -1,0 +1,5 @@
+{
+  "new_plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+  "workers_stopped": true,
+  "review": "SYNTHETIC reviewed migration. UI definition and synthetic accepted record remain independent and unchanged. API checks/contract changed; dependent docs require fresh evidence. Remove failed spike and add review. No real results or stopped workers were verified."
+}

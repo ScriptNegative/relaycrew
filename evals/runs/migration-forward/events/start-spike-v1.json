@@ -1,0 +1,5 @@
+{
+  "type": "start",
+  "task_id": "spike",
+  "worker": "SYNTHETIC-spike-worker"
+}

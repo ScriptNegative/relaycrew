@@ -1,0 +1,23 @@
+{
+  "type": "report",
+  "task_id": "api",
+  "attempt_id": "dac6c25e-b349-4974-9334-af6c8d8bae8a",
+  "report": {
+    "summary": "SYNTHETIC revised API result; no work ran",
+    "changed_paths": [
+      "src/api/synthetic.txt"
+    ],
+    "checks": [
+      {
+        "check": "SYNTHETIC API v2 response contract check",
+        "outcome": "passed",
+        "evidence": "SYNTHETIC bookkeeping evidence; no acceptance command was executed."
+      },
+      {
+        "check": "SYNTHETIC API v2 compatibility check",
+        "outcome": "passed",
+        "evidence": "SYNTHETIC bookkeeping evidence; no acceptance command was executed."
+      }
+    ]
+  }
+}

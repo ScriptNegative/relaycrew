@@ -1,0 +1,82 @@
+{
+  "label": "report-api-v1",
+  "command": [
+    "node",
+    "<skill-dir>/scripts/session.mjs",
+    "apply",
+    "old-plan.json",
+    "checkpoint-main.json",
+    "events/report-api-v1.json",
+    "--revision",
+    "1"
+  ],
+  "cwd": ".",
+  "exit_code": 0,
+  "checkpoint": "checkpoint-main.json",
+  "checkpoint_sha256_before": "b609a285eae7290a94002162b6e74ec18fbcc293099e1e400383685653daa892",
+  "checkpoint_sha256_after": "c9f55c79658c8801224b43f44da9a453bc9463405952628507487f9e93ae45b6",
+  "revision_before": 1,
+  "revision_after": 2,
+  "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 2,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"reported\",\n      \"attempt\": 1,\n      \"attempt_id\": \"236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e\",\n      \"worker\": \"SYNTHETIC-api-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported api result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v1 contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+  "stderr": "",
+  "result": {
+    "format": 1,
+    "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+    "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+    "revision": 2,
+    "tasks": [
+      {
+        "id": "api",
+        "status": "reported",
+        "attempt": 1,
+        "attempt_id": "236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e",
+        "worker": "SYNTHETIC-api-worker",
+        "report": {
+          "summary": "SYNTHETIC reported api result; no work actually ran",
+          "changed_paths": [
+            "src/api/synthetic.txt"
+          ],
+          "checks": [
+            {
+              "check": "SYNTHETIC API v1 contract check",
+              "outcome": "passed",
+              "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+            }
+          ]
+        },
+        "failure": null,
+        "review": null
+      },
+      {
+        "id": "ui",
+        "status": "pending",
+        "attempt": 0,
+        "attempt_id": null,
+        "worker": null,
+        "report": null,
+        "failure": null,
+        "review": null
+      },
+      {
+        "id": "docs",
+        "status": "pending",
+        "attempt": 0,
+        "attempt_id": null,
+        "worker": null,
+        "report": null,
+        "failure": null,
+        "review": null
+      },
+      {
+        "id": "spike",
+        "status": "pending",
+        "attempt": 0,
+        "attempt_id": null,
+        "worker": null,
+        "report": null,
+        "failure": null,
+        "review": null
+      }
+    ]
+  }
+}

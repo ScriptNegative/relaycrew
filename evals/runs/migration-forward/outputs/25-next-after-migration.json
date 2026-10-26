@@ -1,0 +1,44 @@
+{
+  "label": "next-after-migration",
+  "command": [
+    "node",
+    "<skill-dir>/scripts/session.mjs",
+    "next",
+    "new-plan.json",
+    "checkpoint-main.json"
+  ],
+  "cwd": ".",
+  "exit_code": 0,
+  "checkpoint": "checkpoint-main.json",
+  "checkpoint_sha256_before": "549e2ce41a9bc925347c209a478f9e3408ba6e3a20240f385b130b7eacecbb3a",
+  "checkpoint_sha256_after": "549e2ce41a9bc925347c209a478f9e3408ba6e3a20240f385b130b7eacecbb3a",
+  "revision_before": 13,
+  "revision_after": 13,
+  "stdout": "{\n  \"status\": \"ready\",\n  \"max_workers\": 2,\n  \"max_brief_chars\": 2400,\n  \"task_ids\": [\n    \"api\"\n  ],\n  \"completed\": [\n    \"ui\"\n  ],\n  \"failed\": [],\n  \"blocked\": [],\n  \"briefs\": [\n    {\n      \"id\": \"api\",\n      \"characters\": 391,\n      \"text\": \"Task: api — Implement API contract v2 with revised response fields\\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\\nRead: contracts/api-v2.json\\nWrite: src/api, tests/api\\nResources: none\\nDone when: SYNTHETIC API v2 response contract check; SYNTHETIC API v2 compatibility check\\nReturn: changed paths; evidence and checks; blockers; follow-up needed\"\n    }\n  ],\n  \"in_progress\": [],\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"revision\": 13,\n  \"plan_hash\": \"402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a\",\n  \"active\": []\n}\n",
+  "stderr": "",
+  "result": {
+    "status": "ready",
+    "max_workers": 2,
+    "max_brief_chars": 2400,
+    "task_ids": [
+      "api"
+    ],
+    "completed": [
+      "ui"
+    ],
+    "failed": [],
+    "blocked": [],
+    "briefs": [
+      {
+        "id": "api",
+        "characters": 391,
+        "text": "Task: api — Implement API contract v2 with revised response fields\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\nRead: contracts/api-v2.json\nWrite: src/api, tests/api\nResources: none\nDone when: SYNTHETIC API v2 response contract check; SYNTHETIC API v2 compatibility check\nReturn: changed paths; evidence and checks; blockers; follow-up needed"
+      }
+    ],
+    "in_progress": [],
+    "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+    "revision": 13,
+    "plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+    "active": []
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "label": "active-copy-compare-rejected",
+  "command": [
+    "node",
+    "<skill-dir>/scripts/session.mjs",
+    "compare",
+    "old-plan.json",
+    "new-plan.json",
+    "checkpoint-active.json"
+  ],
+  "cwd": ".",
+  "exit_code": 1,
+  "checkpoint": "checkpoint-active.json",
+  "checkpoint_sha256_before": "18fb867e5939a16dfb6ac47fb5f3e4ac2dd1f56959bbfd43bce6d5982d5fb7b5",
+  "checkpoint_sha256_after": "18fb867e5939a16dfb6ac47fb5f3e4ac2dd1f56959bbfd43bce6d5982d5fb7b5",
+  "revision_before": 14,
+  "revision_after": 14,
+  "stdout": "",
+  "stderr": "RelayCrew: Cannot migrate active or reported work: spike. Confirm workers stopped, then accept or fail their current attempts using the old plan.\n",
+  "result": null
+}

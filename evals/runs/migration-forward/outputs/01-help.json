@@ -1,0 +1,18 @@
+{
+  "label": "help",
+  "command": [
+    "node",
+    "<skill-dir>/scripts/session.mjs",
+    "--help"
+  ],
+  "cwd": ".",
+  "exit_code": 0,
+  "checkpoint": null,
+  "checkpoint_sha256_before": null,
+  "checkpoint_sha256_after": null,
+  "revision_before": null,
+  "revision_after": null,
+  "stdout": "Usage: node session.mjs init|next <plan.json> <checkpoint.json> OR apply <plan.json> <checkpoint.json> <event.json> --revision N OR compare <old-plan.json> <new-plan.json> <checkpoint.json> OR migrate <old-plan.json> <new-plan.json> <checkpoint.json> <request.json> --revision N\n",
+  "stderr": "",
+  "result": null
+}

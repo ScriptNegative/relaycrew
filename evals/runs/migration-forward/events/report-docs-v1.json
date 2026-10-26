@@ -1,0 +1,18 @@
+{
+  "type": "report",
+  "task_id": "docs",
+  "attempt_id": "ba22dc79-52c2-427e-9aa0-fd4546793266",
+  "report": {
+    "summary": "SYNTHETIC reported docs result; no work actually ran",
+    "changed_paths": [
+      "docs/api.md"
+    ],
+    "checks": [
+      {
+        "check": "SYNTHETIC API documentation check",
+        "outcome": "passed",
+        "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+      }
+    ]
+  }
+}

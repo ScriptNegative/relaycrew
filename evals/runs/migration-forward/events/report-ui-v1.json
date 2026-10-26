@@ -1,0 +1,18 @@
+{
+  "type": "report",
+  "task_id": "ui",
+  "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+  "report": {
+    "summary": "SYNTHETIC reported ui result; no work actually ran",
+    "changed_paths": [
+      "src/ui/synthetic.txt"
+    ],
+    "checks": [
+      {
+        "check": "SYNTHETIC UI acceptance check",
+        "outcome": "passed",
+        "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+      }
+    ]
+  }
+}

@@ -2,7 +2,7 @@ import {readFile, open, lstat, link, rename, unlink} from 'node:fs/promises';
 import path from 'node:path';
 import {randomUUID} from 'node:crypto';
 import {pathToFileURL} from 'node:url';
-import {createSession, sessionNext, transition} from './session-core.mjs';
+import {createSession, sessionNext, transition, previewMigration, migrateSession} from './session-core.mjs';
 
 const fail = message => { throw new Error(message); };
 const json = async file => JSON.parse((await readFile(file, 'utf8')).replace(/^\uFEFF/, ''));
@@ -83,8 +83,27 @@ export async function applyFile(planPath, checkpointPath, eventPath, expectedRev
   });
 }
 
+export async function compareFile(oldPlanPath, newPlanPath, checkpointPath) {
+  const file = path.resolve(checkpointPath);
+  await regular(file);
+  const [oldPlan, newPlan, checkpoint] = await Promise.all([json(oldPlanPath), json(newPlanPath), json(file)]);
+  return previewMigration(oldPlan, newPlan, checkpoint);
+}
+
+export async function migrateFile(oldPlanPath, newPlanPath, checkpointPath, requestPath, expectedRevision) {
+  const file = path.resolve(checkpointPath);
+  const [oldPlan, newPlan, request] = await Promise.all([json(oldPlanPath), json(newPlanPath), json(requestPath)]);
+  return withLock(file, async () => {
+    await regular(file);
+    const current = await json(file);
+    const result = migrateSession(oldPlan, newPlan, current, request, expectedRevision);
+    await save(file, result.checkpoint, false);
+    return result;
+  });
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
-  const usage = 'Usage: node session.mjs init|next <plan.json> <checkpoint.json> OR node session.mjs apply <plan.json> <checkpoint.json> <event.json> --revision N';
+  const usage = 'Usage: node session.mjs init|next <plan.json> <checkpoint.json> OR apply <plan.json> <checkpoint.json> <event.json> --revision N OR compare <old-plan.json> <new-plan.json> <checkpoint.json> OR migrate <old-plan.json> <new-plan.json> <checkpoint.json> <request.json> --revision N';
   try {
     const args = process.argv.slice(2);
     if (args.length === 1 && args[0] === '--help') {
@@ -95,10 +114,15 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
       let result;
       if (command === 'init' && args.length === 3) result = await initFile(planPath, checkpointPath);
       else if (command === 'next' && args.length === 3) result = await nextFile(planPath, checkpointPath);
+      else if (command === 'compare' && args.length === 4) result = await compareFile(args[1], args[2], args[3]);
       else if (command === 'apply' && args.length === 6 && args[4] === '--revision' && /^(0|[1-9]\d*)$/.test(args[5])) {
         const revision = Number(args[5]);
         if (!Number.isSafeInteger(revision)) fail('revision must be a non-negative safe integer');
         result = await applyFile(planPath, checkpointPath, args[3], revision);
+      } else if (command === 'migrate' && args.length === 7 && args[5] === '--revision' && /^(0|[1-9]\d*)$/.test(args[6])) {
+        const revision = Number(args[6]);
+        if (!Number.isSafeInteger(revision)) fail('revision must be a non-negative safe integer');
+        result = await migrateFile(args[1], args[2], args[3], args[4], revision);
       } else fail(usage);
       process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
     }

@@ -1,0 +1,60 @@
+{
+  "format": 1,
+  "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+  "plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+  "revision": 13,
+  "tasks": [
+    {
+      "id": "api",
+      "status": "pending",
+      "attempt": 1,
+      "attempt_id": null,
+      "worker": null,
+      "report": null,
+      "failure": null,
+      "review": null
+    },
+    {
+      "id": "ui",
+      "status": "completed",
+      "attempt": 1,
+      "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+      "worker": "SYNTHETIC-ui-worker",
+      "report": {
+        "summary": "SYNTHETIC reported ui result; no work actually ran",
+        "changed_paths": [
+          "src/ui/synthetic.txt"
+        ],
+        "checks": [
+          {
+            "check": "SYNTHETIC UI acceptance check",
+            "outcome": "passed",
+            "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+          }
+        ]
+      },
+      "failure": null,
+      "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+    },
+    {
+      "id": "docs",
+      "status": "pending",
+      "attempt": 1,
+      "attempt_id": null,
+      "worker": null,
+      "report": null,
+      "failure": null,
+      "review": null
+    },
+    {
+      "id": "review",
+      "status": "pending",
+      "attempt": 0,
+      "attempt_id": null,
+      "worker": null,
+      "report": null,
+      "failure": null,
+      "review": null
+    }
+  ]
+}

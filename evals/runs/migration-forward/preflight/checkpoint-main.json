@@ -1,0 +1,48 @@
+{
+  "format": 1,
+  "session_id": "1a033ac4-e876-4e49-819d-c7f8593362f0",
+  "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+  "revision": 1,
+  "tasks": [
+    {
+      "id": "api",
+      "status": "running",
+      "attempt": 1,
+      "attempt_id": "c525ebf7-e51a-42e9-8342-ae83b0e8ca48",
+      "worker": "SYNTHETIC-api-worker",
+      "report": null,
+      "failure": null,
+      "review": null
+    },
+    {
+      "id": "ui",
+      "status": "pending",
+      "attempt": 0,
+      "attempt_id": null,
+      "worker": null,
+      "report": null,
+      "failure": null,
+      "review": null
+    },
+    {
+      "id": "docs",
+      "status": "pending",
+      "attempt": 0,
+      "attempt_id": null,
+      "worker": null,
+      "report": null,
+      "failure": null,
+      "review": null
+    },
+    {
+      "id": "spike",
+      "status": "pending",
+      "attempt": 0,
+      "attempt_id": null,
+      "worker": null,
+      "report": null,
+      "failure": null,
+      "review": null
+    }
+  ]
+}

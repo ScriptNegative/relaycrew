@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "assertion_scope": "Saved public CLI artifacts only; no RelayCrew implementation or product tests read or run.",
+  "ui_record_identical": true,
+  "session_id_retained": true,
+  "migration_revision_increment": 1,
+  "reset_receipts_cleared": true,
+  "old_attempt_fenced": true,
+  "next_task_sequence": [
+    "api",
+    "docs",
+    "review"
+  ],
+  "failed_command_count": 7,
+  "all_failed_commands_unchanged": true,
+  "private_absolute_path_scan_passed": true,
+  "scanned_file_count": 81
+}

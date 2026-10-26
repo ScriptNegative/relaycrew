@@ -1,0 +1,20 @@
+{
+  "label": "direct-new-plan-rejected",
+  "command": [
+    "node",
+    "<skill-dir>/scripts/session.mjs",
+    "next",
+    "new-plan.json",
+    "checkpoint-main.json"
+  ],
+  "cwd": ".",
+  "exit_code": 1,
+  "checkpoint": "checkpoint-main.json",
+  "checkpoint_sha256_before": "9bc964718543d94cd33f67814c73207cbcfe5671dba80edeac5f2ec28e15356a",
+  "checkpoint_sha256_after": "9bc964718543d94cd33f67814c73207cbcfe5671dba80edeac5f2ec28e15356a",
+  "revision_before": 12,
+  "revision_after": 12,
+  "stdout": "",
+  "stderr": "RelayCrew: Plan definition changed or checkpoint plan_hash is invalid; reconcile stopped workers before starting a new session\n",
+  "result": null
+}
