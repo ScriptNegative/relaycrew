@@ -1,0 +1,60 @@
+{
+  "format": 1,
+  "session_id": "476f02aa-e979-42f1-bcb2-bde84ebf9e28",
+  "plan_hash": "b5b3a047d3d826776736d5182166e21607ba507789712762beb332f0ae4f30a6",
+  "revision": 8,
+  "tasks": [
+    {
+      "id": "api",
+      "status": "completed",
+      "attempt": 1,
+      "attempt_id": "794cd116-3772-4b14-ae08-75a4b8101ca9",
+      "worker": "SYNTHETIC-api-worker-1",
+      "report": {
+        "summary": "SYNTHETIC successful API report fixture; no implementation or tests executed",
+        "changed_paths": [
+          "src/api/index.mjs"
+        ],
+        "checks": [
+          {
+            "check": "API tests pass",
+            "outcome": "passed",
+            "evidence": "SYNTHETIC ONLY: fixture represents a successful API test result. No API tests were run."
+          }
+        ]
+      },
+      "failure": null,
+      "review": "SYNTHETIC ONLY: reviewed fixture report and simulated API diff/test evidence. Native-host fixture asserts stopped. No real code or test result verified."
+    },
+    {
+      "id": "ui",
+      "status": "running",
+      "attempt": 2,
+      "attempt_id": "bd7dfbd6-d78f-44de-9906-15302ac9496a",
+      "worker": "SYNTHETIC-ui-worker-2",
+      "report": null,
+      "failure": null,
+      "review": null
+    },
+    {
+      "id": "docs",
+      "status": "running",
+      "attempt": 1,
+      "attempt_id": "911a0db0-9cb2-46de-bd58-f69a340005ca",
+      "worker": "SYNTHETIC-docs-worker-1",
+      "report": null,
+      "failure": null,
+      "review": null
+    },
+    {
+      "id": "review",
+      "status": "pending",
+      "attempt": 0,
+      "attempt_id": null,
+      "worker": null,
+      "report": null,
+      "failure": null,
+      "review": null
+    }
+  ]
+}

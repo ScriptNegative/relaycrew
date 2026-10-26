@@ -62,7 +62,7 @@ function capsule(task) {
 }
 
 function prepare(input) {
-  fields(input, ['tasks', 'max_workers', 'max_brief_chars', 'completed', 'failed'], 'plan');
+  fields(input, ['tasks', 'max_workers', 'max_brief_chars', 'completed', 'failed', 'in_progress'], 'plan');
   const maxWorkers = input.max_workers === undefined ? 2 : input.max_workers;
   const maxBrief = input.max_brief_chars === undefined ? 2400 : input.max_brief_chars;
   if (!Number.isSafeInteger(maxWorkers) || maxWorkers < 1 || maxWorkers > 64) fail('max_workers must be an integer from 1 to 64');
@@ -98,11 +98,23 @@ function prepare(input) {
   }
   const completed = new Set(strings(input.completed, 'completed'));
   const failed = new Set(strings(input.failed, 'failed'));
-  for (const id of [...completed, ...failed]) if (!ids.has(id)) fail(`Unknown state task: ${id}`);
+  const inProgress = new Set(strings(input.in_progress, 'in_progress'));
+  for (const id of [...completed, ...failed, ...inProgress]) if (!ids.has(id)) fail(`Unknown state task: ${id}`);
   for (const id of completed) {
     if (failed.has(id)) fail(`${id}: cannot be both completed and failed`);
     const task = tasks.find(task => task.id === id);
     if (task.after.some(dependency => !completed.has(dependency))) fail(`${id}: completed task has an incomplete prerequisite`);
+  }
+  if (inProgress.size > maxWorkers) fail('in_progress exceeds max_workers');
+  const active = tasks.filter(task => inProgress.has(task.id));
+  for (let i = 0; i < active.length; i++) {
+    const task = active[i];
+    if (completed.has(task.id) || failed.has(task.id)) fail(`${task.id}: in_progress cannot also be completed or failed`);
+    if (task.after.some(id => !completed.has(id))) fail(`${task.id}: in_progress task has an incomplete prerequisite`);
+    for (let j = i + 1; j < active.length; j++) {
+      const reasons = conflictReasons(task, active[j]);
+      if (reasons.length) fail(`Conflicting in_progress tasks ${task.id} / ${active[j].id}: ${reasons.join('; ')}`);
+    }
   }
   const unavailable = new Set(failed);
   let changed = true;
@@ -118,7 +130,12 @@ function prepare(input) {
   const blocked = tasks.filter(task => unavailable.has(task.id) && !failed.has(task.id))
     .map(task => ({ id: task.id, after: task.after.filter(id => unavailable.has(id)) }));
   const eligible = tasks.filter(task => !completed.has(task.id) && !unavailable.has(task.id));
-  return { tasks, maxWorkers, maxBrief, completed, failed, unavailable, blocked, eligible };
+  return { tasks, maxWorkers, maxBrief, completed, failed, inProgress, active, activeState: Object.hasOwn(input, 'in_progress'), unavailable, blocked, eligible };
+}
+
+export function validate(input) {
+  const { tasks, maxWorkers, maxBrief, completed, failed, inProgress } = prepare(input);
+  return { tasks, max_workers: maxWorkers, max_brief_chars: maxBrief, completed: [...completed], failed: [...failed], in_progress: [...inProgress] };
 }
 
 function renderBrief(task, maxBrief) {
@@ -128,19 +145,25 @@ function renderBrief(task, maxBrief) {
   return { id: task.id, characters, text };
 }
 
-function schedule({ tasks, maxWorkers, completed, unavailable }, firstOnly = false) {
+function schedule({ tasks, maxWorkers, completed, unavailable, inProgress, active }, firstOnly = false) {
   const waves = [];
   const scheduled = new Set(completed);
+  let reservations = active;
   while (scheduled.size + unavailable.size < tasks.length) {
-    const ready = tasks.filter(task => !scheduled.has(task.id) && !unavailable.has(task.id) && task.after.every(id => scheduled.has(id)));
+    const ready = tasks.filter(task => !scheduled.has(task.id) && !inProgress.has(task.id) && !unavailable.has(task.id) && task.after.every(id => scheduled.has(id)));
     const wave = [];
     for (const task of ready) {
-      if (wave.length === maxWorkers) break;
-      if (wave.every(other => !conflictReasons(task, other).length)) wave.push(task);
+      if (wave.length === maxWorkers - reservations.length) break;
+      if ([...reservations, ...wave].every(other => !conflictReasons(task, other).length)) wave.push(task);
     }
     waves.push(wave.map(task => task.id));
-    wave.forEach(task => scheduled.add(task.id));
     if (firstOnly) break;
+    if (!wave.length && !reservations.length) fail('No schedulable tasks remain in a valid plan');
+    wave.forEach(task => scheduled.add(task.id));
+    // The first projection barrier assumes active work and its compatible new
+    // dispatches finish. Actual dispatch must always use next() with fresh state.
+    reservations.forEach(task => scheduled.add(task.id));
+    reservations = [];
   }
   return waves;
 }
@@ -148,14 +171,14 @@ function schedule({ tasks, maxWorkers, completed, unavailable }, firstOnly = fal
 export function plan(input) {
   const state = prepare(input);
   const { maxWorkers, maxBrief, completed, failed, blocked, eligible } = state;
-  const briefs = eligible.map(task => renderBrief(task, maxBrief));
+  const briefs = eligible.filter(task => !state.inProgress.has(task.id)).map(task => renderBrief(task, maxBrief));
   const conflicts = [];
   for (let i = 0; i < eligible.length; i++) for (let j = i + 1; j < eligible.length; j++) {
     const reasons = conflictReasons(eligible[i], eligible[j]);
     if (reasons.length) conflicts.push({ tasks: [eligible[i].id, eligible[j].id], reasons });
   }
   const waves = schedule(state);
-  return { max_workers: maxWorkers, max_brief_chars: maxBrief, completed: [...completed], failed: [...failed], blocked, waves, conflicts, briefs };
+  return { max_workers: maxWorkers, max_brief_chars: maxBrief, completed: [...completed], failed: [...failed], blocked, waves, conflicts, briefs, ...(state.activeState ? { in_progress: [...state.inProgress] } : {}) };
 }
 
 export function next(input) {
@@ -163,8 +186,8 @@ export function next(input) {
   const { tasks, maxWorkers, maxBrief, completed, failed, blocked } = state;
   const taskIds = schedule(state, true)[0] ?? [];
   const briefs = taskIds.map(id => renderBrief(tasks.find(task => task.id === id), maxBrief));
-  const status = taskIds.length ? 'ready' : failed.size || blocked.length ? 'held' : 'complete';
-  return { status, max_workers: maxWorkers, max_brief_chars: maxBrief, task_ids: taskIds, completed: [...completed], failed: [...failed], blocked, briefs };
+  const status = taskIds.length ? 'ready' : state.inProgress.size ? 'waiting' : failed.size || blocked.length ? 'held' : 'complete';
+  return { status, max_workers: maxWorkers, max_brief_chars: maxBrief, task_ids: taskIds, completed: [...completed], failed: [...failed], blocked, briefs, ...(state.activeState ? { in_progress: [...state.inProgress] } : {}) };
 }
 
 function selectedBrief(input, id) {
@@ -173,6 +196,7 @@ function selectedBrief(input, id) {
   if (!task) fail(`Unknown brief task: ${id}`);
   if (state.completed.has(id)) fail(`${id}: recorded as completed; no pending brief. Recheck the recorded state before changing it.`);
   if (state.failed.has(id)) fail(`${id}: recorded as failed. Inspect partial work and ownership before intentionally retrying.`);
+  if (state.inProgress.has(id)) fail(`${id}: recorded as in_progress; do not redispatch active work.`);
   const blocked = state.blocked.find(task => task.id === id);
   if (blocked) fail(`${id}: blocked by failed or blocked prerequisites: ${blocked.after.join(', ')}. Resolve failures and update state before dispatch.`);
   if (!schedule(state, true)[0]?.includes(id)) fail(`${id}: not in the next runnable wave. Verify prerequisites and update completed/failed state first.`);
@@ -181,9 +205,10 @@ function selectedBrief(input, id) {
 
 export function markdown(result) {
   const lines = ['# RelayCrew plan', '', `Worker ceiling: ${result.max_workers}. Brief cap: ${result.max_brief_chars} Unicode characters.`, ''];
-  result.waves.forEach((wave, index) => lines.push(`- Wave ${index + 1}: ${wave.join(' + ')}`));
+  result.waves.forEach((wave, index) => lines.push(`- Wave ${index + 1}: ${wave.join(' + ') || 'wait for active work'}`));
   if (!result.waves.length) lines.push('No runnable tasks remain.');
-  if (result.completed.length) lines.push('', `Verified completed: ${result.completed.join(', ')}`);
+  if (result.in_progress?.length) lines.push('', `Recorded in progress: ${result.in_progress.join(', ')}`);
+  if (result.completed.length) lines.push('', `Recorded completed: ${result.completed.join(', ')}`);
   if (result.failed.length) lines.push('', `Failed: ${result.failed.join(', ')}`);
   for (const task of result.blocked) lines.push(`- Blocked ${task.id}: requires ${task.after.join(', ')}`);
   if (result.conflicts.length) {
@@ -197,8 +222,10 @@ export function markdown(result) {
 function nextMarkdown(result) {
   const lines = ['# RelayCrew next handoffs', '', `Status: ${result.status}.`, '', `Worker ceiling: ${result.max_workers}. Brief cap: ${result.max_brief_chars} Unicode characters.`, ''];
   if (result.status === 'ready') lines.push(`Current wave: ${result.task_ids.join(' + ')}`);
+  else if (result.status === 'waiting') lines.push('No new dispatches. Active work still reserves capacity or claims.');
   else if (result.status === 'held') lines.push('No runnable tasks. Failed or blocked work remains held.');
   else lines.push('No pending tasks remain according to the recorded state.');
+  if (result.in_progress?.length) lines.push('', `Recorded in progress: ${result.in_progress.join(', ')}`);
   if (result.completed.length) lines.push('', `Recorded completed: ${result.completed.join(', ')}`);
   if (result.failed.length) lines.push('', `Recorded failed: ${result.failed.join(', ')}`);
   if (result.blocked.length) {

@@ -4,7 +4,7 @@ description: Coordinate parallel coding work, independent investigations, and im
 license: MIT
 metadata:
   author: ScriptNegative
-  version: "0.3.0"
+  version: "0.4.0"
 ---
 
 # RelayCrew
@@ -27,7 +27,7 @@ Before dispatch, give each task an ID, a concrete outcome, dependencies, read pa
 
 Workers sharing a checkout must not overlap write/write or write/read claims. Two readers can overlap. Treat a directory claim as covering descendants; include lockfiles, generated files, tests, and configuration in ownership. Verify actual isolation before allowing overlapping edits in separate checkouts. Combine changes through the coordinator and check the combined result.
 
-For several tasks, optionally run `node <skill-dir>/scripts/plan.mjs <plan.json>`; add `--next` to retrieve only the next wave's handoff capsules. Read [planner format](references/planner.md) only when using it. It schedules declared claims; it neither launches agents nor enforces filesystem isolation. For a simple split, keep the plan in conversation instead.
+For several tasks, optionally run `node <skill-dir>/scripts/plan.mjs <plan.json>`; add `--next` to retrieve only the next wave's handoff capsules. Read [planner format](references/planner.md) only when using it. Record `in_progress` to reserve active workers and their claims. It schedules declared claims; it neither launches agents nor enforces filesystem isolation. For a simple split, keep the plan in conversation instead.
 
 ## Relay a brief, not the entire conversation
 
@@ -47,7 +47,9 @@ Include relevant repository rules and inherited user constraints. Let workers re
 
 ## Integrate evidence before continuing
 
-Run only ready tasks with compatible ownership. A planned wave is not a runtime guarantee: a worker timeout, failed check, partial edit, or changed interface invalidates dependent work. Inspect the actual diff, update the plan, and resume only the affected tasks after prerequisites are verified. Before transferring ownership, stop the previous worker and confirm that it has stopped writing. Preserve useful partial work; do not retry an unchanged failure repeatedly. For a long run, checkpoint verified completions and failures; the planner can hold dependents while scheduling unrelated work.
+Run only ready tasks with compatible ownership. A planned wave is not a runtime guarantee: a worker timeout, failed check, partial edit, or changed interface invalidates dependent work. Inspect the actual diff, update the plan, and resume only the affected tasks after prerequisites are verified. Before transferring ownership, stop the previous worker and confirm that it has stopped writing. An unknown or interrupted worker keeps its reservation; a timeout does not prove it stopped. Preserve useful partial work; do not retry an unchanged failure repeatedly.
+
+For interrupted or multi-session work that needs durable attempt tracking, read [session checkpoints](references/sessions.md). The optional helper records a reservation before dispatch, distinguishes a returned report from coordinator acceptance, and rejects stale attempts or changed plan definitions. Pass the current task and attempt IDs to each worker and require both on its return. Inspect the actual diff and reproduce the required checks before accepting. A checkpoint validates bookkeeping, not the truth of reported evidence. For a short run, conversation state or the planner's state arrays are enough.
 
 Ask workers for concise evidence with file locations and actual check results. A worker saying "done" is not proof. Reconcile disagreements against source and reproducible behavior. For an independent review, pass the requirement and resulting diff without the implementer's conclusions; findings must identify a concrete failure or missing check.
 

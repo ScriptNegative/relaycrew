@@ -44,3 +44,13 @@ The next-wave handoff update was checked on Windows with Node v22.14.0:
 - The full `plan(input)` output matched the published 0.2.0 implementation across 200 deterministic graph/checkpoint cases. This checks compatibility for those cases, not every possible input.
 - A separate read-only review passed 17 local assertions covering wave membership, conflict exclusion, state labels, capsule caps, and global validation. No concrete defect was reported.
 - The skill format validator and whitespace checks passed. No new live model, host-installation, or performance benchmark is claimed for this CLI-focused update.
+
+## 0.4.0 update checks
+
+- The root suite contains 65 tests: 38 planner, 18 session-core, 6 session-CLI, and 3 package checks. On Windows with Node v22.14.0, 64 passed and the file-symlink case skipped because this host did not permit creating the fixture. There were no failures. CI runs the same suite on Node 18/22 on Linux and Node 22 on Windows; consult the matching workflow run for platform-specific outcomes.
+- Tests cover active slot/path/resource reservations, independently ready work after partial completion, reported versus accepted evidence, failed checks, explicit stopped confirmations, replacement attempt IDs, stale results, plan definition changes, malformed state, stale revisions, competing file writers, exclusive initialization, and copied-skill execution without installation.
+- Both `plan(input)` and `next(input)` JSON matched 0.3.0 across 200 deterministic graph/state cases without `in_progress`. This is bounded compatibility evidence, not an exhaustive input proof.
+- A separate code/storage review found no reproducible consequential defect in its scope.
+- An independent evaluator used only public skill instructions and references for [22 actual CLI invocations](runs/session-recovery/evaluation.md). It recorded API acceptance, docs dispatch while UI stayed active, fresh-process recovery reads, rejection of unconfirmed-stop retry/failure, a replacement attempt, and rejection of the old attempt's late report without changing the checkpoint. That observation led to a more actionable retry error.
+
+The recovery evaluation's worker reports, stopping confirmations, partial work, and review evidence were synthetic. It did not launch workers, execute project checks, terminate the coordinator driver, reconnect a native host, or simulate power loss. It exercises persisted coordination state and instruction usability. No time, cost, or token improvement is claimed.

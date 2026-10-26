@@ -1,0 +1,120 @@
+{
+  "evaluation": "RelayCrew v0.4 public documented CLI restart and attempt fencing scenario",
+  "synthetic_worker_evidence": true,
+  "actual_workers_launched": false,
+  "actual_source_inspected": false,
+  "actual_tests_run": false,
+  "node_version": "v22.14.0",
+  "docs_read": [
+    "SKILL.md",
+    "references/sessions.md",
+    "references/planner.md"
+  ],
+  "implementation_or_tests_read": false,
+  "old_ui_attempt_id": "e17a3d77-ad35-4127-aaec-758b150b4983",
+  "replacement_ui_attempt_id": "bd7dfbd6-d78f-44de-9906-15302ac9496a",
+  "checks": {
+    "retry_while_stopping_unconfirmed_exit_code": 1,
+    "retry_while_stopping_unconfirmed_checkpoint_unchanged": true,
+    "fail_without_stopped_confirmation_exit_code": 1,
+    "fail_without_stopped_confirmation_checkpoint_unchanged": true,
+    "replacement_attempt_differs": true,
+    "late_former_attempt_report_exit_code": 1,
+    "late_report_checkpoint_unchanged": true
+  },
+  "final_revision": 8,
+  "final_task_states": [
+    {
+      "id": "api",
+      "status": "completed",
+      "attempt": 1,
+      "attempt_id": "794cd116-3772-4b14-ae08-75a4b8101ca9"
+    },
+    {
+      "id": "ui",
+      "status": "running",
+      "attempt": 2,
+      "attempt_id": "bd7dfbd6-d78f-44de-9906-15302ac9496a"
+    },
+    {
+      "id": "docs",
+      "status": "running",
+      "attempt": 1,
+      "attempt_id": "911a0db0-9cb2-46de-bd58-f69a340005ca"
+    },
+    {
+      "id": "review",
+      "status": "pending",
+      "attempt": 0,
+      "attempt_id": null
+    }
+  ],
+  "caveat": "Only actual CLI behavior was executed. Worker launches, reports, reviews, test passes, stop confirmations and partial work are clearly labeled synthetic fixtures.",
+  "observations": [
+    {
+      "phase": "before_api_accept",
+      "revision": 3,
+      "status": "waiting",
+      "active": [
+        "api:reported",
+        "ui:running"
+      ]
+    },
+    {
+      "phase": "after_api_accept",
+      "revision": 4,
+      "status": "ready",
+      "ready": [
+        "docs"
+      ],
+      "active": [
+        "ui:running"
+      ]
+    },
+    {
+      "phase": "restart_read",
+      "revision": 5,
+      "status": "waiting",
+      "active": [
+        "ui:running",
+        "docs:running"
+      ]
+    },
+    {
+      "phase": "after_ui_failure",
+      "revision": 6,
+      "status": "waiting",
+      "failed": [
+        "ui"
+      ],
+      "blocked": [
+        "review"
+      ],
+      "active": [
+        "docs:running"
+      ]
+    },
+    {
+      "phase": "after_retry",
+      "revision": 7,
+      "status": "ready",
+      "ready": [
+        "ui"
+      ],
+      "active": [
+        "docs:running"
+      ]
+    },
+    {
+      "phase": "final",
+      "revision": 8,
+      "status": "waiting",
+      "active": [
+        "ui:running:attempt2",
+        "docs:running"
+      ]
+    }
+  ],
+  "restart_simulation": "Every CLI call ran in a fresh Node process. Contact loss was a synthetic fixture; the driver process itself was not terminated.",
+  "invocation_count": 22
+}

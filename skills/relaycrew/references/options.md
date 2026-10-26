@@ -40,9 +40,9 @@ These are workflow preferences expressed in the user's prompt, not new host sett
 
 ## Checkpoint minimum
 
-Store one small local artifact only when persistence helps. Record the original goal, immutable interface decisions, task IDs and ownership, verified completed tasks with evidence, failed tasks and useful partial edits, and the next acceptance check. Do not dump transcripts or credentials. In a planner JSON, `completed` and `failed` are task-ID arrays; see [planner format](planner.md). Treat state as a claim to verify against the actual workspace before resuming.
+Store one small local artifact only when persistence helps. Record the original goal, immutable interface decisions, task IDs and ownership, verified completed tasks with evidence, failed tasks and useful partial edits, and the next acceptance check. Do not dump transcripts or credentials. In a planner JSON, `completed`, `failed`, and `in_progress` are task-ID arrays; see [planner format](planner.md). Treat state as a claim to verify against the actual workspace before resuming. Use the optional [session helper](sessions.md) for a persistent attempt record and separate reporting/acceptance; it keeps running or reported work reserved across restarts.
 
-When a planner file is useful, `--next` retrieves the next wave's capsules together. It reports `ready`, `held`, or `complete` from the supplied state; verify that state before dispatch. Use `--brief ID` when you need just one current task's capsule.
+When a planner file is useful, `--next` retrieves the next wave's capsules together. It reports `ready`, `waiting`, `held`, or `complete` from the supplied state; verify that state before dispatch. Use `--brief ID` when you need just one current task's capsule.
 
 ## When to stay solo
 

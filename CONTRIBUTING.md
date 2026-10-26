@@ -4,6 +4,6 @@ Start with a concrete workflow or reproducible failure. For a planner bug, inclu
 
 Keep the core skill short. Add host-specific guidance to the relevant reference instead of requiring every user to load it. Preserve solo fallback and existing host permissions. Avoid unmeasured claims about speed, cost, or token savings.
 
-For changes, run `node --test tests/plan.test.mjs tests/package.test.mjs` with Node.js 18+ and include a regression test when it demonstrates a real planner failure. Explain whether you tested the planner, model behavior, or both. Distinguish the recorded exploratory runs from proposed evaluation cases and larger benchmarks.
+For changes, run `npm test` with Node.js 18+ and include a regression test when it demonstrates a real planner or session failure. Session reports must use synthetic evidence in tests; never imply that a fixture ran real project checks. Explain whether you tested the planner, model behavior, or both. Distinguish the recorded exploratory runs from proposed evaluation cases and larger benchmarks.
 
 For a larger feature, discuss the specific problem in an issue first so the project can stay lightweight.

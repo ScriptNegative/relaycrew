@@ -38,7 +38,9 @@ The output includes compatible `waves`, `briefs`, and conflicting task pairs wit
 
 ## Resume and failure holds
 
-Add top-level `completed` and `failed` arrays of known task IDs. Only mark a task completed after inspecting its actual result and acceptance checks. A completed task's prerequisites must also be completed. The planner rejects a task marked both completed and failed. Failed tasks and all their transitive dependents are held out of scheduling; unrelated work remains eligible. Cycles are rejected even if their tasks are marked failed.
+Add top-level `completed`, `failed`, and optional `in_progress` arrays of known task IDs. Only mark a task completed after inspecting its actual result and acceptance checks. A completed task's prerequisites must also be completed. State arrays must be disjoint. Failed tasks and all their transitive dependents are held out of scheduling; unrelated work remains eligible. Cycles are rejected even if their tasks are marked failed.
+
+`in_progress` reserves worker slots, file claims, and exclusive resources. Active tasks need completed prerequisites, must fit within `max_workers`, and must be mutually compatible. The planner rejects contradictory active state rather than ignoring it. `--next` can fill remaining slots with compatible ready tasks without redispatching a still-running peer. Unknown worker status remains active until the coordinator confirms it stopped. For durable task/attempt tracking and reviewable completion, use [session checkpoints](sessions.md) instead of editing these state arrays.
 
 The output lists `completed`, `failed`, and `blocked` tasks. Briefs and conflict explanations cover only eligible pending work, so historical or held capsules do not consume its briefing budget. `--brief ID` prints a capsule only for a task in the next runnable wave; update verified state before requesting later work. Its error distinguishes a genuinely unknown ID from a completed, failed, blocked, or later-wave task. Remove a failed ID only when intentionally retrying it after inspecting partial edits and resolving ownership. A JSON state record is not proof that tests passed.
 
@@ -51,9 +53,14 @@ The output lists `completed`, `failed`, and `blocked` tasks. Briefs and conflict
 The JSON fields are `status`, `max_workers`, `max_brief_chars`, `task_ids`, `completed`, `failed`, `blocked`, and `briefs`. Task IDs and capsules preserve next-wave order. The status is:
 
 - `ready`: at least one task is eligible for the next wave, even if unrelated failed work is held.
+- `waiting`: no new task can start while recorded active work reserves capacity, claims, or prerequisites.
 - `held`: no task can proceed and failed or blocked tasks remain.
 - `complete`: the recorded plan state marks every task completed.
 
 These labels describe the supplied checkpoint and declared plan. They do not independently verify the workspace or dispatch a worker. Recheck the state and ownership before handing off the capsules.
 
-The pure `next(input)` export returns the same JSON bundle. Ordinary `plan(input)` still returns the full proposed schedule and all eligible pending briefs. Capsule caps apply to what you request: every pending brief for a full plan, the next wave for `--next`, and only the selected current-wave capsule for `--brief ID`. A long future brief does not prevent retrieving a valid current handoff; nothing is silently truncated.
+The pure `next(input)` export returns the same JSON bundle. `validate(input)` validates without rendering capsules and returns normalized tasks, limits, and all three state arrays. JSON result schemas stay unchanged when `in_progress` is absent; supplying it adds `in_progress` to both plan and next results.
+
+Ordinary `plan(input)` returns a projection of future waves and all eligible pending briefs. Active tasks never appear as new dispatches or briefs; conflict diagnostics still include their declared claims. With active work, its first wave contains only additional dispatches allowed **now**, possibly an empty array meaning wait. Later waves assume active work and those first dispatches succeeded. Always use `--next` with fresh state for actual dispatch; projected waves are not a runtime queue.
+
+Capsule caps apply to what you request: every pending brief for a full plan, the next wave for `--next`, and only the selected current-wave capsule for `--brief ID`. A long future brief does not prevent retrieving a valid current handoff; nothing is silently truncated.

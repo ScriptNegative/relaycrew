@@ -1,0 +1,406 @@
+[
+  {
+    "index": 0,
+    "label": "session-help",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "--help"
+    ],
+    "exit_code": 0,
+    "stdout": "Usage: node session.mjs init|next <plan.json> <checkpoint.json> OR node session.mjs apply <plan.json> <checkpoint.json> <event.json> --revision N",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\00-session-help.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\00-session-help.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:46:28.7779081Z"
+  },
+  {
+    "index": 1,
+    "label": "planner-next",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\plan.mjs",
+      "evals/runs/session-recovery\\plan.json",
+      "--next"
+    ],
+    "exit_code": 0,
+    "stdout": "{\r\n  \"status\": \"ready\",\r\n  \"max_workers\": 2,\r\n  \"max_brief_chars\": 2400,\r\n  \"task_ids\": [\r\n    \"api\",\r\n    \"ui\"\r\n  ],\r\n  \"completed\": [],\r\n  \"failed\": [],\r\n  \"blocked\": [],\r\n  \"briefs\": [\r\n    {\r\n      \"id\": \"api\",\r\n      \"characters\": 206,\r\n      \"text\": \"Task: api — Implement API (SYNTHETIC EVALUATION ONLY)\\nContext: none\\nRead: none\\nWrite: src/api\\nResources: none\\nDone when: API tests pass\\nReturn: changed paths; evidence and checks; blockers; follow-up needed\"\r\n    },\r\n    {\r\n      \"id\": \"ui\",\r\n      \"characters\": 202,\r\n      \"text\": \"Task: ui — Implement UI (SYNTHETIC EVALUATION ONLY)\\nContext: none\\nRead: none\\nWrite: src/ui\\nResources: none\\nDone when: UI tests pass\\nReturn: changed paths; evidence and checks; blockers; follow-up needed\"\r\n    }\r\n  ]\r\n}",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\01-planner-next.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\01-planner-next.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:46:28.8607377Z"
+  },
+  {
+    "index": 2,
+    "label": "init",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "init",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\r\n  \"format\": 1,\r\n  \"session_id\": \"476f02aa-e979-42f1-bcb2-bde84ebf9e28\",\r\n  \"plan_hash\": \"b5b3a047d3d826776736d5182166e21607ba507789712762beb332f0ae4f30a6\",\r\n  \"revision\": 0,\r\n  \"tasks\": [\r\n    {\r\n      \"id\": \"api\",\r\n      \"status\": \"pending\",\r\n      \"attempt\": 0,\r\n      \"attempt_id\": null,\r\n      \"worker\": null,\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"ui\",\r\n      \"status\": \"pending\",\r\n      \"attempt\": 0,\r\n      \"attempt_id\": null,\r\n      \"worker\": null,\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"docs\",\r\n      \"status\": \"pending\",\r\n      \"attempt\": 0,\r\n      \"attempt_id\": null,\r\n      \"worker\": null,\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"review\",\r\n      \"status\": \"pending\",\r\n      \"attempt\": 0,\r\n      \"attempt_id\": null,\r\n      \"worker\": null,\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    }\r\n  ]\r\n}",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\02-init.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\02-init.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:46:28.9483625Z"
+  },
+  {
+    "index": 3,
+    "label": "initial-next",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "next",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\r\n  \"status\": \"ready\",\r\n  \"max_workers\": 2,\r\n  \"max_brief_chars\": 2400,\r\n  \"task_ids\": [\r\n    \"api\",\r\n    \"ui\"\r\n  ],\r\n  \"completed\": [],\r\n  \"failed\": [],\r\n  \"blocked\": [],\r\n  \"briefs\": [\r\n    {\r\n      \"id\": \"api\",\r\n      \"characters\": 206,\r\n      \"text\": \"Task: api — Implement API (SYNTHETIC EVALUATION ONLY)\\nContext: none\\nRead: none\\nWrite: src/api\\nResources: none\\nDone when: API tests pass\\nReturn: changed paths; evidence and checks; blockers; follow-up needed\"\r\n    },\r\n    {\r\n      \"id\": \"ui\",\r\n      \"characters\": 202,\r\n      \"text\": \"Task: ui — Implement UI (SYNTHETIC EVALUATION ONLY)\\nContext: none\\nRead: none\\nWrite: src/ui\\nResources: none\\nDone when: UI tests pass\\nReturn: changed paths; evidence and checks; blockers; follow-up needed\"\r\n    }\r\n  ],\r\n  \"in_progress\": [],\r\n  \"session_id\": \"476f02aa-e979-42f1-bcb2-bde84ebf9e28\",\r\n  \"revision\": 0,\r\n  \"plan_hash\": \"b5b3a047d3d826776736d5182166e21607ba507789712762beb332f0ae4f30a6\",\r\n  \"active\": []\r\n}",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\03-initial-next.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\03-initial-next.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:46:29.0433323Z"
+  },
+  {
+    "index": 4,
+    "label": "start-api",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "apply",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json",
+      "evals/runs/session-recovery\\start-api.event.json",
+      "--revision",
+      "0"
+    ],
+    "exit_code": 0,
+    "stdout": "{\r\n  \"format\": 1,\r\n  \"session_id\": \"476f02aa-e979-42f1-bcb2-bde84ebf9e28\",\r\n  \"plan_hash\": \"b5b3a047d3d826776736d5182166e21607ba507789712762beb332f0ae4f30a6\",\r\n  \"revision\": 1,\r\n  \"tasks\": [\r\n    {\r\n      \"id\": \"api\",\r\n      \"status\": \"running\",\r\n      \"attempt\": 1,\r\n      \"attempt_id\": \"794cd116-3772-4b14-ae08-75a4b8101ca9\",\r\n      \"worker\": \"SYNTHETIC-api-worker-1\",\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"ui\",\r\n      \"status\": \"pending\",\r\n      \"attempt\": 0,\r\n      \"attempt_id\": null,\r\n      \"worker\": null,\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"docs\",\r\n      \"status\": \"pending\",\r\n      \"attempt\": 0,\r\n      \"attempt_id\": null,\r\n      \"worker\": null,\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"review\",\r\n      \"status\": \"pending\",\r\n      \"attempt\": 0,\r\n      \"attempt_id\": null,\r\n      \"worker\": null,\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    }\r\n  ]\r\n}",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\04-start-api.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\04-start-api.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:46:29.14529Z"
+  },
+  {
+    "index": 5,
+    "label": "start-ui",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "apply",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json",
+      "evals/runs/session-recovery\\start-ui.event.json",
+      "--revision",
+      "1"
+    ],
+    "exit_code": 0,
+    "stdout": "{\r\n  \"format\": 1,\r\n  \"session_id\": \"476f02aa-e979-42f1-bcb2-bde84ebf9e28\",\r\n  \"plan_hash\": \"b5b3a047d3d826776736d5182166e21607ba507789712762beb332f0ae4f30a6\",\r\n  \"revision\": 2,\r\n  \"tasks\": [\r\n    {\r\n      \"id\": \"api\",\r\n      \"status\": \"running\",\r\n      \"attempt\": 1,\r\n      \"attempt_id\": \"794cd116-3772-4b14-ae08-75a4b8101ca9\",\r\n      \"worker\": \"SYNTHETIC-api-worker-1\",\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"ui\",\r\n      \"status\": \"running\",\r\n      \"attempt\": 1,\r\n      \"attempt_id\": \"e17a3d77-ad35-4127-aaec-758b150b4983\",\r\n      \"worker\": \"SYNTHETIC-ui-worker-1\",\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"docs\",\r\n      \"status\": \"pending\",\r\n      \"attempt\": 0,\r\n      \"attempt_id\": null,\r\n      \"worker\": null,\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"review\",\r\n      \"status\": \"pending\",\r\n      \"attempt\": 0,\r\n      \"attempt_id\": null,\r\n      \"worker\": null,\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    }\r\n  ]\r\n}",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\05-start-ui.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\05-start-ui.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:46:29.244025Z"
+  },
+  {
+    "index": 6,
+    "label": "report-api",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "apply",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json",
+      "evals/runs/session-recovery\\report-api.event.json",
+      "--revision",
+      "2"
+    ],
+    "exit_code": 0,
+    "stdout": "{\r\n  \"format\": 1,\r\n  \"session_id\": \"476f02aa-e979-42f1-bcb2-bde84ebf9e28\",\r\n  \"plan_hash\": \"b5b3a047d3d826776736d5182166e21607ba507789712762beb332f0ae4f30a6\",\r\n  \"revision\": 3,\r\n  \"tasks\": [\r\n    {\r\n      \"id\": \"api\",\r\n      \"status\": \"reported\",\r\n      \"attempt\": 1,\r\n      \"attempt_id\": \"794cd116-3772-4b14-ae08-75a4b8101ca9\",\r\n      \"worker\": \"SYNTHETIC-api-worker-1\",\r\n      \"report\": {\r\n        \"summary\": \"SYNTHETIC successful API report fixture; no implementation or tests executed\",\r\n        \"changed_paths\": [\r\n          \"src/api/index.mjs\"\r\n        ],\r\n        \"checks\": [\r\n          {\r\n            \"check\": \"API tests pass\",\r\n            \"outcome\": \"passed\",\r\n            \"evidence\": \"SYNTHETIC ONLY: fixture represents a successful API test result. No API tests were run.\"\r\n          }\r\n        ]\r\n      },\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"ui\",\r\n      \"status\": \"running\",\r\n      \"attempt\": 1,\r\n      \"attempt_id\": \"e17a3d77-ad35-4127-aaec-758b150b4983\",\r\n      \"worker\": \"SYNTHETIC-ui-worker-1\",\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"docs\",\r\n      \"status\": \"pending\",\r\n      \"attempt\": 0,\r\n      \"attempt_id\": null,\r\n      \"worker\": null,\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"review\",\r\n      \"status\": \"pending\",\r\n      \"attempt\": 0,\r\n      \"attempt_id\": null,\r\n      \"worker\": null,\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    }\r\n  ]\r\n}",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\06-report-api.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\06-report-api.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:47:43.5900080Z"
+  },
+  {
+    "index": 7,
+    "label": "next-before-api-accept",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "next",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\r\n  \"status\": \"waiting\",\r\n  \"max_workers\": 2,\r\n  \"max_brief_chars\": 2400,\r\n  \"task_ids\": [],\r\n  \"completed\": [],\r\n  \"failed\": [],\r\n  \"blocked\": [],\r\n  \"briefs\": [],\r\n  \"in_progress\": [\r\n    \"api\",\r\n    \"ui\"\r\n  ],\r\n  \"session_id\": \"476f02aa-e979-42f1-bcb2-bde84ebf9e28\",\r\n  \"revision\": 3,\r\n  \"plan_hash\": \"b5b3a047d3d826776736d5182166e21607ba507789712762beb332f0ae4f30a6\",\r\n  \"active\": [\r\n    {\r\n      \"task_id\": \"api\",\r\n      \"attempt_id\": \"794cd116-3772-4b14-ae08-75a4b8101ca9\",\r\n      \"worker\": \"SYNTHETIC-api-worker-1\",\r\n      \"status\": \"reported\",\r\n      \"report\": {\r\n        \"summary\": \"SYNTHETIC successful API report fixture; no implementation or tests executed\",\r\n        \"changed_paths\": [\r\n          \"src/api/index.mjs\"\r\n        ],\r\n        \"checks\": [\r\n          {\r\n            \"check\": \"API tests pass\",\r\n            \"outcome\": \"passed\",\r\n            \"evidence\": \"SYNTHETIC ONLY: fixture represents a successful API test result. No API tests were run.\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"task_id\": \"ui\",\r\n      \"attempt_id\": \"e17a3d77-ad35-4127-aaec-758b150b4983\",\r\n      \"worker\": \"SYNTHETIC-ui-worker-1\",\r\n      \"status\": \"running\",\r\n      \"report\": null\r\n    }\r\n  ]\r\n}",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\07-next-before-api-accept.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\07-next-before-api-accept.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:47:43.6928136Z"
+  },
+  {
+    "index": 8,
+    "label": "accept-api",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "apply",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json",
+      "evals/runs/session-recovery\\accept-api.event.json",
+      "--revision",
+      "3"
+    ],
+    "exit_code": 0,
+    "stdout": "{\r\n  \"format\": 1,\r\n  \"session_id\": \"476f02aa-e979-42f1-bcb2-bde84ebf9e28\",\r\n  \"plan_hash\": \"b5b3a047d3d826776736d5182166e21607ba507789712762beb332f0ae4f30a6\",\r\n  \"revision\": 4,\r\n  \"tasks\": [\r\n    {\r\n      \"id\": \"api\",\r\n      \"status\": \"completed\",\r\n      \"attempt\": 1,\r\n      \"attempt_id\": \"794cd116-3772-4b14-ae08-75a4b8101ca9\",\r\n      \"worker\": \"SYNTHETIC-api-worker-1\",\r\n      \"report\": {\r\n        \"summary\": \"SYNTHETIC successful API report fixture; no implementation or tests executed\",\r\n        \"changed_paths\": [\r\n          \"src/api/index.mjs\"\r\n        ],\r\n        \"checks\": [\r\n          {\r\n            \"check\": \"API tests pass\",\r\n            \"outcome\": \"passed\",\r\n            \"evidence\": \"SYNTHETIC ONLY: fixture represents a successful API test result. No API tests were run.\"\r\n          }\r\n        ]\r\n      },\r\n      \"failure\": null,\r\n      \"review\": \"SYNTHETIC ONLY: reviewed fixture report and simulated API diff/test evidence. Native-host fixture asserts stopped. No real code or test result verified.\"\r\n    },\r\n    {\r\n      \"id\": \"ui\",\r\n      \"status\": \"running\",\r\n      \"attempt\": 1,\r\n      \"attempt_id\": \"e17a3d77-ad35-4127-aaec-758b150b4983\",\r\n      \"worker\": \"SYNTHETIC-ui-worker-1\",\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"docs\",\r\n      \"status\": \"pending\",\r\n      \"attempt\": 0,\r\n      \"attempt_id\": null,\r\n      \"worker\": null,\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"review\",\r\n      \"status\": \"pending\",\r\n      \"attempt\": 0,\r\n      \"attempt_id\": null,\r\n      \"worker\": null,\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    }\r\n  ]\r\n}",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\08-accept-api.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\08-accept-api.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:47:43.7868389Z"
+  },
+  {
+    "index": 9,
+    "label": "next-docs-allowed",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "next",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\r\n  \"status\": \"ready\",\r\n  \"max_workers\": 2,\r\n  \"max_brief_chars\": 2400,\r\n  \"task_ids\": [\r\n    \"docs\"\r\n  ],\r\n  \"completed\": [\r\n    \"api\"\r\n  ],\r\n  \"failed\": [],\r\n  \"blocked\": [],\r\n  \"briefs\": [\r\n    {\r\n      \"id\": \"docs\",\r\n      \"characters\": 226,\r\n      \"text\": \"Task: docs — Document API examples (SYNTHETIC EVALUATION ONLY)\\nContext: none\\nRead: src/api\\nWrite: docs/api.md\\nResources: none\\nDone when: Examples match API\\nReturn: changed paths; evidence and checks; blockers; follow-up needed\"\r\n    }\r\n  ],\r\n  \"in_progress\": [\r\n    \"ui\"\r\n  ],\r\n  \"session_id\": \"476f02aa-e979-42f1-bcb2-bde84ebf9e28\",\r\n  \"revision\": 4,\r\n  \"plan_hash\": \"b5b3a047d3d826776736d5182166e21607ba507789712762beb332f0ae4f30a6\",\r\n  \"active\": [\r\n    {\r\n      \"task_id\": \"ui\",\r\n      \"attempt_id\": \"e17a3d77-ad35-4127-aaec-758b150b4983\",\r\n      \"worker\": \"SYNTHETIC-ui-worker-1\",\r\n      \"status\": \"running\",\r\n      \"report\": null\r\n    }\r\n  ]\r\n}",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\09-next-docs-allowed.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\09-next-docs-allowed.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:47:43.8736103Z"
+  },
+  {
+    "index": 10,
+    "label": "start-docs",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "apply",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json",
+      "evals/runs/session-recovery\\start-docs.event.json",
+      "--revision",
+      "4"
+    ],
+    "exit_code": 0,
+    "stdout": "{\r\n  \"format\": 1,\r\n  \"session_id\": \"476f02aa-e979-42f1-bcb2-bde84ebf9e28\",\r\n  \"plan_hash\": \"b5b3a047d3d826776736d5182166e21607ba507789712762beb332f0ae4f30a6\",\r\n  \"revision\": 5,\r\n  \"tasks\": [\r\n    {\r\n      \"id\": \"api\",\r\n      \"status\": \"completed\",\r\n      \"attempt\": 1,\r\n      \"attempt_id\": \"794cd116-3772-4b14-ae08-75a4b8101ca9\",\r\n      \"worker\": \"SYNTHETIC-api-worker-1\",\r\n      \"report\": {\r\n        \"summary\": \"SYNTHETIC successful API report fixture; no implementation or tests executed\",\r\n        \"changed_paths\": [\r\n          \"src/api/index.mjs\"\r\n        ],\r\n        \"checks\": [\r\n          {\r\n            \"check\": \"API tests pass\",\r\n            \"outcome\": \"passed\",\r\n            \"evidence\": \"SYNTHETIC ONLY: fixture represents a successful API test result. No API tests were run.\"\r\n          }\r\n        ]\r\n      },\r\n      \"failure\": null,\r\n      \"review\": \"SYNTHETIC ONLY: reviewed fixture report and simulated API diff/test evidence. Native-host fixture asserts stopped. No real code or test result verified.\"\r\n    },\r\n    {\r\n      \"id\": \"ui\",\r\n      \"status\": \"running\",\r\n      \"attempt\": 1,\r\n      \"attempt_id\": \"e17a3d77-ad35-4127-aaec-758b150b4983\",\r\n      \"worker\": \"SYNTHETIC-ui-worker-1\",\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"docs\",\r\n      \"status\": \"running\",\r\n      \"attempt\": 1,\r\n      \"attempt_id\": \"911a0db0-9cb2-46de-bd58-f69a340005ca\",\r\n      \"worker\": \"SYNTHETIC-docs-worker-1\",\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"review\",\r\n      \"status\": \"pending\",\r\n      \"attempt\": 0,\r\n      \"attempt_id\": null,\r\n      \"worker\": null,\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    }\r\n  ]\r\n}",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\10-start-docs.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\10-start-docs.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:47:43.9781046Z"
+  },
+  {
+    "index": 11,
+    "label": "next-docs-and-ui-active",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "next",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\r\n  \"status\": \"waiting\",\r\n  \"max_workers\": 2,\r\n  \"max_brief_chars\": 2400,\r\n  \"task_ids\": [],\r\n  \"completed\": [\r\n    \"api\"\r\n  ],\r\n  \"failed\": [],\r\n  \"blocked\": [],\r\n  \"briefs\": [],\r\n  \"in_progress\": [\r\n    \"ui\",\r\n    \"docs\"\r\n  ],\r\n  \"session_id\": \"476f02aa-e979-42f1-bcb2-bde84ebf9e28\",\r\n  \"revision\": 5,\r\n  \"plan_hash\": \"b5b3a047d3d826776736d5182166e21607ba507789712762beb332f0ae4f30a6\",\r\n  \"active\": [\r\n    {\r\n      \"task_id\": \"ui\",\r\n      \"attempt_id\": \"e17a3d77-ad35-4127-aaec-758b150b4983\",\r\n      \"worker\": \"SYNTHETIC-ui-worker-1\",\r\n      \"status\": \"running\",\r\n      \"report\": null\r\n    },\r\n    {\r\n      \"task_id\": \"docs\",\r\n      \"attempt_id\": \"911a0db0-9cb2-46de-bd58-f69a340005ca\",\r\n      \"worker\": \"SYNTHETIC-docs-worker-1\",\r\n      \"status\": \"running\",\r\n      \"report\": null\r\n    }\r\n  ]\r\n}",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\11-next-docs-and-ui-active.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\11-next-docs-and-ui-active.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:47:44.0741313Z"
+  },
+  {
+    "index": 12,
+    "label": "restart-read-next",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "next",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\r\n  \"status\": \"waiting\",\r\n  \"max_workers\": 2,\r\n  \"max_brief_chars\": 2400,\r\n  \"task_ids\": [],\r\n  \"completed\": [\r\n    \"api\"\r\n  ],\r\n  \"failed\": [],\r\n  \"blocked\": [],\r\n  \"briefs\": [],\r\n  \"in_progress\": [\r\n    \"ui\",\r\n    \"docs\"\r\n  ],\r\n  \"session_id\": \"476f02aa-e979-42f1-bcb2-bde84ebf9e28\",\r\n  \"revision\": 5,\r\n  \"plan_hash\": \"b5b3a047d3d826776736d5182166e21607ba507789712762beb332f0ae4f30a6\",\r\n  \"active\": [\r\n    {\r\n      \"task_id\": \"ui\",\r\n      \"attempt_id\": \"e17a3d77-ad35-4127-aaec-758b150b4983\",\r\n      \"worker\": \"SYNTHETIC-ui-worker-1\",\r\n      \"status\": \"running\",\r\n      \"report\": null\r\n    },\r\n    {\r\n      \"task_id\": \"docs\",\r\n      \"attempt_id\": \"911a0db0-9cb2-46de-bd58-f69a340005ca\",\r\n      \"worker\": \"SYNTHETIC-docs-worker-1\",\r\n      \"status\": \"running\",\r\n      \"report\": null\r\n    }\r\n  ]\r\n}",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\12-restart-read-next.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\12-restart-read-next.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:47:44.1591007Z"
+  },
+  {
+    "index": 13,
+    "label": "retry-ui-stop-unconfirmed",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "apply",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json",
+      "evals/runs/session-recovery\\retry-ui-stop-unconfirmed.event.json",
+      "--revision",
+      "5"
+    ],
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "RelayCrew: ui: only a failed attempt can retry\r\n",
+    "stdout_file": "evals/runs/session-recovery\\13-retry-ui-stop-unconfirmed.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\13-retry-ui-stop-unconfirmed.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:47:44.2824993Z"
+  },
+  {
+    "index": 14,
+    "label": "fail-ui-stop-unconfirmed",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "apply",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json",
+      "evals/runs/session-recovery\\fail-ui-stop-unconfirmed.event.json",
+      "--revision",
+      "5"
+    ],
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "RelayCrew: ui: worker_stopped must be true after confirming the worker stopped\r\n",
+    "stdout_file": "evals/runs/session-recovery\\14-fail-ui-stop-unconfirmed.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\14-fail-ui-stop-unconfirmed.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:47:44.3882187Z"
+  },
+  {
+    "index": 15,
+    "label": "fail-ui-after-confirmed-stop",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "apply",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json",
+      "evals/runs/session-recovery\\fail-ui-after-confirmed-stop.event.json",
+      "--revision",
+      "5"
+    ],
+    "exit_code": 0,
+    "stdout": "{\r\n  \"format\": 1,\r\n  \"session_id\": \"476f02aa-e979-42f1-bcb2-bde84ebf9e28\",\r\n  \"plan_hash\": \"b5b3a047d3d826776736d5182166e21607ba507789712762beb332f0ae4f30a6\",\r\n  \"revision\": 6,\r\n  \"tasks\": [\r\n    {\r\n      \"id\": \"api\",\r\n      \"status\": \"completed\",\r\n      \"attempt\": 1,\r\n      \"attempt_id\": \"794cd116-3772-4b14-ae08-75a4b8101ca9\",\r\n      \"worker\": \"SYNTHETIC-api-worker-1\",\r\n      \"report\": {\r\n        \"summary\": \"SYNTHETIC successful API report fixture; no implementation or tests executed\",\r\n        \"changed_paths\": [\r\n          \"src/api/index.mjs\"\r\n        ],\r\n        \"checks\": [\r\n          {\r\n            \"check\": \"API tests pass\",\r\n            \"outcome\": \"passed\",\r\n            \"evidence\": \"SYNTHETIC ONLY: fixture represents a successful API test result. No API tests were run.\"\r\n          }\r\n        ]\r\n      },\r\n      \"failure\": null,\r\n      \"review\": \"SYNTHETIC ONLY: reviewed fixture report and simulated API diff/test evidence. Native-host fixture asserts stopped. No real code or test result verified.\"\r\n    },\r\n    {\r\n      \"id\": \"ui\",\r\n      \"status\": \"failed\",\r\n      \"attempt\": 1,\r\n      \"attempt_id\": \"e17a3d77-ad35-4127-aaec-758b150b4983\",\r\n      \"worker\": \"SYNTHETIC-ui-worker-1\",\r\n      \"report\": null,\r\n      \"failure\": \"SYNTHETIC ONLY: native-host fixture confirms stopped after contact loss. Inspected synthetic partial-work fixture: UI incomplete, no passed UI check. Preserve fixture for replacement; no real source/test evidence claimed.\",\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"docs\",\r\n      \"status\": \"running\",\r\n      \"attempt\": 1,\r\n      \"attempt_id\": \"911a0db0-9cb2-46de-bd58-f69a340005ca\",\r\n      \"worker\": \"SYNTHETIC-docs-worker-1\",\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"review\",\r\n      \"status\": \"pending\",\r\n      \"attempt\": 0,\r\n      \"attempt_id\": null,\r\n      \"worker\": null,\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    }\r\n  ]\r\n}",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\15-fail-ui-after-confirmed-stop.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\15-fail-ui-after-confirmed-stop.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:47:44.4937053Z"
+  },
+  {
+    "index": 16,
+    "label": "next-ui-failed",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "next",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\r\n  \"status\": \"waiting\",\r\n  \"max_workers\": 2,\r\n  \"max_brief_chars\": 2400,\r\n  \"task_ids\": [],\r\n  \"completed\": [\r\n    \"api\"\r\n  ],\r\n  \"failed\": [\r\n    \"ui\"\r\n  ],\r\n  \"blocked\": [\r\n    {\r\n      \"id\": \"review\",\r\n      \"after\": [\r\n        \"ui\"\r\n      ]\r\n    }\r\n  ],\r\n  \"briefs\": [],\r\n  \"in_progress\": [\r\n    \"docs\"\r\n  ],\r\n  \"session_id\": \"476f02aa-e979-42f1-bcb2-bde84ebf9e28\",\r\n  \"revision\": 6,\r\n  \"plan_hash\": \"b5b3a047d3d826776736d5182166e21607ba507789712762beb332f0ae4f30a6\",\r\n  \"active\": [\r\n    {\r\n      \"task_id\": \"docs\",\r\n      \"attempt_id\": \"911a0db0-9cb2-46de-bd58-f69a340005ca\",\r\n      \"worker\": \"SYNTHETIC-docs-worker-1\",\r\n      \"status\": \"running\",\r\n      \"report\": null\r\n    }\r\n  ]\r\n}",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\16-next-ui-failed.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\16-next-ui-failed.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:47:44.5907219Z"
+  },
+  {
+    "index": 17,
+    "label": "retry-ui-after-failure",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "apply",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json",
+      "evals/runs/session-recovery\\retry-ui-after-failure.event.json",
+      "--revision",
+      "6"
+    ],
+    "exit_code": 0,
+    "stdout": "{\r\n  \"format\": 1,\r\n  \"session_id\": \"476f02aa-e979-42f1-bcb2-bde84ebf9e28\",\r\n  \"plan_hash\": \"b5b3a047d3d826776736d5182166e21607ba507789712762beb332f0ae4f30a6\",\r\n  \"revision\": 7,\r\n  \"tasks\": [\r\n    {\r\n      \"id\": \"api\",\r\n      \"status\": \"completed\",\r\n      \"attempt\": 1,\r\n      \"attempt_id\": \"794cd116-3772-4b14-ae08-75a4b8101ca9\",\r\n      \"worker\": \"SYNTHETIC-api-worker-1\",\r\n      \"report\": {\r\n        \"summary\": \"SYNTHETIC successful API report fixture; no implementation or tests executed\",\r\n        \"changed_paths\": [\r\n          \"src/api/index.mjs\"\r\n        ],\r\n        \"checks\": [\r\n          {\r\n            \"check\": \"API tests pass\",\r\n            \"outcome\": \"passed\",\r\n            \"evidence\": \"SYNTHETIC ONLY: fixture represents a successful API test result. No API tests were run.\"\r\n          }\r\n        ]\r\n      },\r\n      \"failure\": null,\r\n      \"review\": \"SYNTHETIC ONLY: reviewed fixture report and simulated API diff/test evidence. Native-host fixture asserts stopped. No real code or test result verified.\"\r\n    },\r\n    {\r\n      \"id\": \"ui\",\r\n      \"status\": \"pending\",\r\n      \"attempt\": 1,\r\n      \"attempt_id\": null,\r\n      \"worker\": null,\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"docs\",\r\n      \"status\": \"running\",\r\n      \"attempt\": 1,\r\n      \"attempt_id\": \"911a0db0-9cb2-46de-bd58-f69a340005ca\",\r\n      \"worker\": \"SYNTHETIC-docs-worker-1\",\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"review\",\r\n      \"status\": \"pending\",\r\n      \"attempt\": 0,\r\n      \"attempt_id\": null,\r\n      \"worker\": null,\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    }\r\n  ]\r\n}",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\17-retry-ui-after-failure.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\17-retry-ui-after-failure.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:47:44.6856924Z"
+  },
+  {
+    "index": 18,
+    "label": "next-ui-retry-ready",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "next",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\r\n  \"status\": \"ready\",\r\n  \"max_workers\": 2,\r\n  \"max_brief_chars\": 2400,\r\n  \"task_ids\": [\r\n    \"ui\"\r\n  ],\r\n  \"completed\": [\r\n    \"api\"\r\n  ],\r\n  \"failed\": [],\r\n  \"blocked\": [],\r\n  \"briefs\": [\r\n    {\r\n      \"id\": \"ui\",\r\n      \"characters\": 202,\r\n      \"text\": \"Task: ui — Implement UI (SYNTHETIC EVALUATION ONLY)\\nContext: none\\nRead: none\\nWrite: src/ui\\nResources: none\\nDone when: UI tests pass\\nReturn: changed paths; evidence and checks; blockers; follow-up needed\"\r\n    }\r\n  ],\r\n  \"in_progress\": [\r\n    \"docs\"\r\n  ],\r\n  \"session_id\": \"476f02aa-e979-42f1-bcb2-bde84ebf9e28\",\r\n  \"revision\": 7,\r\n  \"plan_hash\": \"b5b3a047d3d826776736d5182166e21607ba507789712762beb332f0ae4f30a6\",\r\n  \"active\": [\r\n    {\r\n      \"task_id\": \"docs\",\r\n      \"attempt_id\": \"911a0db0-9cb2-46de-bd58-f69a340005ca\",\r\n      \"worker\": \"SYNTHETIC-docs-worker-1\",\r\n      \"status\": \"running\",\r\n      \"report\": null\r\n    }\r\n  ]\r\n}",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\18-next-ui-retry-ready.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\18-next-ui-retry-ready.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:47:44.7751204Z"
+  },
+  {
+    "index": 19,
+    "label": "start-ui-replacement",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "apply",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json",
+      "evals/runs/session-recovery\\start-ui-replacement.event.json",
+      "--revision",
+      "7"
+    ],
+    "exit_code": 0,
+    "stdout": "{\r\n  \"format\": 1,\r\n  \"session_id\": \"476f02aa-e979-42f1-bcb2-bde84ebf9e28\",\r\n  \"plan_hash\": \"b5b3a047d3d826776736d5182166e21607ba507789712762beb332f0ae4f30a6\",\r\n  \"revision\": 8,\r\n  \"tasks\": [\r\n    {\r\n      \"id\": \"api\",\r\n      \"status\": \"completed\",\r\n      \"attempt\": 1,\r\n      \"attempt_id\": \"794cd116-3772-4b14-ae08-75a4b8101ca9\",\r\n      \"worker\": \"SYNTHETIC-api-worker-1\",\r\n      \"report\": {\r\n        \"summary\": \"SYNTHETIC successful API report fixture; no implementation or tests executed\",\r\n        \"changed_paths\": [\r\n          \"src/api/index.mjs\"\r\n        ],\r\n        \"checks\": [\r\n          {\r\n            \"check\": \"API tests pass\",\r\n            \"outcome\": \"passed\",\r\n            \"evidence\": \"SYNTHETIC ONLY: fixture represents a successful API test result. No API tests were run.\"\r\n          }\r\n        ]\r\n      },\r\n      \"failure\": null,\r\n      \"review\": \"SYNTHETIC ONLY: reviewed fixture report and simulated API diff/test evidence. Native-host fixture asserts stopped. No real code or test result verified.\"\r\n    },\r\n    {\r\n      \"id\": \"ui\",\r\n      \"status\": \"running\",\r\n      \"attempt\": 2,\r\n      \"attempt_id\": \"bd7dfbd6-d78f-44de-9906-15302ac9496a\",\r\n      \"worker\": \"SYNTHETIC-ui-worker-2\",\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"docs\",\r\n      \"status\": \"running\",\r\n      \"attempt\": 1,\r\n      \"attempt_id\": \"911a0db0-9cb2-46de-bd58-f69a340005ca\",\r\n      \"worker\": \"SYNTHETIC-docs-worker-1\",\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    },\r\n    {\r\n      \"id\": \"review\",\r\n      \"status\": \"pending\",\r\n      \"attempt\": 0,\r\n      \"attempt_id\": null,\r\n      \"worker\": null,\r\n      \"report\": null,\r\n      \"failure\": null,\r\n      \"review\": null\r\n    }\r\n  ]\r\n}",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\19-start-ui-replacement.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\19-start-ui-replacement.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:47:44.8733509Z"
+  },
+  {
+    "index": 20,
+    "label": "late-former-ui-report",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "apply",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json",
+      "evals/runs/session-recovery\\late-former-ui-report.event.json",
+      "--revision",
+      "8"
+    ],
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "RelayCrew: ui: obsolete or unknown attempt_id\r\n",
+    "stdout_file": "evals/runs/session-recovery\\20-late-former-ui-report.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\20-late-former-ui-report.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:47:44.9803853Z"
+  },
+  {
+    "index": 21,
+    "label": "final-next",
+    "executable": "node",
+    "arguments": [
+      ".\\skills\\relaycrew\\scripts\\session.mjs",
+      "next",
+      "evals/runs/session-recovery\\plan.json",
+      "evals/runs/session-recovery\\checkpoint.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\r\n  \"status\": \"waiting\",\r\n  \"max_workers\": 2,\r\n  \"max_brief_chars\": 2400,\r\n  \"task_ids\": [],\r\n  \"completed\": [\r\n    \"api\"\r\n  ],\r\n  \"failed\": [],\r\n  \"blocked\": [],\r\n  \"briefs\": [],\r\n  \"in_progress\": [\r\n    \"ui\",\r\n    \"docs\"\r\n  ],\r\n  \"session_id\": \"476f02aa-e979-42f1-bcb2-bde84ebf9e28\",\r\n  \"revision\": 8,\r\n  \"plan_hash\": \"b5b3a047d3d826776736d5182166e21607ba507789712762beb332f0ae4f30a6\",\r\n  \"active\": [\r\n    {\r\n      \"task_id\": \"ui\",\r\n      \"attempt_id\": \"bd7dfbd6-d78f-44de-9906-15302ac9496a\",\r\n      \"worker\": \"SYNTHETIC-ui-worker-2\",\r\n      \"status\": \"running\",\r\n      \"report\": null\r\n    },\r\n    {\r\n      \"task_id\": \"docs\",\r\n      \"attempt_id\": \"911a0db0-9cb2-46de-bd58-f69a340005ca\",\r\n      \"worker\": \"SYNTHETIC-docs-worker-1\",\r\n      \"status\": \"running\",\r\n      \"report\": null\r\n    }\r\n  ]\r\n}",
+    "stderr": "",
+    "stdout_file": "evals/runs/session-recovery\\21-final-next.stdout.json",
+    "stderr_file": "evals/runs/session-recovery\\21-final-next.stderr.txt",
+    "timestamp_utc": "2026-10-26T12:47:45.0707146Z"
+  }
+]
