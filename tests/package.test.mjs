@@ -41,6 +41,18 @@ test('a copied skill runs from a different directory with no package installatio
     const result=spawnSync(process.execPath,[script,path.join(root,'examples','feature.plan.json'),'--format','markdown'],{cwd:scratch,encoding:'utf8'});
     assert.equal(result.status,0,result.stderr);
     assert.match(result.stdout,/Wave 1: api \+ ui/);
+    const handoffs=spawnSync(process.execPath,[script,path.join(root,'examples','feature.plan.json'),'--next'],{cwd:scratch,encoding:'utf8'});
+    assert.equal(handoffs.status,0,handoffs.stderr);
+    const bundle=JSON.parse(handoffs.stdout);
+    assert.equal(bundle.status,'ready');
+    assert.deepEqual(bundle.task_ids,['api','ui']);
+    assert.deepEqual(bundle.briefs.map(brief=>brief.id),['api','ui']);
+    const readable=spawnSync(process.execPath,[script,path.join(root,'examples','feature.plan.json'),'--format','markdown','--next'],{cwd:scratch,encoding:'utf8'});
+    assert.equal(readable.status,0,readable.stderr);
+    assert.match(readable.stdout,/Status: ready\./);
+    assert.match(readable.stdout,/Current wave: api \+ ui/);
+    assert.ok(bundle.briefs.every(brief=>readable.stdout.includes(brief.text)));
+    assert.doesNotMatch(readable.stdout,/## Handoff: (docs|review)/);
   } finally {
     const resolved=path.resolve(scratch);
     assert.ok(resolved.startsWith(`${tempRoot}${path.sep}`) && path.basename(resolved).startsWith('relaycrew-package-'));

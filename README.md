@@ -57,6 +57,14 @@ node skills/relaycrew/scripts/plan.mjs examples/failure-resume.plan.json --forma
 
 The second holds documentation and review behind a failed API task while unrelated UI work remains eligible. These commands plan work; they do not launch agents.
 
+Get all handoff briefs for the next compatible wave in one command:
+
+```sh
+node skills/relaycrew/scripts/plan.mjs examples/feature.plan.json --next --format markdown
+```
+
+This emits only `api` and `ui`, leaving `docs` and `review` for later. Omit `--format markdown` for a JSON bundle. If no work can proceed, the bundle distinguishes a failure hold from an all-completed checkpoint. The coordinator still verifies state and controls dispatch.
+
 ## Use cases
 
 | Task | Useful pattern |
@@ -152,7 +160,7 @@ No general savings claim has been established. Short briefs and a small team are
 
 **What happens when a task fails?**
 
-Record verified `completed` and `failed` task IDs. The planner holds dependent work and can continue unrelated tasks. `--brief ID` only emits a capsule for the next runnable wave. [Planner format and recovery](skills/relaycrew/references/planner.md).
+Record verified `completed` and `failed` task IDs. The planner holds dependent work and can continue unrelated tasks. `--next` bundles the next wave's capsules; `--brief ID` emits one eligible capsule and explains whether a denied task is failed, blocked, completed, or waiting for a later wave. [Planner format and recovery](skills/relaycrew/references/planner.md).
 
 **Can I use it without Node.js or delegation?**
 
