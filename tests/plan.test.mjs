@@ -2,11 +2,28 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { readFile } from 'node:fs/promises';
-import { plan, markdown } from '../skills/relaycrew/scripts/plan.mjs';
+import { readFile, writeFile, mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+import { plan, next, markdown } from '../skills/relaycrew/scripts/plan.mjs';
 
 const task = (id, extra = {}) => ({ id, goal: `Complete ${id}`, checks: ['Verify the outcome'], ...extra });
 const schedule = (tasks, extra = {}) => plan({ tasks, ...extra });
+const script = fileURLToPath(new URL('../skills/relaycrew/scripts/plan.mjs', import.meta.url));
+const cli = (file, ...args) => spawnSync(process.execPath, [script, file, ...args], { encoding: 'utf8' });
+const withPlanFile = async (input, inspect) => {
+  const tempRoot = path.resolve(tmpdir());
+  const scratch = await mkdtemp(path.join(tempRoot, 'relaycrew-plan-'));
+  try {
+    const file = path.join(scratch, 'plan.json');
+    await writeFile(file, typeof input === 'string' ? input : JSON.stringify(input));
+    await inspect(file);
+  } finally {
+    const resolved = path.resolve(scratch);
+    assert.ok(resolved.startsWith(`${tempRoot}${path.sep}`) && path.basename(resolved).startsWith('relaycrew-plan-'));
+    await rm(resolved, { recursive: true, force: true });
+  }
+};
 
 test('independent writers share a wave up to the worker limit', () => {
   const tasks = ['a', 'b', 'c', 'd', 'e'].map(id => task(id, { writes: [`src/${id}`] }));
@@ -161,4 +178,227 @@ test('the documented example and CLI produce the same valid plan', async () => {
   }
   const help = spawnSync(process.execPath,[script,'--help'],{encoding:'utf8'});
   assert.equal(help.status,0); assert.match(help.stdout,/Usage/);
+});
+
+test('next bundles contain only the current compatible handoffs for all demonstrations', async () => {
+  const examples = [
+    ['feature', ['api', 'ui']],
+    ['failure-resume', ['ui']],
+    ['shared-lockfile', ['api-deps', 'docs']]
+  ];
+  for (const [name, taskIds] of examples) {
+    const file = fileURLToPath(new URL(`../examples/${name}.plan.json`, import.meta.url));
+    const input = JSON.parse(await readFile(file, 'utf8'));
+    const before = JSON.stringify(input);
+    const result = next(input);
+    const full = plan(input);
+    assert.deepEqual(Object.keys(result), ['status', 'max_workers', 'max_brief_chars', 'task_ids', 'completed', 'failed', 'blocked', 'briefs']);
+    assert.equal(result.status, 'ready');
+    assert.deepEqual(result.task_ids, taskIds);
+    assert.deepEqual(result.briefs, taskIds.map(id => full.briefs.find(brief => brief.id === id)));
+    assert.deepEqual(result.completed, full.completed);
+    assert.deepEqual(result.failed, full.failed);
+    assert.deepEqual(result.blocked, full.blocked);
+    assert.equal(result.max_workers, full.max_workers);
+    assert.equal(result.max_brief_chars, full.max_brief_chars);
+    assert.deepEqual(next(input), result);
+    assert.equal(JSON.stringify(input), before);
+    const run = cli(file, '--next');
+    assert.equal(run.status, 0, run.stderr);
+    assert.deepEqual(JSON.parse(run.stdout), result);
+  }
+});
+
+test('next preserves first-wave order and advances only from recorded completion state', () => {
+  const input = { tasks: [task('later', { after: ['first'] }), task('second'), task('first')], max_workers: 1 };
+  assert.deepEqual(next(input).task_ids, ['second']);
+  assert.deepEqual(next({ ...input, completed: ['second'] }).task_ids, ['first']);
+  assert.deepEqual(next({ ...input, completed: ['second', 'first'] }).task_ids, ['later']);
+  assert.deepEqual(next({ ...input, max_workers: 2 }).task_ids, ['second', 'first']);
+});
+
+test('next distinguishes held work from a fully completed recorded plan', async () => {
+  const tasks = [task('a'), task('b', { after: ['a'] })];
+  const cases = [
+    [{ tasks, failed: ['a'] }, 'held', ['a'], [{ id: 'b', after: ['a'] }]],
+    [{ tasks: [task('a')], failed: ['a'] }, 'held', ['a'], []],
+    [{ tasks, completed: ['a', 'b'] }, 'complete', [], []]
+  ];
+  for (const [input, status, failed, blocked] of cases) {
+    const result = next(input);
+    assert.equal(result.status, status);
+    assert.deepEqual(result.task_ids, []);
+    assert.deepEqual(result.briefs, []);
+    assert.deepEqual(result.failed, failed);
+    assert.deepEqual(result.blocked, blocked);
+    await withPlanFile(input, file => {
+      const run = cli(file, '--next');
+      assert.equal(run.status, 0, run.stderr);
+      assert.deepEqual(JSON.parse(run.stdout), result);
+      const human = cli(file, '--next', '--format', 'markdown');
+      assert.equal(human.status, 0, human.stderr);
+      assert.match(human.stdout, new RegExp(`Status: ${status}\\.`));
+      assert.match(human.stdout, /State comes from the input/);
+      assert.match(human.stdout, /does not verify completion or run checks/);
+      assert.doesNotMatch(human.stdout, /## Handoff:/);
+      if (status === 'held') assert.match(human.stdout, /work remains held/);
+      else assert.match(human.stdout, /No pending tasks remain according to the recorded state/);
+    });
+  }
+});
+
+test('next and brief ignore oversized future capsules while full plans retain their cap', async () => {
+  const input = { tasks: [task('a'), task('future', { after: ['a'], context: 'x'.repeat(3000) })] };
+  assert.throws(() => plan(input), /future: brief is/);
+  assert.deepEqual(next(input).task_ids, ['a']);
+  assert.deepEqual(next(input).briefs.map(brief => brief.id), ['a']);
+  assert.throws(() => next({ ...input, completed: ['a'] }), /future: brief is/);
+  await withPlanFile(input, file => {
+    const full = cli(file);
+    assert.equal(full.status, 1);
+    assert.equal(full.stdout, '');
+    assert.match(full.stderr, /future: brief is/);
+    const handoffs = cli(file, '--next');
+    assert.equal(handoffs.status, 0, handoffs.stderr);
+    assert.deepEqual(JSON.parse(handoffs.stdout), next(input));
+    const brief = cli(file, '--brief', 'a');
+    assert.equal(brief.status, 0, brief.stderr);
+    assert.equal(brief.stdout, `${next(input).briefs[0].text}\n`);
+    const later = cli(file, '--brief', 'future');
+    assert.equal(later.status, 1);
+    assert.equal(later.stdout, '');
+    assert.match(later.stderr, /next runnable wave/);
+    assert.doesNotMatch(later.stderr, /brief is/);
+  });
+});
+
+test('next caps its entire current wave while brief caps only the requested capsule', async () => {
+  const input = { tasks: [task('short'), task('large', { context: 'x'.repeat(3000) })] };
+  assert.throws(() => next(input), /large: brief is/);
+  await withPlanFile(input, file => {
+    const handoffs = cli(file, '--next');
+    assert.equal(handoffs.status, 1);
+    assert.equal(handoffs.stdout, '');
+    assert.match(handoffs.stderr, /large: brief is/);
+    const brief = cli(file, '--brief', 'short');
+    assert.equal(brief.status, 0, brief.stderr);
+    assert.equal(brief.stdout, `${plan({ tasks: [task('short')] }).briefs[0].text}\n`);
+    const oversized = cli(file, '--brief', 'large');
+    assert.equal(oversized.status, 1);
+    assert.equal(oversized.stdout, '');
+    assert.match(oversized.stderr, /large: brief is/);
+  });
+});
+
+test('current handoffs still reject invalid future tasks and invalid global state', async () => {
+  const cases = [
+    [{ tasks: [task('a'), task('future', { after: ['a'], checks: [] })] }, /checks/],
+    [{ tasks: [task('a'), task('future', { after: ['a'], writes: ['../secret'] })] }, /traversal/],
+    [{ tasks: [task('a'), task('future', { after: ['missing'] })] }, /unknown dependency/],
+    [{ tasks: [task('a'), task('future', { after: ['future'] })] }, /self-dependency/],
+    [{ tasks: [task('a'), task('b', { after: ['c'] }), task('c', { after: ['b'] })] }, /cycle/],
+    [{ tasks: [task('a'), task('b')], completed: ['b'], failed: ['b'] }, /both/],
+    [{ tasks: [task('a')], completed: ['missing'] }, /Unknown state/],
+    [{ tasks: [task('a'), task('b', { after: ['a'] })], completed: ['b'] }, /incomplete prerequisite/],
+    [{ tasks: [task('a'), task('a')] }, /Duplicate/],
+    [{ tasks: [task('a')], max_workers: 0 }, /max_workers/],
+    [{ tasks: [task('a')], max_brief_chars: 0 }, /max_brief_chars/],
+    [{ tasks: [task('a')], unexpected: true }, /Unknown/]
+  ];
+  for (const [input, error] of cases) assert.throws(() => next(input), error);
+  await withPlanFile(cases[0][0], file => {
+    for (const args of [['--next'], ['--brief', 'a']]) {
+      const run = cli(file, ...args);
+      assert.equal(run.status, 1);
+      assert.equal(run.stdout, '');
+      assert.match(run.stderr, /checks/);
+    }
+  });
+});
+
+test('brief errors distinguish recorded completed, failed, blocked, later and unknown tasks', async () => {
+  const input = {
+    tasks: [task('done'), task('failed'), task('blocked', { after: ['failed'] }), task('current'), task('later', { after: ['current'] })],
+    completed: ['done'], failed: ['failed']
+  };
+  await withPlanFile(input, file => {
+    const cases = [['done', /recorded as completed/], ['failed', /recorded as failed/], ['blocked', /blocked by failed or blocked prerequisites: failed/], ['later', /next runnable wave/], ['missing', /Unknown brief task: missing/]];
+    for (const [id, message] of cases) {
+      const run = cli(file, '--brief', id);
+      assert.equal(run.status, 1);
+      assert.equal(run.stdout, '');
+      assert.match(run.stderr, message);
+      if (id !== 'missing') assert.doesNotMatch(run.stderr, /Unknown brief task/);
+    }
+    const current = cli(file, '--brief', 'current');
+    assert.equal(current.status, 0, current.stderr);
+    assert.equal(current.stdout, `${next(input).briefs[0].text}\n`);
+  });
+});
+
+test('next CLI accepts either format-flag order and prints current capsules with recorded state', async () => {
+  const file = fileURLToPath(new URL('../examples/failure-resume.plan.json', import.meta.url));
+  const input = JSON.parse(await readFile(file, 'utf8'));
+  for (const args of [['--next', '--format', 'json'], ['--format', 'json', '--next']]) {
+    const run = cli(file, ...args);
+    assert.equal(run.status, 0, run.stderr);
+    assert.deepEqual(JSON.parse(run.stdout), next(input));
+  }
+  const outputs = [['--next', '--format', 'markdown'], ['--format', 'markdown', '--next']].map(args => cli(file, ...args));
+  for (const run of outputs) {
+    assert.equal(run.status, 0, run.stderr);
+    assert.match(run.stdout, /Status: ready\./);
+    assert.match(run.stdout, /Current wave: ui/);
+    assert.match(run.stdout, /Recorded completed: contract/);
+    assert.match(run.stdout, /Recorded failed: api/);
+    assert.match(run.stdout, /Blocked docs: requires api/);
+    assert.match(run.stdout, /Blocked review: requires api, docs/);
+    assert.match(run.stdout, /## Handoff: ui/);
+    assert.ok(run.stdout.includes(next(input).briefs[0].text));
+    assert.doesNotMatch(run.stdout, /## Handoff: (api|docs|review)/);
+    assert.doesNotMatch(run.stdout, /Verified completed/);
+    assert.match(run.stdout, /does not verify completion or run checks/);
+  }
+  assert.equal(outputs[0].stdout, outputs[1].stdout);
+});
+
+test('CLI rejects duplicate, mixed, incomplete and unknown flags without stdout', () => {
+  const file = fileURLToPath(new URL('../examples/feature.plan.json', import.meta.url));
+  const cases = [
+    ['--next', '--next'], ['--next', 'true'], ['--next', '--brief', 'api'], ['--brief', 'api', '--next'],
+    ['--next', '--format', 'json', '--brief', 'api'], ['--brief', 'api', '--format', 'json'],
+    ['--format', 'json', '--format', 'markdown'], ['--brief', 'api', '--brief', 'ui'],
+    ['--next', '--format'], ['--format', '--next'], ['--brief'], ['--brief', '--next'],
+    ['--next', '--format', 'xml'], ['--next', '--unknown'], ['--help', '--next']
+  ];
+  for (const args of cases) {
+    const run = cli(file, ...args);
+    assert.equal(run.status, 1, args.join(' '));
+    assert.equal(run.stdout, '', args.join(' '));
+    assert.match(run.stderr, /RelayCrew:/);
+  }
+});
+
+test('CLI accepts one UTF-8 BOM and continues to reject malformed JSON', async () => {
+  const input = { tasks: [task('a')] };
+  await withPlanFile(`\uFEFF${JSON.stringify(input)}`, async file => {
+    const before = await readFile(file);
+    for (const args of [[], ['--next'], ['--brief', 'a']]) {
+      const run = cli(file, ...args);
+      assert.equal(run.status, 0, run.stderr);
+      if (args[0] === '--brief') assert.equal(run.stdout, `${next(input).briefs[0].text}\n`);
+      else assert.deepEqual(JSON.parse(run.stdout), args.length ? next(input) : plan(input));
+    }
+    assert.deepEqual(await readFile(file), before);
+  });
+  for (const contents of ['{"tasks":', `\uFEFF{"tasks":`, `\uFEFF\uFEFF${JSON.stringify(input)}`]) {
+    await withPlanFile(contents, file => {
+      for (const args of [[], ['--next'], ['--brief', 'a']]) {
+        const run = cli(file, ...args);
+        assert.equal(run.status, 1);
+        assert.equal(run.stdout, '');
+        assert.match(run.stderr, /RelayCrew:/);
+      }
+    });
+  }
 });

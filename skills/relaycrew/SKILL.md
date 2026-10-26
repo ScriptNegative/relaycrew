@@ -4,7 +4,7 @@ description: Coordinate parallel coding work, independent investigations, and im
 license: MIT
 metadata:
   author: ScriptNegative
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # RelayCrew
@@ -27,7 +27,7 @@ Before dispatch, give each task an ID, a concrete outcome, dependencies, read pa
 
 Workers sharing a checkout must not overlap write/write or write/read claims. Two readers can overlap. Treat a directory claim as covering descendants; include lockfiles, generated files, tests, and configuration in ownership. Verify actual isolation before allowing overlapping edits in separate checkouts. Combine changes through the coordinator and check the combined result.
 
-For several tasks, optionally run `node <skill-dir>/scripts/plan.mjs <plan.json>`. Read [planner format](references/planner.md) only when using it. It schedules declared claims; it neither launches agents nor enforces filesystem isolation. For a simple split, keep the plan in conversation instead.
+For several tasks, optionally run `node <skill-dir>/scripts/plan.mjs <plan.json>`; add `--next` to retrieve only the next wave's handoff capsules. Read [planner format](references/planner.md) only when using it. It schedules declared claims; it neither launches agents nor enforces filesystem isolation. For a simple split, keep the plan in conversation instead.
 
 ## Relay a brief, not the entire conversation
 

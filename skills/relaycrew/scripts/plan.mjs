@@ -61,7 +61,7 @@ function capsule(task) {
   ].join('\n');
 }
 
-export function plan(input) {
+function prepare(input) {
   fields(input, ['tasks', 'max_workers', 'max_brief_chars', 'completed', 'failed'], 'plan');
   const maxWorkers = input.max_workers === undefined ? 2 : input.max_workers;
   const maxBrief = input.max_brief_chars === undefined ? 2400 : input.max_brief_chars;
@@ -118,17 +118,17 @@ export function plan(input) {
   const blocked = tasks.filter(task => unavailable.has(task.id) && !failed.has(task.id))
     .map(task => ({ id: task.id, after: task.after.filter(id => unavailable.has(id)) }));
   const eligible = tasks.filter(task => !completed.has(task.id) && !unavailable.has(task.id));
-  const briefs = eligible.map(task => {
-    const text = capsule(task);
-    const characters = length(text);
-    if (characters > maxBrief) fail(`${task.id}: brief is ${characters} characters; cap is ${maxBrief}. Narrow the task or explicitly raise max_brief_chars.`);
-    return { id: task.id, characters, text };
-  });
-  const conflicts = [];
-  for (let i = 0; i < eligible.length; i++) for (let j = i + 1; j < eligible.length; j++) {
-    const reasons = conflictReasons(eligible[i], eligible[j]);
-    if (reasons.length) conflicts.push({ tasks: [eligible[i].id, eligible[j].id], reasons });
-  }
+  return { tasks, maxWorkers, maxBrief, completed, failed, unavailable, blocked, eligible };
+}
+
+function renderBrief(task, maxBrief) {
+  const text = capsule(task);
+  const characters = length(text);
+  if (characters > maxBrief) fail(`${task.id}: brief is ${characters} characters; cap is ${maxBrief}. Narrow the task or explicitly raise max_brief_chars.`);
+  return { id: task.id, characters, text };
+}
+
+function schedule({ tasks, maxWorkers, completed, unavailable }, firstOnly = false) {
   const waves = [];
   const scheduled = new Set(completed);
   while (scheduled.size + unavailable.size < tasks.length) {
@@ -140,8 +140,43 @@ export function plan(input) {
     }
     waves.push(wave.map(task => task.id));
     wave.forEach(task => scheduled.add(task.id));
+    if (firstOnly) break;
   }
+  return waves;
+}
+
+export function plan(input) {
+  const state = prepare(input);
+  const { maxWorkers, maxBrief, completed, failed, blocked, eligible } = state;
+  const briefs = eligible.map(task => renderBrief(task, maxBrief));
+  const conflicts = [];
+  for (let i = 0; i < eligible.length; i++) for (let j = i + 1; j < eligible.length; j++) {
+    const reasons = conflictReasons(eligible[i], eligible[j]);
+    if (reasons.length) conflicts.push({ tasks: [eligible[i].id, eligible[j].id], reasons });
+  }
+  const waves = schedule(state);
   return { max_workers: maxWorkers, max_brief_chars: maxBrief, completed: [...completed], failed: [...failed], blocked, waves, conflicts, briefs };
+}
+
+export function next(input) {
+  const state = prepare(input);
+  const { tasks, maxWorkers, maxBrief, completed, failed, blocked } = state;
+  const taskIds = schedule(state, true)[0] ?? [];
+  const briefs = taskIds.map(id => renderBrief(tasks.find(task => task.id === id), maxBrief));
+  const status = taskIds.length ? 'ready' : failed.size || blocked.length ? 'held' : 'complete';
+  return { status, max_workers: maxWorkers, max_brief_chars: maxBrief, task_ids: taskIds, completed: [...completed], failed: [...failed], blocked, briefs };
+}
+
+function selectedBrief(input, id) {
+  const state = prepare(input);
+  const task = state.tasks.find(task => task.id === id);
+  if (!task) fail(`Unknown brief task: ${id}`);
+  if (state.completed.has(id)) fail(`${id}: recorded as completed; no pending brief. Recheck the recorded state before changing it.`);
+  if (state.failed.has(id)) fail(`${id}: recorded as failed. Inspect partial work and ownership before intentionally retrying.`);
+  const blocked = state.blocked.find(task => task.id === id);
+  if (blocked) fail(`${id}: blocked by failed or blocked prerequisites: ${blocked.after.join(', ')}. Resolve failures and update state before dispatch.`);
+  if (!schedule(state, true)[0]?.includes(id)) fail(`${id}: not in the next runnable wave. Verify prerequisites and update completed/failed state first.`);
+  return renderBrief(task, state.maxBrief);
 }
 
 export function markdown(result) {
@@ -159,10 +194,26 @@ export function markdown(result) {
   return lines.join('\n');
 }
 
+function nextMarkdown(result) {
+  const lines = ['# RelayCrew next handoffs', '', `Status: ${result.status}.`, '', `Worker ceiling: ${result.max_workers}. Brief cap: ${result.max_brief_chars} Unicode characters.`, ''];
+  if (result.status === 'ready') lines.push(`Current wave: ${result.task_ids.join(' + ')}`);
+  else if (result.status === 'held') lines.push('No runnable tasks. Failed or blocked work remains held.');
+  else lines.push('No pending tasks remain according to the recorded state.');
+  if (result.completed.length) lines.push('', `Recorded completed: ${result.completed.join(', ')}`);
+  if (result.failed.length) lines.push('', `Recorded failed: ${result.failed.join(', ')}`);
+  if (result.blocked.length) {
+    lines.push('', 'Held dependents:', '');
+    for (const task of result.blocked) lines.push(`- Blocked ${task.id}: requires ${task.after.join(', ')}`);
+  }
+  for (const brief of result.briefs) lines.push('', `## Handoff: ${brief.id}`, '', brief.text);
+  lines.push('', 'State comes from the input; this planner does not verify completion or run checks. Claims are advisory; it does not launch or isolate agents.');
+  return lines.join('\n');
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
   try {
     const args = process.argv.slice(2);
-    const usage = 'Usage: node plan.mjs <plan.json> [--format json|markdown] [--brief task-id]';
+    const usage = 'Usage: node plan.mjs <plan.json> [--next] [--format json|markdown] OR node plan.mjs <plan.json> --brief task-id';
     if (args.length === 1 && args[0] === '--help') {
       process.stdout.write(`${usage}\n`);
     } else {
@@ -170,23 +221,28 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
       let format = 'json';
       let brief;
       let formatSet = false;
-      for (let i = 1; i < args.length; i += 2) {
-        if (args[i] === '--format' && args[i + 1] && !formatSet) {
-          format = args[i + 1]; formatSet = true;
-        } else if (args[i] === '--brief' && args[i + 1] && brief === undefined) {
-          brief = args[i + 1];
+      let nextSet = false;
+      for (let i = 1; i < args.length; i++) {
+        if (args[i] === '--next' && !nextSet) {
+          nextSet = true;
+        } else if (args[i] === '--format' && args[i + 1] && !args[i + 1].startsWith('--') && !formatSet) {
+          format = args[++i]; formatSet = true;
+        } else if (args[i] === '--brief' && args[i + 1] && !args[i + 1].startsWith('--') && brief === undefined) {
+          brief = args[++i];
         } else fail(usage);
       }
       if (!['json', 'markdown'].includes(format)) fail('format must be json or markdown');
+      if (brief !== undefined && nextSet) fail('Use --brief or --next, not both');
       if (brief !== undefined && formatSet) fail('Use --brief or --format, not both');
-      const input = JSON.parse(await readFile(args[0], 'utf8'));
-      const result = plan(input);
+      const input = JSON.parse((await readFile(args[0], 'utf8')).replace(/^\uFEFF/, ''));
       if (brief !== undefined) {
-        const selected = result.briefs.find(item => item.id === brief);
-        if (!selected) fail(`Unknown brief task: ${brief}`);
-        if (!result.waves[0]?.includes(brief)) fail(`${brief}: not in the next runnable wave. Verify prerequisites and update completed/failed state first.`);
+        const selected = selectedBrief(input, brief);
         process.stdout.write(`${selected.text}\n`);
-      } else process.stdout.write(`${format === 'markdown' ? markdown(result) : JSON.stringify(result, null, 2)}\n`);
+      } else {
+        const result = nextSet ? next(input) : plan(input);
+        const output = format === 'markdown' ? (nextSet ? nextMarkdown(result) : markdown(result)) : JSON.stringify(result, null, 2);
+        process.stdout.write(`${output}\n`);
+      }
     }
   } catch (error) {
     console.error(`RelayCrew: ${error.message}`);

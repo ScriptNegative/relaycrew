@@ -9,9 +9,9 @@ Recorded on 26 October 2026. These are small exploratory checks, not a statistic
 | CSV export with skill | RelayCrew 0.1.0 instructions; one Codex evaluator, no extra workers | Original 8 acceptance tests passed; 3 added tests passed | A small dependent task completed in solo mode |
 | CSV export baseline | Same frozen contract and original tests, no RelayCrew | Original 8 acceptance tests passed; 4 added tests passed | The task was also solved without the skill |
 | Offline event report team | RelayCrew 0.1.0; one coordinating evaluator and 2 native workers | Original 7 acceptance tests and 16 added tests passed | A real two-worker split integrated successfully under explicit ownership |
-| Read-only resume | Current 0.2.0 instructions; plan and text access only, no project execution or workers | Checkpoint claims were qualified; UI independence and downstream holds were preserved | The updated workflow produced a bounded plan without claiming execution |
-| Planner/package checks | Current 0.2.0 source, Node v22.14.0 on Windows | 22 tests passed | Scheduling, recovery state, CLI behavior, references, and copied-folder execution satisfy the checked invariants |
-| Independent local review | Current planner, references, and tests; bounded local probes | No confirmed material defect reported; same 22 tests passed | A second inspection found no reproducible defect in the reviewed scope |
+| Read-only resume | 0.2.0 instructions; plan and text access only, no project execution or workers | Checkpoint claims were qualified; UI independence and downstream holds were preserved | The updated workflow produced a bounded plan without claiming execution |
+| Planner/package checks | 0.2.0 source, Node v22.14.0 on Windows | 22 tests passed | Scheduling, recovery state, CLI behavior, references, and copied-folder execution satisfy the checked invariants |
+| Independent local review | 0.2.0 planner, references, and tests; bounded local probes | No confirmed material defect reported; same 22 tests passed | A second inspection found no reproducible defect in the reviewed scope |
 
 The original CSV acceptance-test files have the same SHA-256 in both conditions: `01ec16cfc5cb375df98255d3ff63716294db2956fbaa9984cd76b69127b4a576`. The supplied event acceptance tests were also left unchanged. Added test counts are not comparable quality scores; different evaluators chose different edge cases.
 
@@ -35,3 +35,12 @@ The run used native Codex collaboration tools in a shared Windows workspace. The
 Start from the incomplete [fixtures](fixtures), not the saved solutions. Preserve the same acceptance contract for both conditions and keep the baseline session independent. Publish failures alongside successes. Use the [evaluation prompts](evals.json) and [benchmark method](../docs/growth-playbook.md) to extend coverage.
 
 The saved [read-only resume record](runs/resume-readonly/evaluation.md) documents the 0.2.0 capability-limited case. It is a manual instruction-following observation, not a live failure-recovery benchmark.
+
+## 0.3.0 update checks
+
+The next-wave handoff update was checked on Windows with Node v22.14.0:
+
+- All 32 planner/package tests passed, including `next(input)`, JSON/Markdown handoffs, empty held versus complete states, state-aware brief errors, current-only capsule caps, UTF-8 BOM handling, malformed inputs, and copied-folder execution.
+- The full `plan(input)` output matched the published 0.2.0 implementation across 200 deterministic graph/checkpoint cases. This checks compatibility for those cases, not every possible input.
+- A separate read-only review passed 17 local assertions covering wave membership, conflict exclusion, state labels, capsule caps, and global validation. No concrete defect was reported.
+- The skill format validator and whitespace checks passed. No new live model, host-installation, or performance benchmark is claimed for this CLI-focused update.

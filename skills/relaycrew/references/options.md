@@ -42,6 +42,8 @@ These are workflow preferences expressed in the user's prompt, not new host sett
 
 Store one small local artifact only when persistence helps. Record the original goal, immutable interface decisions, task IDs and ownership, verified completed tasks with evidence, failed tasks and useful partial edits, and the next acceptance check. Do not dump transcripts or credentials. In a planner JSON, `completed` and `failed` are task-ID arrays; see [planner format](planner.md). Treat state as a claim to verify against the actual workspace before resuming.
 
+When a planner file is useful, `--next` retrieves the next wave's capsules together. It reports `ready`, `held`, or `complete` from the supplied state; verify that state before dispatch. Use `--brief ID` when you need just one current task's capsule.
+
 ## When to stay solo
 
 A single small edit, a chain whose next step needs the previous output, a shared mutable file with no sensible split, or a task dominated by one slow external operation can make coordination overhead larger than the benefit. An explicit user request for team mode still matters, but it cannot create missing capabilities or override host permissions.
