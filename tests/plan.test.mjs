@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { readFile } from 'node:fs/promises';
-import { plan } from '../skills/relaycrew/scripts/plan.mjs';
+import { plan, markdown } from '../skills/relaycrew/scripts/plan.mjs';
 
 const task = (id, extra = {}) => ({ id, goal: `Complete ${id}`, checks: ['Verify the outcome'], ...extra });
 const schedule = (tasks, extra = {}) => plan({ tasks, ...extra });
@@ -57,12 +57,44 @@ test('rejects duplicate, missing, self and cyclic dependencies', () => {
 });
 
 test('rejects malformed tasks, misspelled fields and invalid limits', () => {
-  for (const max_workers of [0, 65, 1.5, '2']) assert.throws(() => schedule([task('a')], { max_workers }), /max_workers/);
+  for (const max_workers of [null, 0, 65, 1.5, '2']) assert.throws(() => schedule([task('a')], { max_workers }), /max_workers/);
   assert.throws(() => schedule([]), /non-empty/);
   assert.throws(() => schedule([task('a', { checks: [] })]), /checks/);
   assert.throws(() => schedule([task('a', { write: ['src'] })]), /Unknown/);
   assert.throws(() => schedule([task('a', { context: 1 })]), /context/);
   assert.throws(() => plan(null), /object/);
+});
+
+test('resumes from verified completed tasks and holds transitive dependents of failures', () => {
+  const tasks = [task('a'), task('b'), task('c', {after:['b']}), task('d', {after:['c']}), task('e', {after:['a']})];
+  const result = schedule(tasks, {completed:['a'], failed:['b']});
+  assert.deepEqual(result.waves, [['e']]);
+  assert.deepEqual(result.blocked, [{id:'c',after:['b']},{id:'d',after:['c']}]);
+  assert.deepEqual(result.completed, ['a']);
+  assert.deepEqual(result.failed, ['b']);
+  assert.deepEqual(result.briefs.map(item => item.id), ['e']);
+  assert.deepEqual(schedule(tasks, {completed:['a','b','c','d','e']}).waves, []);
+});
+
+test('irrelevant completed and blocked capsules do not consume the next-wave brief budget', () => {
+  const long = 'A'.repeat(4000);
+  const result = schedule([task('a',{context:long}),task('b'),task('c',{context:long,after:['b']}),task('d')], {completed:['a'],failed:['b']});
+  assert.deepEqual(result.briefs.map(item => item.id), ['d']);
+  assert.deepEqual(result.waves, [['d']]);
+});
+
+test('human-readable plans expose held work instead of silently calling it runnable', () => {
+  const result = schedule([task('a'), task('b',{after:['a']})], {failed:['a']});
+  assert.match(markdown(result), /No runnable tasks remain/);
+  assert.match(markdown(result), /Failed: a/);
+  assert.match(markdown(result), /Blocked b: requires a/);
+});
+
+test('rejects contradictory completion state and validates cycles even for failed tasks', () => {
+  assert.throws(() => schedule([task('a')], {completed:['missing']}), /Unknown state/);
+  assert.throws(() => schedule([task('a')], {completed:['a'],failed:['a']}), /both/);
+  assert.throws(() => schedule([task('a'),task('b',{after:['a']})], {completed:['b']}), /incomplete prerequisite/);
+  assert.throws(() => schedule([task('a',{after:['b']}),task('b',{after:['a']})], {failed:['a']}), /cycle/);
 });
 
 test('oversized capsules fail without silently truncating their contents', () => {
@@ -113,4 +145,20 @@ test('the documented example and CLI produce the same valid plan', async () => {
   const invalid = spawnSync(process.execPath, [script], { encoding: 'utf8' });
   assert.equal(invalid.status, 1);
   assert.equal(invalid.stdout, '');
+  const human = spawnSync(process.execPath, [script, fileURLToPath(example), '--format', 'markdown'], {encoding:'utf8'});
+  assert.equal(human.status, 0, human.stderr);
+  assert.match(human.stdout, /Wave 1: api \+ ui/);
+  const capsule = spawnSync(process.execPath, [script, fileURLToPath(example), '--brief', 'ui'], {encoding:'utf8'});
+  assert.equal(capsule.status, 0, capsule.stderr);
+  assert.equal(capsule.stdout.trim(), expected.briefs.find(item => item.id === 'ui').text);
+  const premature = spawnSync(process.execPath, [script, fileURLToPath(example), '--brief', 'review'], {encoding:'utf8'});
+  assert.equal(premature.status, 1);
+  assert.equal(premature.stdout, '');
+  assert.match(premature.stderr, /next runnable wave/);
+  for (const args of [['--format','xml'],['--format','json','--brief','ui'],['--unknown','x'],['--brief','missing']]) {
+    const bad = spawnSync(process.execPath,[script,fileURLToPath(example),...args],{encoding:'utf8'});
+    assert.equal(bad.status,1); assert.equal(bad.stdout,'');
+  }
+  const help = spawnSync(process.execPath,[script,'--help'],{encoding:'utf8'});
+  assert.equal(help.status,0); assert.match(help.stdout,/Usage/);
 });

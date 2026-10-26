@@ -1,0 +1,8 @@
+{
+  "max_workers": 2,
+  "tasks": [
+    {"id":"api-deps","goal":"Update the API dependency and shared lockfile","writes":["src/api","package.json","package-lock.json"],"checks":["API checks pass"]},
+    {"id":"ui-deps","goal":"Update the UI dependency and shared lockfile","writes":["src/ui","package.json","package-lock.json"],"after":["api-deps"],"checks":["UI checks pass"]},
+    {"id":"docs","goal":"Improve the existing installation examples","reads":["docs/install.md"],"writes":["docs/faq.md"],"checks":["Examples match the supported installation"]}
+  ]
+}
