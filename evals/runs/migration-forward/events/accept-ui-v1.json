@@ -1,0 +1,7 @@
+{
+  "type": "accept",
+  "task_id": "ui",
+  "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+  "worker_stopped": true,
+  "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+}

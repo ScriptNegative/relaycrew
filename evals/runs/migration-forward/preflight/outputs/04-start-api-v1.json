@@ -1,0 +1,70 @@
+{
+  "label": "start-api-v1",
+  "command": [
+    "node",
+    "<skill-dir>/scripts/session.mjs",
+    "apply",
+    "old-plan.json",
+    "checkpoint-main.json",
+    "events/start-api-v1.json",
+    "--revision",
+    "0"
+  ],
+  "cwd": ".",
+  "exit_code": 0,
+  "checkpoint": "checkpoint-main.json",
+  "checkpoint_sha256_before": "32382e7ddfcfc063564844b4e519b8c33513f1870bc78144a5c06dab4e5085c1",
+  "checkpoint_sha256_after": "0b5aaff543b9d60361c8c72f2f3ecac8e00febbd1d54d2c81622541a40db05f7",
+  "revision_before": 0,
+  "revision_after": 1,
+  "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"1a033ac4-e876-4e49-819d-c7f8593362f0\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 1,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"running\",\n      \"attempt\": 1,\n      \"attempt_id\": \"c525ebf7-e51a-42e9-8342-ae83b0e8ca48\",\n      \"worker\": \"SYNTHETIC-api-worker\",\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+  "stderr": "",
+  "result": {
+    "format": 1,
+    "session_id": "1a033ac4-e876-4e49-819d-c7f8593362f0",
+    "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+    "revision": 1,
+    "tasks": [
+      {
+        "id": "api",
+        "status": "running",
+        "attempt": 1,
+        "attempt_id": "c525ebf7-e51a-42e9-8342-ae83b0e8ca48",
+        "worker": "SYNTHETIC-api-worker",
+        "report": null,
+        "failure": null,
+        "review": null
+      },
+      {
+        "id": "ui",
+        "status": "pending",
+        "attempt": 0,
+        "attempt_id": null,
+        "worker": null,
+        "report": null,
+        "failure": null,
+        "review": null
+      },
+      {
+        "id": "docs",
+        "status": "pending",
+        "attempt": 0,
+        "attempt_id": null,
+        "worker": null,
+        "report": null,
+        "failure": null,
+        "review": null
+      },
+      {
+        "id": "spike",
+        "status": "pending",
+        "attempt": 0,
+        "attempt_id": null,
+        "worker": null,
+        "report": null,
+        "failure": null,
+        "review": null
+      }
+    ]
+  }
+}

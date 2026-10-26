@@ -1,0 +1,18 @@
+{
+  "type": "report",
+  "task_id": "spike",
+  "attempt_id": "8933ea0a-76fe-4a4e-b2d2-8cdf8af83d45",
+  "report": {
+    "summary": "SYNTHETIC failed spike result; no work ran",
+    "changed_paths": [
+      "experiments/spike/synthetic.txt"
+    ],
+    "checks": [
+      {
+        "check": "SYNTHETIC spike feasibility check",
+        "outcome": "failed",
+        "evidence": "SYNTHETIC intentional failure. No experiment was executed."
+      }
+    ]
+  }
+}

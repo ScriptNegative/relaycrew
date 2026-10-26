@@ -1,0 +1,48 @@
+{
+  "label": "initial-next",
+  "command": [
+    "node",
+    "<skill-dir>/scripts/session.mjs",
+    "next",
+    "old-plan.json",
+    "checkpoint-main.json"
+  ],
+  "cwd": ".",
+  "exit_code": 0,
+  "checkpoint": "checkpoint-main.json",
+  "checkpoint_sha256_before": "32382e7ddfcfc063564844b4e519b8c33513f1870bc78144a5c06dab4e5085c1",
+  "checkpoint_sha256_after": "32382e7ddfcfc063564844b4e519b8c33513f1870bc78144a5c06dab4e5085c1",
+  "revision_before": 0,
+  "revision_after": 0,
+  "stdout": "{\n  \"status\": \"ready\",\n  \"max_workers\": 2,\n  \"max_brief_chars\": 2400,\n  \"task_ids\": [\n    \"api\",\n    \"ui\"\n  ],\n  \"completed\": [],\n  \"failed\": [],\n  \"blocked\": [],\n  \"briefs\": [\n    {\n      \"id\": \"api\",\n      \"characters\": 315,\n      \"text\": \"Task: api — Implement API contract v1\\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\\nRead: contracts/api-v1.json\\nWrite: src/api, tests/api\\nResources: none\\nDone when: SYNTHETIC API v1 contract check\\nReturn: changed paths; evidence and checks; blockers; follow-up needed\"\n    },\n    {\n      \"id\": \"ui\",\n      \"characters\": 318,\n      \"text\": \"Task: ui — Implement the independent user interface\\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\\nRead: design/ui.json\\nWrite: src/ui, tests/ui\\nResources: none\\nDone when: SYNTHETIC UI acceptance check\\nReturn: changed paths; evidence and checks; blockers; follow-up needed\"\n    }\n  ],\n  \"in_progress\": [],\n  \"session_id\": \"1a033ac4-e876-4e49-819d-c7f8593362f0\",\n  \"revision\": 0,\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"active\": []\n}\n",
+  "stderr": "",
+  "result": {
+    "status": "ready",
+    "max_workers": 2,
+    "max_brief_chars": 2400,
+    "task_ids": [
+      "api",
+      "ui"
+    ],
+    "completed": [],
+    "failed": [],
+    "blocked": [],
+    "briefs": [
+      {
+        "id": "api",
+        "characters": 315,
+        "text": "Task: api — Implement API contract v1\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\nRead: contracts/api-v1.json\nWrite: src/api, tests/api\nResources: none\nDone when: SYNTHETIC API v1 contract check\nReturn: changed paths; evidence and checks; blockers; follow-up needed"
+      },
+      {
+        "id": "ui",
+        "characters": 318,
+        "text": "Task: ui — Implement the independent user interface\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\nRead: design/ui.json\nWrite: src/ui, tests/ui\nResources: none\nDone when: SYNTHETIC UI acceptance check\nReturn: changed paths; evidence and checks; blockers; follow-up needed"
+      }
+    ],
+    "in_progress": [],
+    "session_id": "1a033ac4-e876-4e49-819d-c7f8593362f0",
+    "revision": 0,
+    "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+    "active": []
+  }
+}

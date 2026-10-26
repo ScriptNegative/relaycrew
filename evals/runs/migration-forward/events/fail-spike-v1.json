@@ -1,0 +1,7 @@
+{
+  "type": "fail",
+  "task_id": "spike",
+  "attempt_id": "8933ea0a-76fe-4a4e-b2d2-8cdf8af83d45",
+  "worker_stopped": true,
+  "reason": "SYNTHETIC failed experiment and stopped assertion. No actual worker exists."
+}

@@ -1,0 +1,52 @@
+{
+  "label": "compare-main",
+  "command": [
+    "node",
+    "<skill-dir>/scripts/session.mjs",
+    "compare",
+    "old-plan.json",
+    "new-plan.json",
+    "checkpoint-main.json"
+  ],
+  "cwd": ".",
+  "exit_code": 0,
+  "checkpoint": "checkpoint-main.json",
+  "checkpoint_sha256_before": "9bc964718543d94cd33f67814c73207cbcfe5671dba80edeac5f2ec28e15356a",
+  "checkpoint_sha256_after": "9bc964718543d94cd33f67814c73207cbcfe5671dba80edeac5f2ec28e15356a",
+  "revision_before": 12,
+  "revision_after": 12,
+  "stdout": "{\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"revision\": 12,\n  \"old_plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"new_plan_hash\": \"402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a\",\n  \"kept_completed\": [\n    \"ui\"\n  ],\n  \"kept_failed\": [],\n  \"reset\": [\n    {\n      \"id\": \"api\",\n      \"reasons\": [\n        \"Task definition changed\"\n      ]\n    },\n    {\n      \"id\": \"docs\",\n      \"reasons\": [\n        \"Prerequisite completion not retained: api\",\n        \"A prerequisite definition changed\"\n      ]\n    }\n  ],\n  \"added\": [\n    \"review\"\n  ],\n  \"removed\": [\n    \"spike\"\n  ],\n  \"plan_changed\": true\n}\n",
+  "stderr": "",
+  "result": {
+    "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+    "revision": 12,
+    "old_plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+    "new_plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+    "kept_completed": [
+      "ui"
+    ],
+    "kept_failed": [],
+    "reset": [
+      {
+        "id": "api",
+        "reasons": [
+          "Task definition changed"
+        ]
+      },
+      {
+        "id": "docs",
+        "reasons": [
+          "Prerequisite completion not retained: api",
+          "A prerequisite definition changed"
+        ]
+      }
+    ],
+    "added": [
+      "review"
+    ],
+    "removed": [
+      "spike"
+    ],
+    "plan_changed": true
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "max_workers": 2,
+  "max_brief_chars": 2400,
+  "tasks": [
+    {
+      "id": "api",
+      "goal": "Implement API contract v1",
+      "context": "SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.",
+      "reads": [
+        "contracts/api-v1.json"
+      ],
+      "writes": [
+        "src/api",
+        "tests/api"
+      ],
+      "resources": [],
+      "after": [],
+      "checks": [
+        "SYNTHETIC API v1 contract check"
+      ]
+    },
+    {
+      "id": "ui",
+      "goal": "Implement the independent user interface",
+      "context": "SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.",
+      "reads": [
+        "design/ui.json"
+      ],
+      "writes": [
+        "src/ui",
+        "tests/ui"
+      ],
+      "resources": [],
+      "after": [],
+      "checks": [
+        "SYNTHETIC UI acceptance check"
+      ]
+    },
+    {
+      "id": "docs",
+      "goal": "Document the accepted API",
+      "context": "SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.",
+      "reads": [
+        "src/api"
+      ],
+      "writes": [
+        "docs/api.md"
+      ],
+      "resources": [],
+      "after": [
+        "api"
+      ],
+      "checks": [
+        "SYNTHETIC API documentation check"
+      ]
+    },
+    {
+      "id": "spike",
+      "goal": "Evaluate an optional experiment",
+      "context": "SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.",
+      "reads": [
+        "experiments/input.json"
+      ],
+      "writes": [
+        "experiments/spike"
+      ],
+      "resources": [],
+      "after": [],
+      "checks": [
+        "SYNTHETIC spike feasibility check"
+      ]
+    }
+  ]
+}

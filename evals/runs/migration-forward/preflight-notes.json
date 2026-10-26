@@ -1,0 +1,10 @@
+{
+  "synthetic": true,
+  "public_cli_help_exit_code": 0,
+  "initial_harness_run_exit_code": 1,
+  "initial_harness_failure": "Evaluator assumed checkpoint.tasks was keyed by task ID. The public CLI output actually uses an array. The evaluator was corrected after inspecting its own checkpoint output.",
+  "preflight_cli_commands": 4,
+  "preflight_cli_exit_codes": [0, 0, 0, 0],
+  "preflight_artifacts": "preflight/",
+  "classification": "Evaluator setup error, not a RelayCrew defect. The complete 36-command scenario is recorded separately in transcript.json."
+}

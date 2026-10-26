@@ -1,0 +1,67 @@
+{
+  "label": "init",
+  "command": [
+    "node",
+    "<skill-dir>/scripts/session.mjs",
+    "init",
+    "old-plan.json",
+    "checkpoint-main.json"
+  ],
+  "cwd": ".",
+  "exit_code": 0,
+  "checkpoint": "checkpoint-main.json",
+  "checkpoint_sha256_before": null,
+  "checkpoint_sha256_after": "e3ff831f379f1a587873a4480af1042ca23dd60a6661b8ed4b99906badd5d523",
+  "revision_before": null,
+  "revision_after": 0,
+  "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 0,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+  "stderr": "",
+  "result": {
+    "format": 1,
+    "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+    "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+    "revision": 0,
+    "tasks": [
+      {
+        "id": "api",
+        "status": "pending",
+        "attempt": 0,
+        "attempt_id": null,
+        "worker": null,
+        "report": null,
+        "failure": null,
+        "review": null
+      },
+      {
+        "id": "ui",
+        "status": "pending",
+        "attempt": 0,
+        "attempt_id": null,
+        "worker": null,
+        "report": null,
+        "failure": null,
+        "review": null
+      },
+      {
+        "id": "docs",
+        "status": "pending",
+        "attempt": 0,
+        "attempt_id": null,
+        "worker": null,
+        "report": null,
+        "failure": null,
+        "review": null
+      },
+      {
+        "id": "spike",
+        "status": "pending",
+        "attempt": 0,
+        "attempt_id": null,
+        "worker": null,
+        "report": null,
+        "failure": null,
+        "review": null
+      }
+    ]
+  }
+}

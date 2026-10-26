@@ -1,0 +1,18 @@
+{
+  "type": "report",
+  "task_id": "api",
+  "attempt_id": "236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e",
+  "report": {
+    "summary": "SYNTHETIC reported api result; no work actually ran",
+    "changed_paths": [
+      "src/api/synthetic.txt"
+    ],
+    "checks": [
+      {
+        "check": "SYNTHETIC API v1 contract check",
+        "outcome": "passed",
+        "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+      }
+    ]
+  }
+}

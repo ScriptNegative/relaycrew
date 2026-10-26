@@ -89,7 +89,7 @@ function inspect(input, checkpoint) {
   fields(checkpoint, ['format', 'session_id', 'plan_hash', 'revision', 'tasks'], 'checkpoint');
   if (checkpoint.format !== 1) fail('Unsupported checkpoint format');
   if (!uuid(checkpoint.session_id)) fail('Invalid checkpoint session_id');
-  if (checkpoint.plan_hash !== hash) fail('Plan definition changed or checkpoint plan_hash is invalid; reconcile stopped workers before starting a new session');
+  if (checkpoint.plan_hash !== hash) fail('Plan definition changed or checkpoint plan_hash is invalid; use the plan matching this checkpoint. For an intentional change, resolve active work and review compare/migrate with the old and new plans.');
   integer(checkpoint.revision, 'checkpoint revision');
   if (!Array.isArray(checkpoint.tasks) || checkpoint.tasks.length !== plan.tasks.length) fail('Checkpoint tasks must match the plan exactly and in order');
   const attempts = new Set();
@@ -152,6 +152,103 @@ export function sessionNext(input, checkpoint) {
     plan_hash: checkpoint.plan_hash,
     active: checkpoint.tasks.filter(active).map(record => ({ task_id: record.id, attempt_id: record.attempt_id, worker: record.worker, status: record.status, report: record.report === null ? null : structuredClone(record.report) }))
   };
+}
+
+function pendingRecord(id, attempt = 0) {
+  return { id, status: 'pending', attempt, attempt_id: null, worker: null, report: null, failure: null, review: null };
+}
+
+function migrationAnalysis(oldInput, newInput, checkpoint) {
+  const oldPlan = inspect(oldInput, checkpoint);
+  const { plan: newPlan, hash } = definition(newInput);
+  const running = checkpoint.tasks.filter(active).map(task => task.id);
+  if (running.length) fail(`Cannot compare or migrate with active or reported work: ${running.join(', ')}. Confirm workers stopped, then accept or fail their current attempts using the old plan.`);
+
+  const previous = new Map(oldPlan.tasks.map(task => [task.id, task]));
+  const records = new Map(checkpoint.tasks.map(task => [task.id, task]));
+  const current = new Map(newPlan.tasks.map(task => [task.id, task]));
+  const changed = new Set(newPlan.tasks.filter(task => previous.has(task.id) && canonical(task) !== canonical(previous.get(task.id))).map(task => task.id));
+  const affected = new Set([...changed, ...newPlan.tasks.filter(task => !previous.has(task.id)).map(task => task.id)]);
+  let progressed = true;
+  while (progressed) {
+    progressed = false;
+    for (const task of newPlan.tasks) if (!affected.has(task.id) && task.after.some(id => affected.has(id))) {
+      affected.add(task.id);
+      progressed = true;
+    }
+  }
+
+  // Completion survives only through a chain of retained completed prerequisites.
+  // This deliberately compares definitions, not actual source or test freshness.
+  const retained = new Set();
+  progressed = true;
+  while (progressed) {
+    progressed = false;
+    for (const task of newPlan.tasks) {
+      if (!retained.has(task.id) && !changed.has(task.id) && records.get(task.id)?.status === 'completed' && task.after.every(id => retained.has(id))) {
+        retained.add(task.id);
+        progressed = true;
+      }
+    }
+  }
+
+  const keptFailed = [];
+  const reset = [];
+  const tasks = newPlan.tasks.map(task => {
+    const record = records.get(task.id);
+    if (!record) return pendingRecord(task.id);
+    if (retained.has(task.id)) return structuredClone(record);
+    const reasons = [];
+    if (changed.has(task.id)) reasons.push('Task definition changed');
+    const missing = task.after.filter(id => !retained.has(id));
+    if (record.status !== 'pending' && missing.length) reasons.push(`Prerequisite completion not retained: ${missing.join(', ')}`);
+    if (!changed.has(task.id) && affected.has(task.id)) reasons.push('A prerequisite definition changed');
+    if (!reasons.length && record.status === 'failed') {
+      keptFailed.push(task.id);
+      return structuredClone(record);
+    }
+    if (!reasons.length && record.status === 'pending') return structuredClone(record);
+    reset.push({ id: task.id, reasons });
+    return pendingRecord(task.id, record.attempt);
+  });
+  const preview = {
+    session_id: checkpoint.session_id,
+    revision: checkpoint.revision,
+    old_plan_hash: checkpoint.plan_hash,
+    new_plan_hash: hash,
+    kept_completed: newPlan.tasks.filter(task => retained.has(task.id)).map(task => task.id),
+    kept_failed: keptFailed,
+    reset,
+    added: newPlan.tasks.filter(task => !previous.has(task.id)).map(task => task.id),
+    removed: oldPlan.tasks.filter(task => !current.has(task.id)).map(task => task.id),
+    plan_changed: checkpoint.plan_hash !== hash
+  };
+  return { preview, tasks };
+}
+
+export function previewMigration(oldInput, newInput, checkpoint) {
+  return migrationAnalysis(oldInput, newInput, checkpoint).preview;
+}
+
+export function migrateSession(oldInput, newInput, checkpoint, request, expectedRevision) {
+  const { preview, tasks } = migrationAnalysis(oldInput, newInput, checkpoint);
+  integer(expectedRevision, 'expected revision');
+  if (checkpoint.revision !== expectedRevision) fail(`Stale revision: expected ${expectedRevision}, current ${checkpoint.revision}`);
+  fields(request, ['new_plan_hash', 'workers_stopped', 'review'], 'migration request');
+  if (request.new_plan_hash !== preview.new_plan_hash) fail('Migration target hash does not match the proposed new plan; compare and review the current plans again');
+  if (request.workers_stopped !== true) fail('workers_stopped must be true after confirming all old workers stopped');
+  const review = text(request.review, 'migration review');
+  if (!preview.plan_changed) fail('Plan definition is unchanged; no migration is needed');
+  integer(checkpoint.revision + 1, 'next revision');
+  const updated = {
+    format: checkpoint.format,
+    session_id: checkpoint.session_id,
+    plan_hash: preview.new_plan_hash,
+    revision: checkpoint.revision + 1,
+    tasks
+  };
+  inspect(newInput, updated);
+  return { checkpoint: updated, migration: { ...preview, review } };
 }
 
 export function transition(input, checkpoint, event, expectedRevision) {

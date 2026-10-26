@@ -1,0 +1,82 @@
+{
+  "label": "start-api-v2",
+  "command": [
+    "node",
+    "<skill-dir>/scripts/session.mjs",
+    "apply",
+    "new-plan.json",
+    "checkpoint-main.json",
+    "events/start-api-v2.json",
+    "--revision",
+    "13"
+  ],
+  "cwd": ".",
+  "exit_code": 0,
+  "checkpoint": "checkpoint-main.json",
+  "checkpoint_sha256_before": "549e2ce41a9bc925347c209a478f9e3408ba6e3a20240f385b130b7eacecbb3a",
+  "checkpoint_sha256_after": "8b817f64f267da73bf578a3a21a83d0eea4f4db012036426842e6d5ce6b865d2",
+  "revision_before": 13,
+  "revision_after": 14,
+  "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a\",\n  \"revision\": 14,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"running\",\n      \"attempt\": 2,\n      \"attempt_id\": \"dac6c25e-b349-4974-9334-af6c8d8bae8a\",\n      \"worker\": \"SYNTHETIC-api-v2-worker\",\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n      \"worker\": \"SYNTHETIC-ui-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported ui result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/ui/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC UI acceptance check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"pending\",\n      \"attempt\": 1,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"review\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+  "stderr": "",
+  "result": {
+    "format": 1,
+    "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+    "plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+    "revision": 14,
+    "tasks": [
+      {
+        "id": "api",
+        "status": "running",
+        "attempt": 2,
+        "attempt_id": "dac6c25e-b349-4974-9334-af6c8d8bae8a",
+        "worker": "SYNTHETIC-api-v2-worker",
+        "report": null,
+        "failure": null,
+        "review": null
+      },
+      {
+        "id": "ui",
+        "status": "completed",
+        "attempt": 1,
+        "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+        "worker": "SYNTHETIC-ui-worker",
+        "report": {
+          "summary": "SYNTHETIC reported ui result; no work actually ran",
+          "changed_paths": [
+            "src/ui/synthetic.txt"
+          ],
+          "checks": [
+            {
+              "check": "SYNTHETIC UI acceptance check",
+              "outcome": "passed",
+              "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+            }
+          ]
+        },
+        "failure": null,
+        "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+      },
+      {
+        "id": "docs",
+        "status": "pending",
+        "attempt": 1,
+        "attempt_id": null,
+        "worker": null,
+        "report": null,
+        "failure": null,
+        "review": null
+      },
+      {
+        "id": "review",
+        "status": "pending",
+        "attempt": 0,
+        "attempt_id": null,
+        "worker": null,
+        "report": null,
+        "failure": null,
+        "review": null
+      }
+    ]
+  }
+}

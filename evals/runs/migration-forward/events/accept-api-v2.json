@@ -1,0 +1,7 @@
+{
+  "type": "accept",
+  "task_id": "api",
+  "attempt_id": "dac6c25e-b349-4974-9334-af6c8d8bae8a",
+  "worker_stopped": true,
+  "review": "SYNTHETIC acceptance and stopped assertion only; no actual worker or checks."
+}

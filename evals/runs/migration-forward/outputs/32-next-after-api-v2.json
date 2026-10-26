@@ -1,0 +1,45 @@
+{
+  "label": "next-after-api-v2",
+  "command": [
+    "node",
+    "<skill-dir>/scripts/session.mjs",
+    "next",
+    "new-plan.json",
+    "checkpoint-main.json"
+  ],
+  "cwd": ".",
+  "exit_code": 0,
+  "checkpoint": "checkpoint-main.json",
+  "checkpoint_sha256_before": "f0fd76d8259b3e64e67cab2f0466261ca63ac6b82f090aa5f4bd33e9f8f71f41",
+  "checkpoint_sha256_after": "f0fd76d8259b3e64e67cab2f0466261ca63ac6b82f090aa5f4bd33e9f8f71f41",
+  "revision_before": 16,
+  "revision_after": 16,
+  "stdout": "{\n  \"status\": \"ready\",\n  \"max_workers\": 2,\n  \"max_brief_chars\": 2400,\n  \"task_ids\": [\n    \"docs\"\n  ],\n  \"completed\": [\n    \"api\",\n    \"ui\"\n  ],\n  \"failed\": [],\n  \"blocked\": [],\n  \"briefs\": [\n    {\n      \"id\": \"docs\",\n      \"characters\": 297,\n      \"text\": \"Task: docs — Document the accepted API\\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\\nRead: src/api\\nWrite: docs/api.md\\nResources: none\\nDone when: SYNTHETIC API documentation check\\nReturn: changed paths; evidence and checks; blockers; follow-up needed\"\n    }\n  ],\n  \"in_progress\": [],\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"revision\": 16,\n  \"plan_hash\": \"402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a\",\n  \"active\": []\n}\n",
+  "stderr": "",
+  "result": {
+    "status": "ready",
+    "max_workers": 2,
+    "max_brief_chars": 2400,
+    "task_ids": [
+      "docs"
+    ],
+    "completed": [
+      "api",
+      "ui"
+    ],
+    "failed": [],
+    "blocked": [],
+    "briefs": [
+      {
+        "id": "docs",
+        "characters": 297,
+        "text": "Task: docs — Document the accepted API\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\nRead: src/api\nWrite: docs/api.md\nResources: none\nDone when: SYNTHETIC API documentation check\nReturn: changed paths; evidence and checks; blockers; follow-up needed"
+      }
+    ],
+    "in_progress": [],
+    "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+    "revision": 16,
+    "plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+    "active": []
+  }
+}

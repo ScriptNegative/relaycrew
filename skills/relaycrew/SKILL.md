@@ -4,7 +4,7 @@ description: Coordinate parallel coding work, independent investigations, and im
 license: MIT
 metadata:
   author: ScriptNegative
-  version: "0.4.0"
+  version: "0.5.0"
 ---
 
 # RelayCrew
@@ -50,6 +50,8 @@ Include relevant repository rules and inherited user constraints. Let workers re
 Run only ready tasks with compatible ownership. A planned wave is not a runtime guarantee: a worker timeout, failed check, partial edit, or changed interface invalidates dependent work. Inspect the actual diff, update the plan, and resume only the affected tasks after prerequisites are verified. Before transferring ownership, stop the previous worker and confirm that it has stopped writing. An unknown or interrupted worker keeps its reservation; a timeout does not prove it stopped. Preserve useful partial work; do not retry an unchanged failure repeatedly.
 
 For interrupted or multi-session work that needs durable attempt tracking, read [session checkpoints](references/sessions.md). The optional helper records a reservation before dispatch, distinguishes a returned report from coordinator acceptance, and rejects stale attempts or changed plan definitions. Pass the current task and attempt IDs to each worker and require both on its return. Inspect the actual diff and reproduce the required checks before accepting. A checkpoint validates bookkeeping, not the truth of reported evidence. For a short run, conversation state or the planner's state arrays are enough.
+
+When requirements change, use the reference's reviewed plan migration only after every worker is confirmed stopped and its active attempt is resolved. Compare the old and new plans before applying: retain completed work only after checking that its definition, prerequisites, and actual result remain valid. Changed tasks and affected dependents need fresh work; a matching plan definition does not establish workspace freshness.
 
 Ask workers for concise evidence with file locations and actual check results. A worker saying "done" is not proof. Reconcile disagreements against source and reproducible behavior. For an independent review, pass the requirement and resulting diff without the implementer's conclusions; findings must identify a concrete failure or missing check.
 

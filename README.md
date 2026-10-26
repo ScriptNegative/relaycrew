@@ -8,7 +8,7 @@ Turn one coding request into focused handoffs and a coordinated result. **RelayC
 
 Keep the coding assistant you already use. The core is Markdown; an optional offline planner uses Node.js built-ins. No RelayCrew account, API key, server, or background process.
 
-**New in v0.4:** resume interrupted work with reserved active tasks, reviewable reports, and a local checkpoint that rejects outdated attempt results. [See recovery in practice](skills/relaycrew/references/sessions.md).
+**New in v0.5:** change a plan without throwing away unrelated completed work. Preview a reviewed migration, retain compatible results, and reset changed tasks plus affected dependents. [Plan migration and recovery](skills/relaycrew/references/sessions.md#change-the-plan-with-a-reviewed-migration).
 
 **[Download the skill](https://github.com/ScriptNegative/relaycrew/releases/latest) · [Try a real coding task](evals/README.md) · [See the evidence](evals/results.md)**
 
@@ -82,9 +82,26 @@ node skills/relaycrew/scripts/session.mjs init examples/feature.plan.json checkp
 node skills/relaycrew/scripts/session.mjs next examples/feature.plan.json checkpoint.json
 ```
 
-Record a `start` event before dispatch. Each attempt gets an ID; returned evidence stays pending until the coordinator checks it and accepts the stopped worker's result. After a confirmed stop, failure and retry create a fresh attempt; late results from the old attempt are rejected. The helper also rejects changed plan definitions and stale checkpoint updates. [Events, recovery, and limits](skills/relaycrew/references/sessions.md).
+Record a `start` event before dispatch. Each attempt gets an ID; returned evidence stays pending until the coordinator checks it and accepts the stopped worker's result. After a confirmed stop, failure and retry create a fresh attempt; late results from the old attempt are rejected. Directly edited plan definitions and stale checkpoint updates are rejected. [Events, recovery, and limits](skills/relaycrew/references/sessions.md).
 
 The helper tracks coordination state. It does not launch workers, stop an old writer, inspect actual edits, or prove a reported test passed.
+
+### Change the plan while keeping valid work
+
+```sh
+node examples/migration-demo.mjs
+```
+
+This bookkeeping demo changes an accepted API task after its documentation was completed. The preview resets `api` and its dependent `docs`, keeps the independent completed `ui` task, and identifies added and removed tasks. Receipts and worker-stop assertions are explicitly synthetic; the demo starts no workers and runs no project checks.
+
+For your own session, resolve every active attempt using the old plan, then compare and review before migrating:
+
+```sh
+node skills/relaycrew/scripts/session.mjs compare old-plan.json new-plan.json checkpoint.json
+node skills/relaycrew/scripts/session.mjs migrate old-plan.json new-plan.json checkpoint.json migration-request.json --revision 9
+```
+
+Use the revision from your preview, and bind the request to its new plan hash. The coordinator checks actual source and results before preserving them. Active or merely reported work cannot be migrated. [Request format, retention rules, and limits](skills/relaycrew/references/sessions.md#change-the-plan-with-a-reviewed-migration).
 
 ## Use cases
 
@@ -94,6 +111,7 @@ The helper tracks coordination state. It does not launch workers, stop an old wr
 | Several plausible bug causes | Independent read-only investigations before choosing a fix |
 | Dependency changes sharing a lockfile | One owner at a time, with explicit ordering |
 | Interrupted implementation | Keep active claims reserved, inspect returned evidence, resume with attempt tracking |
+| Requirements change after partial completion | Preview preserved work and reset changed tasks plus affected dependents |
 | A change needing another perspective | Independent read-only review when native delegation permits it |
 | A tiny dependent edit | Solo execution without creating a team |
 
@@ -181,7 +199,11 @@ No general savings claim has been established. Short briefs and a small team are
 
 **What happens when a task fails?**
 
-The planner can use `completed`, `failed`, and `in_progress` task IDs to hold dependents and reserve active work while continuing independent tasks. For durable recovery, the optional checkpoint keeps current attempt IDs, requires a confirmed stop before release, and separates reported completion from acceptance. Changed plans and stale attempt results are rejected. These records rely on the coordinator checking actual work. [Planner format](skills/relaycrew/references/planner.md) · [Session recovery](skills/relaycrew/references/sessions.md).
+The planner can use `completed`, `failed`, and `in_progress` task IDs to hold dependents and reserve active work while continuing independent tasks. For durable recovery, the optional checkpoint keeps current attempt IDs, requires a confirmed stop before release, and separates reported completion from acceptance. Using an edited plan directly and submitting stale attempt results are rejected. These records rely on the coordinator checking actual work. [Planner format](skills/relaycrew/references/planner.md) · [Session recovery](skills/relaycrew/references/sessions.md).
+
+**Can I change the plan after some tasks finish?**
+
+Yes, through a reviewed migration after all active attempts are resolved. `compare` previews what can remain completed, what resets, and which tasks are added or removed. `migrate` requires the reviewed new plan hash, current revision, stopped-worker confirmation, and review text. Definitions and dependency state drive retention; actual source correctness still needs coordinator verification. The checkpoint keeps current state rather than a full migration history.
 
 **Can I use it without Node.js or delegation?**
 

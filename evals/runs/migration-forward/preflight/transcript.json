@@ -1,0 +1,209 @@
+{
+  "synthetic": true,
+  "runtime": "v22.14.0",
+  "entries": [
+    {
+      "label": "help",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "--help"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": null,
+      "checkpoint_sha256_before": null,
+      "checkpoint_sha256_after": null,
+      "revision_before": null,
+      "revision_after": null,
+      "stdout": "Usage: node session.mjs init|next <plan.json> <checkpoint.json> OR apply <plan.json> <checkpoint.json> <event.json> --revision N OR compare <old-plan.json> <new-plan.json> <checkpoint.json> OR migrate <old-plan.json> <new-plan.json> <checkpoint.json> <request.json> --revision N\n",
+      "stderr": "",
+      "result": null
+    },
+    {
+      "label": "init",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "init",
+        "old-plan.json",
+        "checkpoint-main.json"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": null,
+      "checkpoint_sha256_after": "32382e7ddfcfc063564844b4e519b8c33513f1870bc78144a5c06dab4e5085c1",
+      "revision_before": null,
+      "revision_after": 0,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"1a033ac4-e876-4e49-819d-c7f8593362f0\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 0,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "1a033ac4-e876-4e49-819d-c7f8593362f0",
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "revision": 0,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "ui",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "docs",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "spike",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "initial-next",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "next",
+        "old-plan.json",
+        "checkpoint-main.json"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "32382e7ddfcfc063564844b4e519b8c33513f1870bc78144a5c06dab4e5085c1",
+      "checkpoint_sha256_after": "32382e7ddfcfc063564844b4e519b8c33513f1870bc78144a5c06dab4e5085c1",
+      "revision_before": 0,
+      "revision_after": 0,
+      "stdout": "{\n  \"status\": \"ready\",\n  \"max_workers\": 2,\n  \"max_brief_chars\": 2400,\n  \"task_ids\": [\n    \"api\",\n    \"ui\"\n  ],\n  \"completed\": [],\n  \"failed\": [],\n  \"blocked\": [],\n  \"briefs\": [\n    {\n      \"id\": \"api\",\n      \"characters\": 315,\n      \"text\": \"Task: api — Implement API contract v1\\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\\nRead: contracts/api-v1.json\\nWrite: src/api, tests/api\\nResources: none\\nDone when: SYNTHETIC API v1 contract check\\nReturn: changed paths; evidence and checks; blockers; follow-up needed\"\n    },\n    {\n      \"id\": \"ui\",\n      \"characters\": 318,\n      \"text\": \"Task: ui — Implement the independent user interface\\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\\nRead: design/ui.json\\nWrite: src/ui, tests/ui\\nResources: none\\nDone when: SYNTHETIC UI acceptance check\\nReturn: changed paths; evidence and checks; blockers; follow-up needed\"\n    }\n  ],\n  \"in_progress\": [],\n  \"session_id\": \"1a033ac4-e876-4e49-819d-c7f8593362f0\",\n  \"revision\": 0,\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"active\": []\n}\n",
+      "stderr": "",
+      "result": {
+        "status": "ready",
+        "max_workers": 2,
+        "max_brief_chars": 2400,
+        "task_ids": [
+          "api",
+          "ui"
+        ],
+        "completed": [],
+        "failed": [],
+        "blocked": [],
+        "briefs": [
+          {
+            "id": "api",
+            "characters": 315,
+            "text": "Task: api — Implement API contract v1\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\nRead: contracts/api-v1.json\nWrite: src/api, tests/api\nResources: none\nDone when: SYNTHETIC API v1 contract check\nReturn: changed paths; evidence and checks; blockers; follow-up needed"
+          },
+          {
+            "id": "ui",
+            "characters": 318,
+            "text": "Task: ui — Implement the independent user interface\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\nRead: design/ui.json\nWrite: src/ui, tests/ui\nResources: none\nDone when: SYNTHETIC UI acceptance check\nReturn: changed paths; evidence and checks; blockers; follow-up needed"
+          }
+        ],
+        "in_progress": [],
+        "session_id": "1a033ac4-e876-4e49-819d-c7f8593362f0",
+        "revision": 0,
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "active": []
+      }
+    },
+    {
+      "label": "start-api-v1",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "old-plan.json",
+        "checkpoint-main.json",
+        "events/start-api-v1.json",
+        "--revision",
+        "0"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "32382e7ddfcfc063564844b4e519b8c33513f1870bc78144a5c06dab4e5085c1",
+      "checkpoint_sha256_after": "0b5aaff543b9d60361c8c72f2f3ecac8e00febbd1d54d2c81622541a40db05f7",
+      "revision_before": 0,
+      "revision_after": 1,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"1a033ac4-e876-4e49-819d-c7f8593362f0\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 1,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"running\",\n      \"attempt\": 1,\n      \"attempt_id\": \"c525ebf7-e51a-42e9-8342-ae83b0e8ca48\",\n      \"worker\": \"SYNTHETIC-api-worker\",\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "1a033ac4-e876-4e49-819d-c7f8593362f0",
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "revision": 1,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "running",
+            "attempt": 1,
+            "attempt_id": "c525ebf7-e51a-42e9-8342-ae83b0e8ca48",
+            "worker": "SYNTHETIC-api-worker",
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "ui",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "docs",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "spike",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "type": "start",
+  "task_id": "api",
+  "worker": "SYNTHETIC-api-v2-worker"
+}

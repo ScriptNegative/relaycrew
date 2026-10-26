@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFile, readdir, cp, mkdtemp, rm} from 'node:fs/promises';
+import {readFile, readdir, cp, mkdtemp, rm, writeFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -60,6 +60,19 @@ test('a copied skill runs from a different directory with no package installatio
     const sessionHandoffs=spawnSync(process.execPath,[sessionScript,'next',path.join(root,'examples','feature.plan.json'),checkpoint],{cwd:scratch,encoding:'utf8'});
     assert.equal(sessionHandoffs.status,0,sessionHandoffs.stderr);
     assert.deepEqual(JSON.parse(sessionHandoffs.stdout).task_ids,['api','ui']);
+    const revisedPlan=JSON.parse(await readFile(path.join(root,'examples','feature.plan.json'),'utf8'));
+    revisedPlan.tasks[0].goal+=' with a revised requirement';
+    const revisedPath=path.join(scratch,'revised-plan.json');
+    await writeFile(revisedPath,JSON.stringify(revisedPlan));
+    const compared=spawnSync(process.execPath,[sessionScript,'compare',path.join(root,'examples','feature.plan.json'),revisedPath,checkpoint],{cwd:scratch,encoding:'utf8'});
+    assert.equal(compared.status,0,compared.stderr);
+    const preview=JSON.parse(compared.stdout);
+    const requestPath=path.join(scratch,'migration.json');
+    await writeFile(requestPath,JSON.stringify({new_plan_hash:preview.new_plan_hash,workers_stopped:true,review:'Synthetic copied-package migration fixture.'}));
+    const migrated=spawnSync(process.execPath,[sessionScript,'migrate',path.join(root,'examples','feature.plan.json'),revisedPath,checkpoint,requestPath,'--revision','0'],{cwd:scratch,encoding:'utf8'});
+    assert.equal(migrated.status,0,migrated.stderr);
+    assert.equal(JSON.parse(migrated.stdout).checkpoint.revision,1);
+    assert.equal(JSON.parse(await readFile(checkpoint,'utf8')).plan_hash,preview.new_plan_hash);
   } finally {
     const resolved=path.resolve(scratch);
     assert.ok(resolved.startsWith(`${tempRoot}${path.sep}`) && path.basename(resolved).startsWith('relaycrew-package-'));

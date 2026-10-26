@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createSession, sessionNext, transition } from '../skills/relaycrew/scripts/session-core.mjs';
+import { createSession, sessionNext, transition, previewMigration, migrateSession } from '../skills/relaycrew/scripts/session-core.mjs';
 
 const task = (id, extra = {}) => ({ id, goal: `Complete ${id}`, writes: [`src/${id}`], checks: [`Verify ${id}`], ...extra });
 const fixture = (tasks = [task('a'), task('b'), task('c', { after: ['a'] })], extra = {}) => ({ tasks, ...extra });
@@ -291,4 +291,168 @@ test('session creation validates structure without forcing oversized future hand
   assert.deepEqual(sessionNext(plan, state).task_ids, ['a']);
   const completed = accept(plan, report(plan, start(plan, state, 'a'), 'a'), 'a');
   assert.throws(() => sessionNext(plan, completed), /brief is/);
+});
+
+const migrationFixture = () => fixture([
+  task('api'), task('ui'), task('docs', {after:['api']}), task('review', {after:['docs']}), task('retired')
+]);
+const completedFixture = plan => {
+  let state=createSession(plan);
+  for(const id of ['api','ui','docs','review','retired']) state=accept(plan,report(plan,start(plan,state,id),id),id);
+  return state;
+};
+const migrationRequest = preview => ({new_plan_hash:preview.new_plan_hash,workers_stopped:true,review:'Synthetic fixture: coordinator reviewed the proposed reset and retained evidence.'});
+
+test('migration preserves independent completions while resetting a changed task and its completed descendants',()=>{
+  const oldPlan=migrationFixture();
+  const state=completedFixture(oldPlan);
+  const nextPlan=copy(oldPlan);
+  nextPlan.tasks[0].goal='Implement API version 2';
+  nextPlan.tasks=nextPlan.tasks.filter(task=>task.id!=='retired');
+  nextPlan.tasks.push(task('new-task'));
+  const before=copy({oldPlan,nextPlan,state});
+  const preview=previewMigration(oldPlan,nextPlan,state);
+  assert.deepEqual(preview.kept_completed,['ui']);
+  assert.deepEqual(preview.reset.map(task=>task.id),['api','docs','review']);
+  assert.deepEqual(preview.added,['new-task']);
+  assert.deepEqual(preview.removed,['retired']);
+  assert.equal(preview.plan_changed,true);
+  const request=migrationRequest(preview);
+  const migrated=migrateSession(oldPlan,nextPlan,state,request,state.revision);
+  assert.equal(migrated.checkpoint.session_id,state.session_id);
+  assert.equal(migrated.checkpoint.format,1);
+  assert.equal(migrated.checkpoint.revision,state.revision+1);
+  assert.equal(migrated.checkpoint.plan_hash,preview.new_plan_hash);
+  assert.deepEqual(Object.keys(migrated.checkpoint),Object.keys(state));
+  assert.deepEqual(record(migrated.checkpoint,'ui'),record(state,'ui'));
+  assert.equal(record(migrated.checkpoint,'api').attempt,1);
+  assert.equal(record(migrated.checkpoint,'api').attempt_id,null);
+  assert.equal(record(migrated.checkpoint,'api').report,null);
+  assert.equal(record(migrated.checkpoint,'new-task').attempt,0);
+  assert.deepEqual(sessionNext(nextPlan,migrated.checkpoint).task_ids,['api','new-task']);
+  assert.throws(()=>sessionNext(oldPlan,migrated.checkpoint),/Plan definition changed/);
+  assert.deepEqual({oldPlan,nextPlan,state},before);
+  assert.deepEqual(migrated.migration,{...preview,review:request.review});
+});
+
+test('every task definition category invalidates its completion and dependent evidence',()=>{
+  const oldPlan=migrationFixture();
+  const state=completedFixture(oldPlan);
+  for(const mutate of [
+    task=>{task.goal+=' differently';},task=>{task.context='A revised contract';},
+    task=>{task.reads=['contract-v2.md'];},task=>{task.writes=['new-api'];},
+    task=>{task.resources=['test-db'];},task=>{task.checks=['Verify the new API'];},
+    task=>{task.after=['ui'];}
+  ]) {
+    const nextPlan=copy(oldPlan);mutate(nextPlan.tasks[0]);
+    const preview=previewMigration(oldPlan,nextPlan,state);
+    assert.deepEqual(preview.kept_completed,['ui','retired']);
+    assert.deepEqual(preview.reset.map(task=>task.id),['api','docs','review']);
+    assert.ok(preview.reset.every(task=>task.reasons.length));
+    const migrated=migrateSession(oldPlan,nextPlan,state,migrationRequest(preview),state.revision).checkpoint;
+    for(const id of ['api','docs','review']) {
+      assert.equal(record(migrated,id).status,'pending');
+      assert.equal(record(migrated,id).report,null);
+      assert.equal(record(migrated,id).review,null);
+    }
+  }
+});
+
+test('reordered tasks and changed limits retain valid evidence in the new order',()=>{
+  const oldPlan=migrationFixture();
+  const state=completedFixture(oldPlan);
+  const nextPlan={...copy(oldPlan),max_workers:1,max_brief_chars:2500};
+  nextPlan.tasks.reverse();
+  const preview=previewMigration(oldPlan,nextPlan,state);
+  assert.deepEqual(preview.kept_completed,['retired','review','docs','ui','api']);
+  assert.deepEqual(preview.reset,[]);
+  const migrated=migrateSession(oldPlan,nextPlan,state,migrationRequest(preview),state.revision).checkpoint;
+  assert.equal(sessionNext(nextPlan,migrated).status,'complete');
+  assert.deepEqual(migrated.tasks.map(task=>task.id),nextPlan.tasks.map(task=>task.id));
+});
+
+test('migration retains unchanged failure holds but resets failures whose prerequisite evidence changed',()=>{
+  const oldPlan=fixture([task('api'),task('failed',{after:['api']}),task('dependent',{after:['failed']}),task('unrelated')]);
+  let state=accept(oldPlan,report(oldPlan,start(oldPlan,createSession(oldPlan),'api'),'api'),'api');
+  state=stop(oldPlan,start(oldPlan,state,'failed'),'failed');
+  const nextPlan=copy(oldPlan);nextPlan.tasks.push(task('new-task'));
+  const preview=previewMigration(oldPlan,nextPlan,state);
+  assert.deepEqual(preview.kept_failed,['failed']);
+  const kept=migrateSession(oldPlan,nextPlan,state,migrationRequest(preview),state.revision).checkpoint;
+  assert.deepEqual(sessionNext(nextPlan,kept).failed,['failed']);
+  assert.deepEqual(sessionNext(nextPlan,kept).blocked,[{id:'dependent',after:['failed']}]);
+  nextPlan.tasks[0].goal+=' with a changed contract';
+  const reset=previewMigration(oldPlan,nextPlan,state);
+  assert.deepEqual(reset.kept_failed,[]);
+  const changed=migrateSession(oldPlan,nextPlan,state,migrationRequest(reset),state.revision).checkpoint;
+  assert.equal(record(changed,'failed').status,'pending');
+  assert.equal(record(changed,'failed').failure,null);
+  assert.equal(record(changed,'failed').attempt,1);
+});
+
+test('preview and migration reject running or reported workers even when the task will be removed',()=>{
+  const oldPlan=fixture([task('a'),task('b')]);
+  const nextPlan=fixture([task('b')]);
+  const started=start(oldPlan,createSession(oldPlan),'a');
+  for(const state of [started,report(oldPlan,started,'a')]) {
+    const before=copy(state);
+    assert.throws(()=>previewMigration(oldPlan,nextPlan,state),/active or reported/);
+    assert.throws(()=>migrateSession(oldPlan,nextPlan,state,{new_plan_hash:'x',workers_stopped:true,review:'Synthetic review'},state.revision),/active or reported/);
+    assert.deepEqual(state,before);
+  }
+});
+
+test('migration requires a matching target hash, fresh revision, explicit stopped assertion and review',()=>{
+  const oldPlan=fixture([task('a')]);
+  const state=createSession(oldPlan);
+  const nextPlan=fixture([task('a'),task('b')]);
+  const preview=previewMigration(oldPlan,nextPlan,state);
+  const request=migrationRequest(preview);
+  const before=copy({oldPlan,nextPlan,state,request});
+  for(const changed of [
+    {...request,new_plan_hash:'0'.repeat(64)}, {...request,workers_stopped:false},
+    {...request,workers_stopped:'true'}, {...request,review:' '}, {...request,extra:true},
+    {new_plan_hash:request.new_plan_hash,workers_stopped:true}
+  ]) assert.throws(()=>migrateSession(oldPlan,nextPlan,state,changed,state.revision));
+  assert.throws(()=>migrateSession(oldPlan,nextPlan,state,request,1),/Stale revision/);
+  for(const revision of [undefined,null,-1,0.1,'0',Infinity]) assert.throws(()=>migrateSession(oldPlan,nextPlan,state,request,revision),/expected revision/);
+  assert.deepEqual({oldPlan,nextPlan,state,request},before);
+});
+
+test('equivalent normalized plans preview as unchanged and migration rejects a no-op',()=>{
+  const oldPlan=fixture([task('a')]);
+  const state=createSession(oldPlan);
+  const nextPlan={max_workers:2,max_brief_chars:2400,tasks:[{...task('a'),goal:' Complete a ',context:'',reads:[],resources:[],after:[]}]};
+  const preview=previewMigration(oldPlan,nextPlan,state);
+  assert.equal(preview.plan_changed,false);
+  assert.equal(preview.old_plan_hash,preview.new_plan_hash);
+  assert.throws(()=>migrateSession(oldPlan,nextPlan,state,migrationRequest(preview),0),/unchanged/);
+});
+
+test('reset task starts a fresh attempt and rejects results from the old completed or failed attempt',()=>{
+  const oldPlan=fixture([task('a')]);
+  for(const state of [accept(oldPlan,report(oldPlan,start(oldPlan,createSession(oldPlan),'a'),'a'),'a'),stop(oldPlan,start(oldPlan,createSession(oldPlan),'a'),'a')]) {
+    const oldId=record(state,'a').attempt_id;
+    const nextPlan=copy(oldPlan);nextPlan.tasks[0].goal+=' version 2';
+    const preview=previewMigration(oldPlan,nextPlan,state);
+    let migrated=migrateSession(oldPlan,nextPlan,state,migrationRequest(preview),state.revision).checkpoint;
+    assert.throws(()=>act(nextPlan,migrated,{type:'report',task_id:'a',attempt_id:oldId,report:evidence(nextPlan,'a')}),/obsolete/);
+    migrated=start(nextPlan,migrated,'a','replacement');
+    assert.equal(record(migrated,'a').attempt,2);
+    assert.notEqual(record(migrated,'a').attempt_id,oldId);
+    assert.throws(()=>act(nextPlan,migrated,{type:'report',task_id:'a',attempt_id:oldId,report:evidence(nextPlan,'a')}),/obsolete/);
+    assert.equal(record(report(nextPlan,migrated,'a'),'a').status,'reported');
+  }
+});
+
+test('migration validates both plans and the old checkpoint rather than importing claimed legacy state',()=>{
+  const oldPlan=fixture([task('a')]);
+  const state=createSession(oldPlan);
+  for(const nextPlan of [fixture([task('a'),task('b',{after:['missing']})]),{...oldPlan,completed:['a']},{...oldPlan,in_progress:['a']},{...oldPlan,failed:['a']}]) {
+    assert.throws(()=>previewMigration(oldPlan,nextPlan,state));
+  }
+  const corrupted=copy(state);corrupted.tasks[0].status='completed';
+  assert.throws(()=>previewMigration(oldPlan,fixture([task('a'),task('b')]),corrupted),/attempt identity/);
+  const wrongOld=copy(oldPlan);wrongOld.tasks[0].goal+=' stale';
+  assert.throws(()=>previewMigration(wrongOld,oldPlan,state),/Plan definition changed/);
 });

@@ -1,0 +1,23 @@
+{
+  "label": "old-api-report-rejected-after-restart",
+  "command": [
+    "node",
+    "<skill-dir>/scripts/session.mjs",
+    "apply",
+    "new-plan.json",
+    "checkpoint-main.json",
+    "events/old-api-report-rejected-after-restart.json",
+    "--revision",
+    "14"
+  ],
+  "cwd": ".",
+  "exit_code": 1,
+  "checkpoint": "checkpoint-main.json",
+  "checkpoint_sha256_before": "8b817f64f267da73bf578a3a21a83d0eea4f4db012036426842e6d5ce6b865d2",
+  "checkpoint_sha256_after": "8b817f64f267da73bf578a3a21a83d0eea4f4db012036426842e6d5ce6b865d2",
+  "revision_before": 14,
+  "revision_after": 14,
+  "stdout": "",
+  "stderr": "RelayCrew: api: obsolete or unknown attempt_id\n",
+  "result": null
+}

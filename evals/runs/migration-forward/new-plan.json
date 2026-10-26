@@ -1,0 +1,80 @@
+{
+  "max_workers": 2,
+  "max_brief_chars": 2400,
+  "tasks": [
+    {
+      "id": "api",
+      "goal": "Implement API contract v2 with revised response fields",
+      "context": "SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.",
+      "reads": [
+        "contracts/api-v2.json"
+      ],
+      "writes": [
+        "src/api",
+        "tests/api"
+      ],
+      "resources": [],
+      "after": [],
+      "checks": [
+        "SYNTHETIC API v2 response contract check",
+        "SYNTHETIC API v2 compatibility check"
+      ]
+    },
+    {
+      "id": "ui",
+      "goal": "Implement the independent user interface",
+      "context": "SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.",
+      "reads": [
+        "design/ui.json"
+      ],
+      "writes": [
+        "src/ui",
+        "tests/ui"
+      ],
+      "resources": [],
+      "after": [],
+      "checks": [
+        "SYNTHETIC UI acceptance check"
+      ]
+    },
+    {
+      "id": "docs",
+      "goal": "Document the accepted API",
+      "context": "SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.",
+      "reads": [
+        "src/api"
+      ],
+      "writes": [
+        "docs/api.md"
+      ],
+      "resources": [],
+      "after": [
+        "api"
+      ],
+      "checks": [
+        "SYNTHETIC API documentation check"
+      ]
+    },
+    {
+      "id": "review",
+      "goal": "Independently review the revised API and documentation",
+      "context": "SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.",
+      "reads": [
+        "src/api",
+        "tests/api",
+        "docs/api.md"
+      ],
+      "writes": [
+        "review/findings.md"
+      ],
+      "resources": [],
+      "after": [
+        "api",
+        "docs"
+      ],
+      "checks": [
+        "SYNTHETIC API and documentation review check"
+      ]
+    }
+  ]
+}

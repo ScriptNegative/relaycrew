@@ -151,3 +151,114 @@ test('checkpoint symlinks cannot be used for reads or replacement', async t => {
     assert.equal(await readFile(target,'utf8'),before);
   });
 });
+
+async function completeSyntheticTask(event,id,revision) {
+  const started=success(await event({type:'start',task_id:id,worker:`synthetic-${id}`},revision));
+  const attempt=started.tasks.find(task=>task.id===id).attempt_id;
+  const check=id==='api'?'API tests pass':'UI tests pass';
+  success(await event({type:'report',task_id:id,attempt_id:attempt,report:{summary:'Synthetic fixture completion',changed_paths:[`src/${id}/index.mjs`],checks:[{check,outcome:'passed',evidence:'Synthetic fixture only; no application test was executed'}]}},revision+1));
+  return success(await event({type:'accept',task_id:id,attempt_id:attempt,worker_stopped:true,review:'Synthetic coordinator assertion for CLI protocol test.'},revision+2));
+}
+
+test('compare is read-only and migration atomically retains independent evidence while resetting changed work',async()=>{
+  await fixture(async({directory,plan,checkpoint,command,event})=>{
+    success(command('init',plan,checkpoint));
+    await completeSyntheticTask(event,'api',0);
+    await completeSyntheticTask(event,'ui',3);
+    const before=await readFile(checkpoint,'utf8');
+    const nextPlan=structuredClone(definition);
+    nextPlan.tasks[0].goal='Implement the revised API contract';
+    nextPlan.tasks.push({id:'audit',goal:'Audit separate metadata',writes:['audit'],checks:['Audit is complete']});
+    const nextPath=path.join(directory,'next-plan.json');
+    await writeFile(nextPath,`\uFEFF${JSON.stringify(nextPlan)}`);
+    const preview=success(command('compare',plan,nextPath,checkpoint));
+    assert.equal(await readFile(checkpoint,'utf8'),before);
+    assert.deepEqual(preview.kept_completed,['ui']);
+    assert.deepEqual(preview.reset.map(task=>task.id),['api','docs']);
+    const requestPath=path.join(directory,'migration.json');
+    await writeFile(requestPath,JSON.stringify({new_plan_hash:preview.new_plan_hash,workers_stopped:true,review:'Synthetic fixture review of retained ui and reset API evidence.'}));
+    const result=success(command('migrate',plan,nextPath,checkpoint,requestPath,'--revision','6'));
+    assert.equal(result.checkpoint.revision,7);
+    assert.equal(result.checkpoint.format,1);
+    assert.deepEqual(JSON.parse(await readFile(checkpoint,'utf8')),result.checkpoint);
+    assert.equal(result.migration.new_plan_hash,preview.new_plan_hash);
+    assert.deepEqual(success(command('next',nextPath,checkpoint)).task_ids,['api','audit']);
+    rejected(command('next',plan,checkpoint));
+    rejected(command('migrate',plan,nextPath,checkpoint,requestPath,'--revision','6'));
+    assert.deepEqual((await readdir(directory)).filter(name=>name.includes('.tmp-')||name.endsWith('.lock')),[]);
+  });
+});
+
+test('migration refuses stale revision, target hash, missing confirmations and active work without checkpoint changes',async()=>{
+  await fixture(async({directory,plan,checkpoint,command,event})=>{
+    success(command('init',plan,checkpoint));
+    const nextPlan=structuredClone(definition);
+    nextPlan.tasks[0].goal='API version 2';
+    const nextPath=path.join(directory,'next.json');
+    await writeFile(nextPath,JSON.stringify(nextPlan));
+    const preview=success(command('compare',plan,nextPath,checkpoint));
+    const requestPath=path.join(directory,'request.json');
+    const request={new_plan_hash:preview.new_plan_hash,workers_stopped:true,review:'Synthetic fixture review.'};
+    const before=await readFile(checkpoint,'utf8');
+    for(const value of [{...request,new_plan_hash:'0'.repeat(64)},{...request,workers_stopped:false},{...request,review:''},{...request,extra:1}]) {
+      await writeFile(requestPath,JSON.stringify(value));
+      rejected(command('migrate',plan,nextPath,checkpoint,requestPath,'--revision','0'));
+      assert.equal(await readFile(checkpoint,'utf8'),before);
+    }
+    await writeFile(requestPath,JSON.stringify(request));
+    rejected(command('migrate',plan,nextPath,checkpoint,requestPath,'--revision','1'));
+    assert.equal(await readFile(checkpoint,'utf8'),before);
+    success(await event({type:'start',task_id:'api',worker:'synthetic-active'},0));
+    const active=await readFile(checkpoint,'utf8');
+    const refused=command('compare',plan,nextPath,checkpoint);
+    rejected(refused);
+    assert.match(refused.stderr,/active or reported/);
+    rejected(command('migrate',plan,nextPath,checkpoint,requestPath,'--revision','1'));
+    assert.equal(await readFile(checkpoint,'utf8'),active);
+    assert.deepEqual((await readdir(directory)).filter(name=>name.includes('.tmp-')||name.endsWith('.lock')),[]);
+  });
+});
+
+test('concurrent migrations at one revision publish exactly one complete checkpoint',async()=>{
+  await fixture(async({directory,plan,checkpoint,command})=>{
+    success(command('init',plan,checkpoint));
+    const nextPath=path.join(directory,'next.json');
+    const nextPlan=structuredClone(definition);nextPlan.tasks[0].goal='API version 2';
+    await writeFile(nextPath,JSON.stringify(nextPlan));
+    const preview=success(command('compare',plan,nextPath,checkpoint));
+    const requestPath=path.join(directory,'request.json');
+    await writeFile(requestPath,JSON.stringify({new_plan_hash:preview.new_plan_hash,workers_stopped:true,review:'Synthetic concurrency fixture review.'}));
+    const invoke=()=>new Promise((resolve,reject)=>{
+      const child=spawn(process.execPath,[script,'migrate',plan,nextPath,checkpoint,requestPath,'--revision','0'],{cwd:directory});
+      let stdout='',stderr='';
+      child.stdout.on('data',data=>stdout+=data);
+      child.stderr.on('data',data=>stderr+=data);
+      child.once('error',reject);
+      child.once('close',status=>resolve({status,stdout,stderr}));
+    });
+    const results=await Promise.all([invoke(),invoke()]);
+    assert.equal(results.filter(result=>result.status===0).length,1);
+    rejected(results.find(result=>result.status!==0));
+    const current=JSON.parse(await readFile(checkpoint,'utf8'));
+    assert.equal(current.revision,1);
+    assert.equal(current.plan_hash,preview.new_plan_hash);
+    assert.equal(current.tasks[0].goal,undefined);
+    assert.equal(success(command('next',nextPath,checkpoint)).revision,1);
+    assert.deepEqual((await readdir(directory)).filter(name=>name.includes('.tmp-')||name.endsWith('.lock')),[]);
+  });
+});
+
+test('migration and compare CLI reject malformed invocation shapes without output or state changes',async()=>{
+  await fixture(async({plan,checkpoint,command})=>{
+    success(command('init',plan,checkpoint));
+    const before=await readFile(checkpoint,'utf8');
+    for(const args of [
+      ['compare',plan,checkpoint],['compare',plan,plan,checkpoint,'extra'],
+      ['migrate',plan,plan,checkpoint],['migrate',plan,plan,checkpoint,plan,'--revision','1.5'],
+      ['migrate',plan,plan,checkpoint,plan,'--revision','-1'],['migrate',plan,plan,checkpoint,plan,'--revision','9007199254740992']
+    ]) {
+      rejected(command(...args));
+      assert.equal(await readFile(checkpoint,'utf8'),before);
+    }
+  });
+});

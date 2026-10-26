@@ -1,0 +1,2612 @@
+{
+  "synthetic": true,
+  "runtime": "v22.14.0",
+  "entries": [
+    {
+      "label": "help",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "--help"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": null,
+      "checkpoint_sha256_before": null,
+      "checkpoint_sha256_after": null,
+      "revision_before": null,
+      "revision_after": null,
+      "stdout": "Usage: node session.mjs init|next <plan.json> <checkpoint.json> OR apply <plan.json> <checkpoint.json> <event.json> --revision N OR compare <old-plan.json> <new-plan.json> <checkpoint.json> OR migrate <old-plan.json> <new-plan.json> <checkpoint.json> <request.json> --revision N\n",
+      "stderr": "",
+      "result": null
+    },
+    {
+      "label": "init",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "init",
+        "old-plan.json",
+        "checkpoint-main.json"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": null,
+      "checkpoint_sha256_after": "e3ff831f379f1a587873a4480af1042ca23dd60a6661b8ed4b99906badd5d523",
+      "revision_before": null,
+      "revision_after": 0,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 0,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "revision": 0,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "ui",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "docs",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "spike",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "initial-next",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "next",
+        "old-plan.json",
+        "checkpoint-main.json"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "e3ff831f379f1a587873a4480af1042ca23dd60a6661b8ed4b99906badd5d523",
+      "checkpoint_sha256_after": "e3ff831f379f1a587873a4480af1042ca23dd60a6661b8ed4b99906badd5d523",
+      "revision_before": 0,
+      "revision_after": 0,
+      "stdout": "{\n  \"status\": \"ready\",\n  \"max_workers\": 2,\n  \"max_brief_chars\": 2400,\n  \"task_ids\": [\n    \"api\",\n    \"ui\"\n  ],\n  \"completed\": [],\n  \"failed\": [],\n  \"blocked\": [],\n  \"briefs\": [\n    {\n      \"id\": \"api\",\n      \"characters\": 315,\n      \"text\": \"Task: api — Implement API contract v1\\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\\nRead: contracts/api-v1.json\\nWrite: src/api, tests/api\\nResources: none\\nDone when: SYNTHETIC API v1 contract check\\nReturn: changed paths; evidence and checks; blockers; follow-up needed\"\n    },\n    {\n      \"id\": \"ui\",\n      \"characters\": 318,\n      \"text\": \"Task: ui — Implement the independent user interface\\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\\nRead: design/ui.json\\nWrite: src/ui, tests/ui\\nResources: none\\nDone when: SYNTHETIC UI acceptance check\\nReturn: changed paths; evidence and checks; blockers; follow-up needed\"\n    }\n  ],\n  \"in_progress\": [],\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"revision\": 0,\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"active\": []\n}\n",
+      "stderr": "",
+      "result": {
+        "status": "ready",
+        "max_workers": 2,
+        "max_brief_chars": 2400,
+        "task_ids": [
+          "api",
+          "ui"
+        ],
+        "completed": [],
+        "failed": [],
+        "blocked": [],
+        "briefs": [
+          {
+            "id": "api",
+            "characters": 315,
+            "text": "Task: api — Implement API contract v1\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\nRead: contracts/api-v1.json\nWrite: src/api, tests/api\nResources: none\nDone when: SYNTHETIC API v1 contract check\nReturn: changed paths; evidence and checks; blockers; follow-up needed"
+          },
+          {
+            "id": "ui",
+            "characters": 318,
+            "text": "Task: ui — Implement the independent user interface\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\nRead: design/ui.json\nWrite: src/ui, tests/ui\nResources: none\nDone when: SYNTHETIC UI acceptance check\nReturn: changed paths; evidence and checks; blockers; follow-up needed"
+          }
+        ],
+        "in_progress": [],
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "revision": 0,
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "active": []
+      }
+    },
+    {
+      "label": "start-api-v1",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "old-plan.json",
+        "checkpoint-main.json",
+        "events/start-api-v1.json",
+        "--revision",
+        "0"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "e3ff831f379f1a587873a4480af1042ca23dd60a6661b8ed4b99906badd5d523",
+      "checkpoint_sha256_after": "b609a285eae7290a94002162b6e74ec18fbcc293099e1e400383685653daa892",
+      "revision_before": 0,
+      "revision_after": 1,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 1,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"running\",\n      \"attempt\": 1,\n      \"attempt_id\": \"236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e\",\n      \"worker\": \"SYNTHETIC-api-worker\",\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "revision": 1,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "running",
+            "attempt": 1,
+            "attempt_id": "236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e",
+            "worker": "SYNTHETIC-api-worker",
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "ui",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "docs",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "spike",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "report-api-v1",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "old-plan.json",
+        "checkpoint-main.json",
+        "events/report-api-v1.json",
+        "--revision",
+        "1"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "b609a285eae7290a94002162b6e74ec18fbcc293099e1e400383685653daa892",
+      "checkpoint_sha256_after": "c9f55c79658c8801224b43f44da9a453bc9463405952628507487f9e93ae45b6",
+      "revision_before": 1,
+      "revision_after": 2,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 2,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"reported\",\n      \"attempt\": 1,\n      \"attempt_id\": \"236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e\",\n      \"worker\": \"SYNTHETIC-api-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported api result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v1 contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "revision": 2,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "reported",
+            "attempt": 1,
+            "attempt_id": "236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e",
+            "worker": "SYNTHETIC-api-worker",
+            "report": {
+              "summary": "SYNTHETIC reported api result; no work actually ran",
+              "changed_paths": [
+                "src/api/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API v1 contract check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "ui",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "docs",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "spike",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "accept-api-v1",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "old-plan.json",
+        "checkpoint-main.json",
+        "events/accept-api-v1.json",
+        "--revision",
+        "2"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "c9f55c79658c8801224b43f44da9a453bc9463405952628507487f9e93ae45b6",
+      "checkpoint_sha256_after": "e48fb776d5c3db983bddb6bbf319312cc3c3ef8b07fdf3c5e641f3acdc5cc23c",
+      "revision_before": 2,
+      "revision_after": 3,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 3,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e\",\n      \"worker\": \"SYNTHETIC-api-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported api result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v1 contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "revision": 3,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e",
+            "worker": "SYNTHETIC-api-worker",
+            "report": {
+              "summary": "SYNTHETIC reported api result; no work actually ran",
+              "changed_paths": [
+                "src/api/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API v1 contract check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "ui",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "docs",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "spike",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "start-ui-v1",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "old-plan.json",
+        "checkpoint-main.json",
+        "events/start-ui-v1.json",
+        "--revision",
+        "3"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "e48fb776d5c3db983bddb6bbf319312cc3c3ef8b07fdf3c5e641f3acdc5cc23c",
+      "checkpoint_sha256_after": "2e0c5d7fe06b9915d53f9785c610272d19125350863af701fba23caca7deccbd",
+      "revision_before": 3,
+      "revision_after": 4,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 4,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e\",\n      \"worker\": \"SYNTHETIC-api-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported api result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v1 contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"running\",\n      \"attempt\": 1,\n      \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n      \"worker\": \"SYNTHETIC-ui-worker\",\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "revision": 4,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e",
+            "worker": "SYNTHETIC-api-worker",
+            "report": {
+              "summary": "SYNTHETIC reported api result; no work actually ran",
+              "changed_paths": [
+                "src/api/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API v1 contract check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "ui",
+            "status": "running",
+            "attempt": 1,
+            "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+            "worker": "SYNTHETIC-ui-worker",
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "docs",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "spike",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "report-ui-v1",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "old-plan.json",
+        "checkpoint-main.json",
+        "events/report-ui-v1.json",
+        "--revision",
+        "4"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "2e0c5d7fe06b9915d53f9785c610272d19125350863af701fba23caca7deccbd",
+      "checkpoint_sha256_after": "9299312430f65edb189e53c016d8d6669751c9423e8e67c3afc715472935e480",
+      "revision_before": 4,
+      "revision_after": 5,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 5,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e\",\n      \"worker\": \"SYNTHETIC-api-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported api result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v1 contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"reported\",\n      \"attempt\": 1,\n      \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n      \"worker\": \"SYNTHETIC-ui-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported ui result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/ui/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC UI acceptance check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "revision": 5,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e",
+            "worker": "SYNTHETIC-api-worker",
+            "report": {
+              "summary": "SYNTHETIC reported api result; no work actually ran",
+              "changed_paths": [
+                "src/api/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API v1 contract check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "ui",
+            "status": "reported",
+            "attempt": 1,
+            "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+            "worker": "SYNTHETIC-ui-worker",
+            "report": {
+              "summary": "SYNTHETIC reported ui result; no work actually ran",
+              "changed_paths": [
+                "src/ui/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC UI acceptance check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "docs",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "spike",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "accept-ui-v1",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "old-plan.json",
+        "checkpoint-main.json",
+        "events/accept-ui-v1.json",
+        "--revision",
+        "5"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "9299312430f65edb189e53c016d8d6669751c9423e8e67c3afc715472935e480",
+      "checkpoint_sha256_after": "7da04b700043363b5675faabeee1161dfbda62a23eaea2f6e7d2c9caa0f413e6",
+      "revision_before": 5,
+      "revision_after": 6,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 6,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e\",\n      \"worker\": \"SYNTHETIC-api-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported api result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v1 contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n      \"worker\": \"SYNTHETIC-ui-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported ui result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/ui/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC UI acceptance check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "revision": 6,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e",
+            "worker": "SYNTHETIC-api-worker",
+            "report": {
+              "summary": "SYNTHETIC reported api result; no work actually ran",
+              "changed_paths": [
+                "src/api/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API v1 contract check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "ui",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+            "worker": "SYNTHETIC-ui-worker",
+            "report": {
+              "summary": "SYNTHETIC reported ui result; no work actually ran",
+              "changed_paths": [
+                "src/ui/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC UI acceptance check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "docs",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "spike",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "start-docs-v1",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "old-plan.json",
+        "checkpoint-main.json",
+        "events/start-docs-v1.json",
+        "--revision",
+        "6"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "7da04b700043363b5675faabeee1161dfbda62a23eaea2f6e7d2c9caa0f413e6",
+      "checkpoint_sha256_after": "b18ccb2bac9115b8328be3c7151345b44691c3f85f45602e1dcdbe3c9a78d43f",
+      "revision_before": 6,
+      "revision_after": 7,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 7,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e\",\n      \"worker\": \"SYNTHETIC-api-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported api result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v1 contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n      \"worker\": \"SYNTHETIC-ui-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported ui result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/ui/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC UI acceptance check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"running\",\n      \"attempt\": 1,\n      \"attempt_id\": \"ba22dc79-52c2-427e-9aa0-fd4546793266\",\n      \"worker\": \"SYNTHETIC-docs-worker\",\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "revision": 7,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e",
+            "worker": "SYNTHETIC-api-worker",
+            "report": {
+              "summary": "SYNTHETIC reported api result; no work actually ran",
+              "changed_paths": [
+                "src/api/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API v1 contract check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "ui",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+            "worker": "SYNTHETIC-ui-worker",
+            "report": {
+              "summary": "SYNTHETIC reported ui result; no work actually ran",
+              "changed_paths": [
+                "src/ui/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC UI acceptance check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "docs",
+            "status": "running",
+            "attempt": 1,
+            "attempt_id": "ba22dc79-52c2-427e-9aa0-fd4546793266",
+            "worker": "SYNTHETIC-docs-worker",
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "spike",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "report-docs-v1",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "old-plan.json",
+        "checkpoint-main.json",
+        "events/report-docs-v1.json",
+        "--revision",
+        "7"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "b18ccb2bac9115b8328be3c7151345b44691c3f85f45602e1dcdbe3c9a78d43f",
+      "checkpoint_sha256_after": "ba1558581b27f034b0fcb199175c5b3b67b20f6d4373a2464bfaebaa682db1b9",
+      "revision_before": 7,
+      "revision_after": 8,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 8,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e\",\n      \"worker\": \"SYNTHETIC-api-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported api result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v1 contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n      \"worker\": \"SYNTHETIC-ui-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported ui result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/ui/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC UI acceptance check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"reported\",\n      \"attempt\": 1,\n      \"attempt_id\": \"ba22dc79-52c2-427e-9aa0-fd4546793266\",\n      \"worker\": \"SYNTHETIC-docs-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported docs result; no work actually ran\",\n        \"changed_paths\": [\n          \"docs/api.md\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API documentation check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "revision": 8,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e",
+            "worker": "SYNTHETIC-api-worker",
+            "report": {
+              "summary": "SYNTHETIC reported api result; no work actually ran",
+              "changed_paths": [
+                "src/api/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API v1 contract check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "ui",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+            "worker": "SYNTHETIC-ui-worker",
+            "report": {
+              "summary": "SYNTHETIC reported ui result; no work actually ran",
+              "changed_paths": [
+                "src/ui/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC UI acceptance check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "docs",
+            "status": "reported",
+            "attempt": 1,
+            "attempt_id": "ba22dc79-52c2-427e-9aa0-fd4546793266",
+            "worker": "SYNTHETIC-docs-worker",
+            "report": {
+              "summary": "SYNTHETIC reported docs result; no work actually ran",
+              "changed_paths": [
+                "docs/api.md"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API documentation check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "spike",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "accept-docs-v1",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "old-plan.json",
+        "checkpoint-main.json",
+        "events/accept-docs-v1.json",
+        "--revision",
+        "8"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "ba1558581b27f034b0fcb199175c5b3b67b20f6d4373a2464bfaebaa682db1b9",
+      "checkpoint_sha256_after": "00f8535beb8e17d7bdf64765a7376d59211eec5e2dc22d5170c65ddc979ad0cc",
+      "revision_before": 8,
+      "revision_after": 9,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 9,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e\",\n      \"worker\": \"SYNTHETIC-api-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported api result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v1 contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n      \"worker\": \"SYNTHETIC-ui-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported ui result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/ui/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC UI acceptance check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"ba22dc79-52c2-427e-9aa0-fd4546793266\",\n      \"worker\": \"SYNTHETIC-docs-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported docs result; no work actually ran\",\n        \"changed_paths\": [\n          \"docs/api.md\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API documentation check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "revision": 9,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e",
+            "worker": "SYNTHETIC-api-worker",
+            "report": {
+              "summary": "SYNTHETIC reported api result; no work actually ran",
+              "changed_paths": [
+                "src/api/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API v1 contract check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "ui",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+            "worker": "SYNTHETIC-ui-worker",
+            "report": {
+              "summary": "SYNTHETIC reported ui result; no work actually ran",
+              "changed_paths": [
+                "src/ui/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC UI acceptance check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "docs",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "ba22dc79-52c2-427e-9aa0-fd4546793266",
+            "worker": "SYNTHETIC-docs-worker",
+            "report": {
+              "summary": "SYNTHETIC reported docs result; no work actually ran",
+              "changed_paths": [
+                "docs/api.md"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API documentation check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "spike",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "start-spike-v1",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "old-plan.json",
+        "checkpoint-main.json",
+        "events/start-spike-v1.json",
+        "--revision",
+        "9"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "00f8535beb8e17d7bdf64765a7376d59211eec5e2dc22d5170c65ddc979ad0cc",
+      "checkpoint_sha256_after": "0220cf139d93c17332009c1bbccceb2b14fe5fc10c7956b88b3ec1ec3e009108",
+      "revision_before": 9,
+      "revision_after": 10,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 10,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e\",\n      \"worker\": \"SYNTHETIC-api-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported api result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v1 contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n      \"worker\": \"SYNTHETIC-ui-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported ui result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/ui/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC UI acceptance check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"ba22dc79-52c2-427e-9aa0-fd4546793266\",\n      \"worker\": \"SYNTHETIC-docs-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported docs result; no work actually ran\",\n        \"changed_paths\": [\n          \"docs/api.md\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API documentation check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"running\",\n      \"attempt\": 1,\n      \"attempt_id\": \"8933ea0a-76fe-4a4e-b2d2-8cdf8af83d45\",\n      \"worker\": \"SYNTHETIC-spike-worker\",\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "revision": 10,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e",
+            "worker": "SYNTHETIC-api-worker",
+            "report": {
+              "summary": "SYNTHETIC reported api result; no work actually ran",
+              "changed_paths": [
+                "src/api/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API v1 contract check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "ui",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+            "worker": "SYNTHETIC-ui-worker",
+            "report": {
+              "summary": "SYNTHETIC reported ui result; no work actually ran",
+              "changed_paths": [
+                "src/ui/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC UI acceptance check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "docs",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "ba22dc79-52c2-427e-9aa0-fd4546793266",
+            "worker": "SYNTHETIC-docs-worker",
+            "report": {
+              "summary": "SYNTHETIC reported docs result; no work actually ran",
+              "changed_paths": [
+                "docs/api.md"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API documentation check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "spike",
+            "status": "running",
+            "attempt": 1,
+            "attempt_id": "8933ea0a-76fe-4a4e-b2d2-8cdf8af83d45",
+            "worker": "SYNTHETIC-spike-worker",
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "report-spike-failed",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "old-plan.json",
+        "checkpoint-main.json",
+        "events/report-spike-failed.json",
+        "--revision",
+        "10"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "0220cf139d93c17332009c1bbccceb2b14fe5fc10c7956b88b3ec1ec3e009108",
+      "checkpoint_sha256_after": "2125bd6d6e579387c654413d81df980739d9ffe99d71a37300146a5317292b1f",
+      "revision_before": 10,
+      "revision_after": 11,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 11,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e\",\n      \"worker\": \"SYNTHETIC-api-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported api result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v1 contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n      \"worker\": \"SYNTHETIC-ui-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported ui result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/ui/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC UI acceptance check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"ba22dc79-52c2-427e-9aa0-fd4546793266\",\n      \"worker\": \"SYNTHETIC-docs-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported docs result; no work actually ran\",\n        \"changed_paths\": [\n          \"docs/api.md\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API documentation check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"reported\",\n      \"attempt\": 1,\n      \"attempt_id\": \"8933ea0a-76fe-4a4e-b2d2-8cdf8af83d45\",\n      \"worker\": \"SYNTHETIC-spike-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC failed spike result; no work ran\",\n        \"changed_paths\": [\n          \"experiments/spike/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC spike feasibility check\",\n            \"outcome\": \"failed\",\n            \"evidence\": \"SYNTHETIC intentional failure. No experiment was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "revision": 11,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e",
+            "worker": "SYNTHETIC-api-worker",
+            "report": {
+              "summary": "SYNTHETIC reported api result; no work actually ran",
+              "changed_paths": [
+                "src/api/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API v1 contract check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "ui",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+            "worker": "SYNTHETIC-ui-worker",
+            "report": {
+              "summary": "SYNTHETIC reported ui result; no work actually ran",
+              "changed_paths": [
+                "src/ui/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC UI acceptance check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "docs",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "ba22dc79-52c2-427e-9aa0-fd4546793266",
+            "worker": "SYNTHETIC-docs-worker",
+            "report": {
+              "summary": "SYNTHETIC reported docs result; no work actually ran",
+              "changed_paths": [
+                "docs/api.md"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API documentation check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "spike",
+            "status": "reported",
+            "attempt": 1,
+            "attempt_id": "8933ea0a-76fe-4a4e-b2d2-8cdf8af83d45",
+            "worker": "SYNTHETIC-spike-worker",
+            "report": {
+              "summary": "SYNTHETIC failed spike result; no work ran",
+              "changed_paths": [
+                "experiments/spike/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC spike feasibility check",
+                  "outcome": "failed",
+                  "evidence": "SYNTHETIC intentional failure. No experiment was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "fail-spike-v1",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "old-plan.json",
+        "checkpoint-main.json",
+        "events/fail-spike-v1.json",
+        "--revision",
+        "11"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "2125bd6d6e579387c654413d81df980739d9ffe99d71a37300146a5317292b1f",
+      "checkpoint_sha256_after": "9bc964718543d94cd33f67814c73207cbcfe5671dba80edeac5f2ec28e15356a",
+      "revision_before": 11,
+      "revision_after": 12,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 12,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e\",\n      \"worker\": \"SYNTHETIC-api-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported api result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v1 contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n      \"worker\": \"SYNTHETIC-ui-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported ui result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/ui/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC UI acceptance check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"ba22dc79-52c2-427e-9aa0-fd4546793266\",\n      \"worker\": \"SYNTHETIC-docs-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported docs result; no work actually ran\",\n        \"changed_paths\": [\n          \"docs/api.md\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API documentation check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"failed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"8933ea0a-76fe-4a4e-b2d2-8cdf8af83d45\",\n      \"worker\": \"SYNTHETIC-spike-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC failed spike result; no work ran\",\n        \"changed_paths\": [\n          \"experiments/spike/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC spike feasibility check\",\n            \"outcome\": \"failed\",\n            \"evidence\": \"SYNTHETIC intentional failure. No experiment was executed.\"\n          }\n        ]\n      },\n      \"failure\": \"SYNTHETIC failed experiment and stopped assertion. No actual worker exists.\",\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "revision": 12,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e",
+            "worker": "SYNTHETIC-api-worker",
+            "report": {
+              "summary": "SYNTHETIC reported api result; no work actually ran",
+              "changed_paths": [
+                "src/api/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API v1 contract check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "ui",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+            "worker": "SYNTHETIC-ui-worker",
+            "report": {
+              "summary": "SYNTHETIC reported ui result; no work actually ran",
+              "changed_paths": [
+                "src/ui/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC UI acceptance check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "docs",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "ba22dc79-52c2-427e-9aa0-fd4546793266",
+            "worker": "SYNTHETIC-docs-worker",
+            "report": {
+              "summary": "SYNTHETIC reported docs result; no work actually ran",
+              "changed_paths": [
+                "docs/api.md"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API documentation check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "spike",
+            "status": "failed",
+            "attempt": 1,
+            "attempt_id": "8933ea0a-76fe-4a4e-b2d2-8cdf8af83d45",
+            "worker": "SYNTHETIC-spike-worker",
+            "report": {
+              "summary": "SYNTHETIC failed spike result; no work ran",
+              "changed_paths": [
+                "experiments/spike/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC spike feasibility check",
+                  "outcome": "failed",
+                  "evidence": "SYNTHETIC intentional failure. No experiment was executed."
+                }
+              ]
+            },
+            "failure": "SYNTHETIC failed experiment and stopped assertion. No actual worker exists.",
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "compare-main",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "compare",
+        "old-plan.json",
+        "new-plan.json",
+        "checkpoint-main.json"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "9bc964718543d94cd33f67814c73207cbcfe5671dba80edeac5f2ec28e15356a",
+      "checkpoint_sha256_after": "9bc964718543d94cd33f67814c73207cbcfe5671dba80edeac5f2ec28e15356a",
+      "revision_before": 12,
+      "revision_after": 12,
+      "stdout": "{\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"revision\": 12,\n  \"old_plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"new_plan_hash\": \"402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a\",\n  \"kept_completed\": [\n    \"ui\"\n  ],\n  \"kept_failed\": [],\n  \"reset\": [\n    {\n      \"id\": \"api\",\n      \"reasons\": [\n        \"Task definition changed\"\n      ]\n    },\n    {\n      \"id\": \"docs\",\n      \"reasons\": [\n        \"Prerequisite completion not retained: api\",\n        \"A prerequisite definition changed\"\n      ]\n    }\n  ],\n  \"added\": [\n    \"review\"\n  ],\n  \"removed\": [\n    \"spike\"\n  ],\n  \"plan_changed\": true\n}\n",
+      "stderr": "",
+      "result": {
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "revision": 12,
+        "old_plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "new_plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+        "kept_completed": [
+          "ui"
+        ],
+        "kept_failed": [],
+        "reset": [
+          {
+            "id": "api",
+            "reasons": [
+              "Task definition changed"
+            ]
+          },
+          {
+            "id": "docs",
+            "reasons": [
+              "Prerequisite completion not retained: api",
+              "A prerequisite definition changed"
+            ]
+          }
+        ],
+        "added": [
+          "review"
+        ],
+        "removed": [
+          "spike"
+        ],
+        "plan_changed": true
+      }
+    },
+    {
+      "label": "direct-new-plan-rejected",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "next",
+        "new-plan.json",
+        "checkpoint-main.json"
+      ],
+      "cwd": ".",
+      "exit_code": 1,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "9bc964718543d94cd33f67814c73207cbcfe5671dba80edeac5f2ec28e15356a",
+      "checkpoint_sha256_after": "9bc964718543d94cd33f67814c73207cbcfe5671dba80edeac5f2ec28e15356a",
+      "revision_before": 12,
+      "revision_after": 12,
+      "stdout": "",
+      "stderr": "RelayCrew: Plan definition changed or checkpoint plan_hash is invalid; reconcile stopped workers before starting a new session\n",
+      "result": null
+    },
+    {
+      "label": "stale-revision-rejected",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "migrate",
+        "old-plan.json",
+        "new-plan.json",
+        "checkpoint-main.json",
+        "migration-request.json",
+        "--revision",
+        "11"
+      ],
+      "cwd": ".",
+      "exit_code": 1,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "9bc964718543d94cd33f67814c73207cbcfe5671dba80edeac5f2ec28e15356a",
+      "checkpoint_sha256_after": "9bc964718543d94cd33f67814c73207cbcfe5671dba80edeac5f2ec28e15356a",
+      "revision_before": 12,
+      "revision_after": 12,
+      "stdout": "",
+      "stderr": "RelayCrew: Stale revision: expected 11, current 12\n",
+      "result": null
+    },
+    {
+      "label": "active-copy-retry-spike",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "old-plan.json",
+        "checkpoint-active.json",
+        "events/active-copy-retry-spike.json",
+        "--revision",
+        "12"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-active.json",
+      "checkpoint_sha256_before": "9bc964718543d94cd33f67814c73207cbcfe5671dba80edeac5f2ec28e15356a",
+      "checkpoint_sha256_after": "e6fb2e4a13bba0866040285e3c4f60eadda3610662a7997f8006c18c404304a4",
+      "revision_before": 12,
+      "revision_after": 13,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 13,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e\",\n      \"worker\": \"SYNTHETIC-api-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported api result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v1 contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n      \"worker\": \"SYNTHETIC-ui-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported ui result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/ui/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC UI acceptance check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"ba22dc79-52c2-427e-9aa0-fd4546793266\",\n      \"worker\": \"SYNTHETIC-docs-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported docs result; no work actually ran\",\n        \"changed_paths\": [\n          \"docs/api.md\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API documentation check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"pending\",\n      \"attempt\": 1,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "revision": 13,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e",
+            "worker": "SYNTHETIC-api-worker",
+            "report": {
+              "summary": "SYNTHETIC reported api result; no work actually ran",
+              "changed_paths": [
+                "src/api/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API v1 contract check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "ui",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+            "worker": "SYNTHETIC-ui-worker",
+            "report": {
+              "summary": "SYNTHETIC reported ui result; no work actually ran",
+              "changed_paths": [
+                "src/ui/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC UI acceptance check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "docs",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "ba22dc79-52c2-427e-9aa0-fd4546793266",
+            "worker": "SYNTHETIC-docs-worker",
+            "report": {
+              "summary": "SYNTHETIC reported docs result; no work actually ran",
+              "changed_paths": [
+                "docs/api.md"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API documentation check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "spike",
+            "status": "pending",
+            "attempt": 1,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "active-copy-start-spike",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "old-plan.json",
+        "checkpoint-active.json",
+        "events/active-copy-start-spike.json",
+        "--revision",
+        "13"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-active.json",
+      "checkpoint_sha256_before": "e6fb2e4a13bba0866040285e3c4f60eadda3610662a7997f8006c18c404304a4",
+      "checkpoint_sha256_after": "18fb867e5939a16dfb6ac47fb5f3e4ac2dd1f56959bbfd43bce6d5982d5fb7b5",
+      "revision_before": 13,
+      "revision_after": 14,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"revision\": 14,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e\",\n      \"worker\": \"SYNTHETIC-api-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported api result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v1 contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n      \"worker\": \"SYNTHETIC-ui-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported ui result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/ui/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC UI acceptance check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"ba22dc79-52c2-427e-9aa0-fd4546793266\",\n      \"worker\": \"SYNTHETIC-docs-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported docs result; no work actually ran\",\n        \"changed_paths\": [\n          \"docs/api.md\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API documentation check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"spike\",\n      \"status\": \"running\",\n      \"attempt\": 2,\n      \"attempt_id\": \"11f52892-e61c-4511-a869-dec09847afca\",\n      \"worker\": \"SYNTHETIC-still-running-spike-worker\",\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "revision": 14,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "236e8eb8-a575-4e1e-b3a6-5d2c3b90bd9e",
+            "worker": "SYNTHETIC-api-worker",
+            "report": {
+              "summary": "SYNTHETIC reported api result; no work actually ran",
+              "changed_paths": [
+                "src/api/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API v1 contract check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "ui",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+            "worker": "SYNTHETIC-ui-worker",
+            "report": {
+              "summary": "SYNTHETIC reported ui result; no work actually ran",
+              "changed_paths": [
+                "src/ui/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC UI acceptance check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "docs",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "ba22dc79-52c2-427e-9aa0-fd4546793266",
+            "worker": "SYNTHETIC-docs-worker",
+            "report": {
+              "summary": "SYNTHETIC reported docs result; no work actually ran",
+              "changed_paths": [
+                "docs/api.md"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API documentation check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "spike",
+            "status": "running",
+            "attempt": 2,
+            "attempt_id": "11f52892-e61c-4511-a869-dec09847afca",
+            "worker": "SYNTHETIC-still-running-spike-worker",
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "active-copy-next-old",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "next",
+        "old-plan.json",
+        "checkpoint-active.json"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-active.json",
+      "checkpoint_sha256_before": "18fb867e5939a16dfb6ac47fb5f3e4ac2dd1f56959bbfd43bce6d5982d5fb7b5",
+      "checkpoint_sha256_after": "18fb867e5939a16dfb6ac47fb5f3e4ac2dd1f56959bbfd43bce6d5982d5fb7b5",
+      "revision_before": 14,
+      "revision_after": 14,
+      "stdout": "{\n  \"status\": \"waiting\",\n  \"max_workers\": 2,\n  \"max_brief_chars\": 2400,\n  \"task_ids\": [],\n  \"completed\": [\n    \"api\",\n    \"ui\",\n    \"docs\"\n  ],\n  \"failed\": [],\n  \"blocked\": [],\n  \"briefs\": [],\n  \"in_progress\": [\n    \"spike\"\n  ],\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"revision\": 14,\n  \"plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n  \"active\": [\n    {\n      \"task_id\": \"spike\",\n      \"attempt_id\": \"11f52892-e61c-4511-a869-dec09847afca\",\n      \"worker\": \"SYNTHETIC-still-running-spike-worker\",\n      \"status\": \"running\",\n      \"report\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "status": "waiting",
+        "max_workers": 2,
+        "max_brief_chars": 2400,
+        "task_ids": [],
+        "completed": [
+          "api",
+          "ui",
+          "docs"
+        ],
+        "failed": [],
+        "blocked": [],
+        "briefs": [],
+        "in_progress": [
+          "spike"
+        ],
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "revision": 14,
+        "plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+        "active": [
+          {
+            "task_id": "spike",
+            "attempt_id": "11f52892-e61c-4511-a869-dec09847afca",
+            "worker": "SYNTHETIC-still-running-spike-worker",
+            "status": "running",
+            "report": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "active-copy-compare-rejected",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "compare",
+        "old-plan.json",
+        "new-plan.json",
+        "checkpoint-active.json"
+      ],
+      "cwd": ".",
+      "exit_code": 1,
+      "checkpoint": "checkpoint-active.json",
+      "checkpoint_sha256_before": "18fb867e5939a16dfb6ac47fb5f3e4ac2dd1f56959bbfd43bce6d5982d5fb7b5",
+      "checkpoint_sha256_after": "18fb867e5939a16dfb6ac47fb5f3e4ac2dd1f56959bbfd43bce6d5982d5fb7b5",
+      "revision_before": 14,
+      "revision_after": 14,
+      "stdout": "",
+      "stderr": "RelayCrew: Cannot migrate active or reported work: spike. Confirm workers stopped, then accept or fail their current attempts using the old plan.\n",
+      "result": null
+    },
+    {
+      "label": "active-copy-migrate-rejected",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "migrate",
+        "old-plan.json",
+        "new-plan.json",
+        "checkpoint-active.json",
+        "migration-request.json",
+        "--revision",
+        "14"
+      ],
+      "cwd": ".",
+      "exit_code": 1,
+      "checkpoint": "checkpoint-active.json",
+      "checkpoint_sha256_before": "18fb867e5939a16dfb6ac47fb5f3e4ac2dd1f56959bbfd43bce6d5982d5fb7b5",
+      "checkpoint_sha256_after": "18fb867e5939a16dfb6ac47fb5f3e4ac2dd1f56959bbfd43bce6d5982d5fb7b5",
+      "revision_before": 14,
+      "revision_after": 14,
+      "stdout": "",
+      "stderr": "RelayCrew: Cannot migrate active or reported work: spike. Confirm workers stopped, then accept or fail their current attempts using the old plan.\n",
+      "result": null
+    },
+    {
+      "label": "migrate-reviewed",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "migrate",
+        "old-plan.json",
+        "new-plan.json",
+        "checkpoint-main.json",
+        "migration-request.json",
+        "--revision",
+        "12"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "9bc964718543d94cd33f67814c73207cbcfe5671dba80edeac5f2ec28e15356a",
+      "checkpoint_sha256_after": "549e2ce41a9bc925347c209a478f9e3408ba6e3a20240f385b130b7eacecbb3a",
+      "revision_before": 12,
+      "revision_after": 13,
+      "stdout": "{\n  \"checkpoint\": {\n    \"format\": 1,\n    \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n    \"plan_hash\": \"402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a\",\n    \"revision\": 13,\n    \"tasks\": [\n      {\n        \"id\": \"api\",\n        \"status\": \"pending\",\n        \"attempt\": 1,\n        \"attempt_id\": null,\n        \"worker\": null,\n        \"report\": null,\n        \"failure\": null,\n        \"review\": null\n      },\n      {\n        \"id\": \"ui\",\n        \"status\": \"completed\",\n        \"attempt\": 1,\n        \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n        \"worker\": \"SYNTHETIC-ui-worker\",\n        \"report\": {\n          \"summary\": \"SYNTHETIC reported ui result; no work actually ran\",\n          \"changed_paths\": [\n            \"src/ui/synthetic.txt\"\n          ],\n          \"checks\": [\n            {\n              \"check\": \"SYNTHETIC UI acceptance check\",\n              \"outcome\": \"passed\",\n              \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n            }\n          ]\n        },\n        \"failure\": null,\n        \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n      },\n      {\n        \"id\": \"docs\",\n        \"status\": \"pending\",\n        \"attempt\": 1,\n        \"attempt_id\": null,\n        \"worker\": null,\n        \"report\": null,\n        \"failure\": null,\n        \"review\": null\n      },\n      {\n        \"id\": \"review\",\n        \"status\": \"pending\",\n        \"attempt\": 0,\n        \"attempt_id\": null,\n        \"worker\": null,\n        \"report\": null,\n        \"failure\": null,\n        \"review\": null\n      }\n    ]\n  },\n  \"migration\": {\n    \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n    \"revision\": 12,\n    \"old_plan_hash\": \"94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b\",\n    \"new_plan_hash\": \"402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a\",\n    \"kept_completed\": [\n      \"ui\"\n    ],\n    \"kept_failed\": [],\n    \"reset\": [\n      {\n        \"id\": \"api\",\n        \"reasons\": [\n          \"Task definition changed\"\n        ]\n      },\n      {\n        \"id\": \"docs\",\n        \"reasons\": [\n          \"Prerequisite completion not retained: api\",\n          \"A prerequisite definition changed\"\n        ]\n      }\n    ],\n    \"added\": [\n      \"review\"\n    ],\n    \"removed\": [\n      \"spike\"\n    ],\n    \"plan_changed\": true,\n    \"review\": \"SYNTHETIC reviewed migration. UI definition and synthetic accepted record remain independent and unchanged. API checks/contract changed; dependent docs require fresh evidence. Remove failed spike and add review. No real results or stopped workers were verified.\"\n  }\n}\n",
+      "stderr": "",
+      "result": {
+        "checkpoint": {
+          "format": 1,
+          "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+          "plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+          "revision": 13,
+          "tasks": [
+            {
+              "id": "api",
+              "status": "pending",
+              "attempt": 1,
+              "attempt_id": null,
+              "worker": null,
+              "report": null,
+              "failure": null,
+              "review": null
+            },
+            {
+              "id": "ui",
+              "status": "completed",
+              "attempt": 1,
+              "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+              "worker": "SYNTHETIC-ui-worker",
+              "report": {
+                "summary": "SYNTHETIC reported ui result; no work actually ran",
+                "changed_paths": [
+                  "src/ui/synthetic.txt"
+                ],
+                "checks": [
+                  {
+                    "check": "SYNTHETIC UI acceptance check",
+                    "outcome": "passed",
+                    "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                  }
+                ]
+              },
+              "failure": null,
+              "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+            },
+            {
+              "id": "docs",
+              "status": "pending",
+              "attempt": 1,
+              "attempt_id": null,
+              "worker": null,
+              "report": null,
+              "failure": null,
+              "review": null
+            },
+            {
+              "id": "review",
+              "status": "pending",
+              "attempt": 0,
+              "attempt_id": null,
+              "worker": null,
+              "report": null,
+              "failure": null,
+              "review": null
+            }
+          ]
+        },
+        "migration": {
+          "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+          "revision": 12,
+          "old_plan_hash": "94ed19a6b117b0b75edb3ee61d766ad364a71298b839f3f52d7dc25fad02730b",
+          "new_plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+          "kept_completed": [
+            "ui"
+          ],
+          "kept_failed": [],
+          "reset": [
+            {
+              "id": "api",
+              "reasons": [
+                "Task definition changed"
+              ]
+            },
+            {
+              "id": "docs",
+              "reasons": [
+                "Prerequisite completion not retained: api",
+                "A prerequisite definition changed"
+              ]
+            }
+          ],
+          "added": [
+            "review"
+          ],
+          "removed": [
+            "spike"
+          ],
+          "plan_changed": true,
+          "review": "SYNTHETIC reviewed migration. UI definition and synthetic accepted record remain independent and unchanged. API checks/contract changed; dependent docs require fresh evidence. Remove failed spike and add review. No real results or stopped workers were verified."
+        }
+      }
+    },
+    {
+      "label": "next-after-migration",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "next",
+        "new-plan.json",
+        "checkpoint-main.json"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "549e2ce41a9bc925347c209a478f9e3408ba6e3a20240f385b130b7eacecbb3a",
+      "checkpoint_sha256_after": "549e2ce41a9bc925347c209a478f9e3408ba6e3a20240f385b130b7eacecbb3a",
+      "revision_before": 13,
+      "revision_after": 13,
+      "stdout": "{\n  \"status\": \"ready\",\n  \"max_workers\": 2,\n  \"max_brief_chars\": 2400,\n  \"task_ids\": [\n    \"api\"\n  ],\n  \"completed\": [\n    \"ui\"\n  ],\n  \"failed\": [],\n  \"blocked\": [],\n  \"briefs\": [\n    {\n      \"id\": \"api\",\n      \"characters\": 391,\n      \"text\": \"Task: api — Implement API contract v2 with revised response fields\\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\\nRead: contracts/api-v2.json\\nWrite: src/api, tests/api\\nResources: none\\nDone when: SYNTHETIC API v2 response contract check; SYNTHETIC API v2 compatibility check\\nReturn: changed paths; evidence and checks; blockers; follow-up needed\"\n    }\n  ],\n  \"in_progress\": [],\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"revision\": 13,\n  \"plan_hash\": \"402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a\",\n  \"active\": []\n}\n",
+      "stderr": "",
+      "result": {
+        "status": "ready",
+        "max_workers": 2,
+        "max_brief_chars": 2400,
+        "task_ids": [
+          "api"
+        ],
+        "completed": [
+          "ui"
+        ],
+        "failed": [],
+        "blocked": [],
+        "briefs": [
+          {
+            "id": "api",
+            "characters": 391,
+            "text": "Task: api — Implement API contract v2 with revised response fields\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\nRead: contracts/api-v2.json\nWrite: src/api, tests/api\nResources: none\nDone when: SYNTHETIC API v2 response contract check; SYNTHETIC API v2 compatibility check\nReturn: changed paths; evidence and checks; blockers; follow-up needed"
+          }
+        ],
+        "in_progress": [],
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "revision": 13,
+        "plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+        "active": []
+      }
+    },
+    {
+      "label": "old-plan-rejected-after-migration",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "next",
+        "old-plan.json",
+        "checkpoint-main.json"
+      ],
+      "cwd": ".",
+      "exit_code": 1,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "549e2ce41a9bc925347c209a478f9e3408ba6e3a20240f385b130b7eacecbb3a",
+      "checkpoint_sha256_after": "549e2ce41a9bc925347c209a478f9e3408ba6e3a20240f385b130b7eacecbb3a",
+      "revision_before": 13,
+      "revision_after": 13,
+      "stdout": "",
+      "stderr": "RelayCrew: Plan definition changed or checkpoint plan_hash is invalid; reconcile stopped workers before starting a new session\n",
+      "result": null
+    },
+    {
+      "label": "old-api-report-rejected-before-restart",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "new-plan.json",
+        "checkpoint-main.json",
+        "events/old-api-report-rejected-before-restart.json",
+        "--revision",
+        "13"
+      ],
+      "cwd": ".",
+      "exit_code": 1,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "549e2ce41a9bc925347c209a478f9e3408ba6e3a20240f385b130b7eacecbb3a",
+      "checkpoint_sha256_after": "549e2ce41a9bc925347c209a478f9e3408ba6e3a20240f385b130b7eacecbb3a",
+      "revision_before": 13,
+      "revision_after": 13,
+      "stdout": "",
+      "stderr": "RelayCrew: api: obsolete or unknown attempt_id\n",
+      "result": null
+    },
+    {
+      "label": "start-api-v2",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "new-plan.json",
+        "checkpoint-main.json",
+        "events/start-api-v2.json",
+        "--revision",
+        "13"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "549e2ce41a9bc925347c209a478f9e3408ba6e3a20240f385b130b7eacecbb3a",
+      "checkpoint_sha256_after": "8b817f64f267da73bf578a3a21a83d0eea4f4db012036426842e6d5ce6b865d2",
+      "revision_before": 13,
+      "revision_after": 14,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a\",\n  \"revision\": 14,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"running\",\n      \"attempt\": 2,\n      \"attempt_id\": \"dac6c25e-b349-4974-9334-af6c8d8bae8a\",\n      \"worker\": \"SYNTHETIC-api-v2-worker\",\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n      \"worker\": \"SYNTHETIC-ui-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported ui result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/ui/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC UI acceptance check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"pending\",\n      \"attempt\": 1,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"review\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+        "revision": 14,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "running",
+            "attempt": 2,
+            "attempt_id": "dac6c25e-b349-4974-9334-af6c8d8bae8a",
+            "worker": "SYNTHETIC-api-v2-worker",
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "ui",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+            "worker": "SYNTHETIC-ui-worker",
+            "report": {
+              "summary": "SYNTHETIC reported ui result; no work actually ran",
+              "changed_paths": [
+                "src/ui/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC UI acceptance check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "docs",
+            "status": "pending",
+            "attempt": 1,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "review",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "old-api-report-rejected-after-restart",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "new-plan.json",
+        "checkpoint-main.json",
+        "events/old-api-report-rejected-after-restart.json",
+        "--revision",
+        "14"
+      ],
+      "cwd": ".",
+      "exit_code": 1,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "8b817f64f267da73bf578a3a21a83d0eea4f4db012036426842e6d5ce6b865d2",
+      "checkpoint_sha256_after": "8b817f64f267da73bf578a3a21a83d0eea4f4db012036426842e6d5ce6b865d2",
+      "revision_before": 14,
+      "revision_after": 14,
+      "stdout": "",
+      "stderr": "RelayCrew: api: obsolete or unknown attempt_id\n",
+      "result": null
+    },
+    {
+      "label": "report-api-v2",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "new-plan.json",
+        "checkpoint-main.json",
+        "events/report-api-v2.json",
+        "--revision",
+        "14"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "8b817f64f267da73bf578a3a21a83d0eea4f4db012036426842e6d5ce6b865d2",
+      "checkpoint_sha256_after": "ac093b2f77dece664fc7ccb935be12bf5b2fc584bdeff31a14c72a6db5627529",
+      "revision_before": 14,
+      "revision_after": 15,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a\",\n  \"revision\": 15,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"reported\",\n      \"attempt\": 2,\n      \"attempt_id\": \"dac6c25e-b349-4974-9334-af6c8d8bae8a\",\n      \"worker\": \"SYNTHETIC-api-v2-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC revised API result; no work ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v2 response contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC bookkeeping evidence; no acceptance command was executed.\"\n          },\n          {\n            \"check\": \"SYNTHETIC API v2 compatibility check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC bookkeeping evidence; no acceptance command was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n      \"worker\": \"SYNTHETIC-ui-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported ui result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/ui/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC UI acceptance check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"pending\",\n      \"attempt\": 1,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"review\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+        "revision": 15,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "reported",
+            "attempt": 2,
+            "attempt_id": "dac6c25e-b349-4974-9334-af6c8d8bae8a",
+            "worker": "SYNTHETIC-api-v2-worker",
+            "report": {
+              "summary": "SYNTHETIC revised API result; no work ran",
+              "changed_paths": [
+                "src/api/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API v2 response contract check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC bookkeeping evidence; no acceptance command was executed."
+                },
+                {
+                  "check": "SYNTHETIC API v2 compatibility check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC bookkeeping evidence; no acceptance command was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "ui",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+            "worker": "SYNTHETIC-ui-worker",
+            "report": {
+              "summary": "SYNTHETIC reported ui result; no work actually ran",
+              "changed_paths": [
+                "src/ui/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC UI acceptance check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "docs",
+            "status": "pending",
+            "attempt": 1,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "review",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "accept-api-v2",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "new-plan.json",
+        "checkpoint-main.json",
+        "events/accept-api-v2.json",
+        "--revision",
+        "15"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "ac093b2f77dece664fc7ccb935be12bf5b2fc584bdeff31a14c72a6db5627529",
+      "checkpoint_sha256_after": "f0fd76d8259b3e64e67cab2f0466261ca63ac6b82f090aa5f4bd33e9f8f71f41",
+      "revision_before": 15,
+      "revision_after": 16,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a\",\n  \"revision\": 16,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"completed\",\n      \"attempt\": 2,\n      \"attempt_id\": \"dac6c25e-b349-4974-9334-af6c8d8bae8a\",\n      \"worker\": \"SYNTHETIC-api-v2-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC revised API result; no work ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v2 response contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC bookkeeping evidence; no acceptance command was executed.\"\n          },\n          {\n            \"check\": \"SYNTHETIC API v2 compatibility check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC bookkeeping evidence; no acceptance command was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC acceptance and stopped assertion only; no actual worker or checks.\"\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n      \"worker\": \"SYNTHETIC-ui-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported ui result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/ui/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC UI acceptance check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"pending\",\n      \"attempt\": 1,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"review\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+        "revision": 16,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "completed",
+            "attempt": 2,
+            "attempt_id": "dac6c25e-b349-4974-9334-af6c8d8bae8a",
+            "worker": "SYNTHETIC-api-v2-worker",
+            "report": {
+              "summary": "SYNTHETIC revised API result; no work ran",
+              "changed_paths": [
+                "src/api/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API v2 response contract check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC bookkeeping evidence; no acceptance command was executed."
+                },
+                {
+                  "check": "SYNTHETIC API v2 compatibility check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC bookkeeping evidence; no acceptance command was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC acceptance and stopped assertion only; no actual worker or checks."
+          },
+          {
+            "id": "ui",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+            "worker": "SYNTHETIC-ui-worker",
+            "report": {
+              "summary": "SYNTHETIC reported ui result; no work actually ran",
+              "changed_paths": [
+                "src/ui/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC UI acceptance check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "docs",
+            "status": "pending",
+            "attempt": 1,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "review",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "next-after-api-v2",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "next",
+        "new-plan.json",
+        "checkpoint-main.json"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "f0fd76d8259b3e64e67cab2f0466261ca63ac6b82f090aa5f4bd33e9f8f71f41",
+      "checkpoint_sha256_after": "f0fd76d8259b3e64e67cab2f0466261ca63ac6b82f090aa5f4bd33e9f8f71f41",
+      "revision_before": 16,
+      "revision_after": 16,
+      "stdout": "{\n  \"status\": \"ready\",\n  \"max_workers\": 2,\n  \"max_brief_chars\": 2400,\n  \"task_ids\": [\n    \"docs\"\n  ],\n  \"completed\": [\n    \"api\",\n    \"ui\"\n  ],\n  \"failed\": [],\n  \"blocked\": [],\n  \"briefs\": [\n    {\n      \"id\": \"docs\",\n      \"characters\": 297,\n      \"text\": \"Task: docs — Document the accepted API\\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\\nRead: src/api\\nWrite: docs/api.md\\nResources: none\\nDone when: SYNTHETIC API documentation check\\nReturn: changed paths; evidence and checks; blockers; follow-up needed\"\n    }\n  ],\n  \"in_progress\": [],\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"revision\": 16,\n  \"plan_hash\": \"402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a\",\n  \"active\": []\n}\n",
+      "stderr": "",
+      "result": {
+        "status": "ready",
+        "max_workers": 2,
+        "max_brief_chars": 2400,
+        "task_ids": [
+          "docs"
+        ],
+        "completed": [
+          "api",
+          "ui"
+        ],
+        "failed": [],
+        "blocked": [],
+        "briefs": [
+          {
+            "id": "docs",
+            "characters": 297,
+            "text": "Task: docs — Document the accepted API\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\nRead: src/api\nWrite: docs/api.md\nResources: none\nDone when: SYNTHETIC API documentation check\nReturn: changed paths; evidence and checks; blockers; follow-up needed"
+          }
+        ],
+        "in_progress": [],
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "revision": 16,
+        "plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+        "active": []
+      }
+    },
+    {
+      "label": "start-docs-v2",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "new-plan.json",
+        "checkpoint-main.json",
+        "events/start-docs-v2.json",
+        "--revision",
+        "16"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "f0fd76d8259b3e64e67cab2f0466261ca63ac6b82f090aa5f4bd33e9f8f71f41",
+      "checkpoint_sha256_after": "5b726938f26a42394f4ce8155308312e0c1a6df78e961304b174ecd5a6aa0ae7",
+      "revision_before": 16,
+      "revision_after": 17,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a\",\n  \"revision\": 17,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"completed\",\n      \"attempt\": 2,\n      \"attempt_id\": \"dac6c25e-b349-4974-9334-af6c8d8bae8a\",\n      \"worker\": \"SYNTHETIC-api-v2-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC revised API result; no work ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v2 response contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC bookkeeping evidence; no acceptance command was executed.\"\n          },\n          {\n            \"check\": \"SYNTHETIC API v2 compatibility check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC bookkeeping evidence; no acceptance command was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC acceptance and stopped assertion only; no actual worker or checks.\"\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n      \"worker\": \"SYNTHETIC-ui-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported ui result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/ui/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC UI acceptance check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"running\",\n      \"attempt\": 2,\n      \"attempt_id\": \"4a961e01-9f7f-4a72-886f-8318dd75331b\",\n      \"worker\": \"SYNTHETIC-docs-worker\",\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"review\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+        "revision": 17,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "completed",
+            "attempt": 2,
+            "attempt_id": "dac6c25e-b349-4974-9334-af6c8d8bae8a",
+            "worker": "SYNTHETIC-api-v2-worker",
+            "report": {
+              "summary": "SYNTHETIC revised API result; no work ran",
+              "changed_paths": [
+                "src/api/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API v2 response contract check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC bookkeeping evidence; no acceptance command was executed."
+                },
+                {
+                  "check": "SYNTHETIC API v2 compatibility check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC bookkeeping evidence; no acceptance command was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC acceptance and stopped assertion only; no actual worker or checks."
+          },
+          {
+            "id": "ui",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+            "worker": "SYNTHETIC-ui-worker",
+            "report": {
+              "summary": "SYNTHETIC reported ui result; no work actually ran",
+              "changed_paths": [
+                "src/ui/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC UI acceptance check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "docs",
+            "status": "running",
+            "attempt": 2,
+            "attempt_id": "4a961e01-9f7f-4a72-886f-8318dd75331b",
+            "worker": "SYNTHETIC-docs-worker",
+            "report": null,
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "review",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "report-docs-v2",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "new-plan.json",
+        "checkpoint-main.json",
+        "events/report-docs-v2.json",
+        "--revision",
+        "17"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "5b726938f26a42394f4ce8155308312e0c1a6df78e961304b174ecd5a6aa0ae7",
+      "checkpoint_sha256_after": "156bf227fc2bb035e7830c7fdc62cd37e097a8bf1edc79961cdc12b5e5f011a1",
+      "revision_before": 17,
+      "revision_after": 18,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a\",\n  \"revision\": 18,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"completed\",\n      \"attempt\": 2,\n      \"attempt_id\": \"dac6c25e-b349-4974-9334-af6c8d8bae8a\",\n      \"worker\": \"SYNTHETIC-api-v2-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC revised API result; no work ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v2 response contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC bookkeeping evidence; no acceptance command was executed.\"\n          },\n          {\n            \"check\": \"SYNTHETIC API v2 compatibility check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC bookkeeping evidence; no acceptance command was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC acceptance and stopped assertion only; no actual worker or checks.\"\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n      \"worker\": \"SYNTHETIC-ui-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported ui result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/ui/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC UI acceptance check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"reported\",\n      \"attempt\": 2,\n      \"attempt_id\": \"4a961e01-9f7f-4a72-886f-8318dd75331b\",\n      \"worker\": \"SYNTHETIC-docs-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported docs result; no work actually ran\",\n        \"changed_paths\": [\n          \"docs/api.md\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API documentation check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": null\n    },\n    {\n      \"id\": \"review\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+        "revision": 18,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "completed",
+            "attempt": 2,
+            "attempt_id": "dac6c25e-b349-4974-9334-af6c8d8bae8a",
+            "worker": "SYNTHETIC-api-v2-worker",
+            "report": {
+              "summary": "SYNTHETIC revised API result; no work ran",
+              "changed_paths": [
+                "src/api/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API v2 response contract check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC bookkeeping evidence; no acceptance command was executed."
+                },
+                {
+                  "check": "SYNTHETIC API v2 compatibility check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC bookkeeping evidence; no acceptance command was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC acceptance and stopped assertion only; no actual worker or checks."
+          },
+          {
+            "id": "ui",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+            "worker": "SYNTHETIC-ui-worker",
+            "report": {
+              "summary": "SYNTHETIC reported ui result; no work actually ran",
+              "changed_paths": [
+                "src/ui/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC UI acceptance check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "docs",
+            "status": "reported",
+            "attempt": 2,
+            "attempt_id": "4a961e01-9f7f-4a72-886f-8318dd75331b",
+            "worker": "SYNTHETIC-docs-worker",
+            "report": {
+              "summary": "SYNTHETIC reported docs result; no work actually ran",
+              "changed_paths": [
+                "docs/api.md"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API documentation check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": null
+          },
+          {
+            "id": "review",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "accept-docs-v2",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "apply",
+        "new-plan.json",
+        "checkpoint-main.json",
+        "events/accept-docs-v2.json",
+        "--revision",
+        "18"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "156bf227fc2bb035e7830c7fdc62cd37e097a8bf1edc79961cdc12b5e5f011a1",
+      "checkpoint_sha256_after": "7c4e2bea6f67544e4e94bdd25a98f11d2c9b191367f5aa826e1778d03062bfe2",
+      "revision_before": 18,
+      "revision_after": 19,
+      "stdout": "{\n  \"format\": 1,\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"plan_hash\": \"402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a\",\n  \"revision\": 19,\n  \"tasks\": [\n    {\n      \"id\": \"api\",\n      \"status\": \"completed\",\n      \"attempt\": 2,\n      \"attempt_id\": \"dac6c25e-b349-4974-9334-af6c8d8bae8a\",\n      \"worker\": \"SYNTHETIC-api-v2-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC revised API result; no work ran\",\n        \"changed_paths\": [\n          \"src/api/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API v2 response contract check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC bookkeeping evidence; no acceptance command was executed.\"\n          },\n          {\n            \"check\": \"SYNTHETIC API v2 compatibility check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC bookkeeping evidence; no acceptance command was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC acceptance and stopped assertion only; no actual worker or checks.\"\n    },\n    {\n      \"id\": \"ui\",\n      \"status\": \"completed\",\n      \"attempt\": 1,\n      \"attempt_id\": \"3b41aa17-32a4-425a-8555-42be9d53ab98\",\n      \"worker\": \"SYNTHETIC-ui-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported ui result; no work actually ran\",\n        \"changed_paths\": [\n          \"src/ui/synthetic.txt\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC UI acceptance check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"docs\",\n      \"status\": \"completed\",\n      \"attempt\": 2,\n      \"attempt_id\": \"4a961e01-9f7f-4a72-886f-8318dd75331b\",\n      \"worker\": \"SYNTHETIC-docs-worker\",\n      \"report\": {\n        \"summary\": \"SYNTHETIC reported docs result; no work actually ran\",\n        \"changed_paths\": [\n          \"docs/api.md\"\n        ],\n        \"checks\": [\n          {\n            \"check\": \"SYNTHETIC API documentation check\",\n            \"outcome\": \"passed\",\n            \"evidence\": \"SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed.\"\n          }\n        ]\n      },\n      \"failure\": null,\n      \"review\": \"SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists.\"\n    },\n    {\n      \"id\": \"review\",\n      \"status\": \"pending\",\n      \"attempt\": 0,\n      \"attempt_id\": null,\n      \"worker\": null,\n      \"report\": null,\n      \"failure\": null,\n      \"review\": null\n    }\n  ]\n}\n",
+      "stderr": "",
+      "result": {
+        "format": 1,
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+        "revision": 19,
+        "tasks": [
+          {
+            "id": "api",
+            "status": "completed",
+            "attempt": 2,
+            "attempt_id": "dac6c25e-b349-4974-9334-af6c8d8bae8a",
+            "worker": "SYNTHETIC-api-v2-worker",
+            "report": {
+              "summary": "SYNTHETIC revised API result; no work ran",
+              "changed_paths": [
+                "src/api/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API v2 response contract check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC bookkeeping evidence; no acceptance command was executed."
+                },
+                {
+                  "check": "SYNTHETIC API v2 compatibility check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC bookkeeping evidence; no acceptance command was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC acceptance and stopped assertion only; no actual worker or checks."
+          },
+          {
+            "id": "ui",
+            "status": "completed",
+            "attempt": 1,
+            "attempt_id": "3b41aa17-32a4-425a-8555-42be9d53ab98",
+            "worker": "SYNTHETIC-ui-worker",
+            "report": {
+              "summary": "SYNTHETIC reported ui result; no work actually ran",
+              "changed_paths": [
+                "src/ui/synthetic.txt"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC UI acceptance check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "docs",
+            "status": "completed",
+            "attempt": 2,
+            "attempt_id": "4a961e01-9f7f-4a72-886f-8318dd75331b",
+            "worker": "SYNTHETIC-docs-worker",
+            "report": {
+              "summary": "SYNTHETIC reported docs result; no work actually ran",
+              "changed_paths": [
+                "docs/api.md"
+              ],
+              "checks": [
+                {
+                  "check": "SYNTHETIC API documentation check",
+                  "outcome": "passed",
+                  "evidence": "SYNTHETIC evidence for bookkeeping evaluation. No command or acceptance check was executed."
+                }
+              ]
+            },
+            "failure": null,
+            "review": "SYNTHETIC coordinator acceptance and stopped assertion. No actual worker, diff, or acceptance check exists."
+          },
+          {
+            "id": "review",
+            "status": "pending",
+            "attempt": 0,
+            "attempt_id": null,
+            "worker": null,
+            "report": null,
+            "failure": null,
+            "review": null
+          }
+        ]
+      }
+    },
+    {
+      "label": "next-after-docs-v2",
+      "command": [
+        "node",
+        "<skill-dir>/scripts/session.mjs",
+        "next",
+        "new-plan.json",
+        "checkpoint-main.json"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "checkpoint": "checkpoint-main.json",
+      "checkpoint_sha256_before": "7c4e2bea6f67544e4e94bdd25a98f11d2c9b191367f5aa826e1778d03062bfe2",
+      "checkpoint_sha256_after": "7c4e2bea6f67544e4e94bdd25a98f11d2c9b191367f5aa826e1778d03062bfe2",
+      "revision_before": 19,
+      "revision_after": 19,
+      "stdout": "{\n  \"status\": \"ready\",\n  \"max_workers\": 2,\n  \"max_brief_chars\": 2400,\n  \"task_ids\": [\n    \"review\"\n  ],\n  \"completed\": [\n    \"api\",\n    \"ui\",\n    \"docs\"\n  ],\n  \"failed\": [],\n  \"blocked\": [],\n  \"briefs\": [\n    {\n      \"id\": \"review\",\n      \"characters\": 370,\n      \"text\": \"Task: review — Independently review the revised API and documentation\\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\\nRead: src/api, tests/api, docs/api.md\\nWrite: review/findings.md\\nResources: none\\nDone when: SYNTHETIC API and documentation review check\\nReturn: changed paths; evidence and checks; blockers; follow-up needed\"\n    }\n  ],\n  \"in_progress\": [],\n  \"session_id\": \"ac6288ac-b05e-43de-b777-56093fd41777\",\n  \"revision\": 19,\n  \"plan_hash\": \"402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a\",\n  \"active\": []\n}\n",
+      "stderr": "",
+      "result": {
+        "status": "ready",
+        "max_workers": 2,
+        "max_brief_chars": 2400,
+        "task_ids": [
+          "review"
+        ],
+        "completed": [
+          "api",
+          "ui",
+          "docs"
+        ],
+        "failed": [],
+        "blocked": [],
+        "briefs": [
+          {
+            "id": "review",
+            "characters": 370,
+            "text": "Task: review — Independently review the revised API and documentation\nContext: SYNTHETIC fixture only. No worker, project, checks, or actual implementation exists.\nRead: src/api, tests/api, docs/api.md\nWrite: review/findings.md\nResources: none\nDone when: SYNTHETIC API and documentation review check\nReturn: changed paths; evidence and checks; blockers; follow-up needed"
+          }
+        ],
+        "in_progress": [],
+        "session_id": "ac6288ac-b05e-43de-b777-56093fd41777",
+        "revision": 19,
+        "plan_hash": "402ec5a3c3231ecb66735964e0dbe80bcd861d24b73b241f278e74eb4df7e95a",
+        "active": []
+      }
+    }
+  ]
+}
