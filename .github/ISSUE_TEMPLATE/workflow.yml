@@ -1,0 +1,35 @@
+name: Workflow report
+description: Share a concrete task, outcome, or compatibility observation
+title: "[Workflow] "
+body:
+  - type: input
+    id: host
+    attributes:
+      label: Host and version
+      description: Include the assistant/runtime version and operating system you actually used.
+    validations:
+      required: true
+  - type: textarea
+    id: task
+    attributes:
+      label: Task and expected result
+      description: Describe a real task. Remove private source, credentials, and personal data.
+    validations:
+      required: true
+  - type: textarea
+    id: plan
+    attributes:
+      label: Minimal task split or plan
+      description: Include dependencies, read/write ownership, and the actual worker count when relevant.
+  - type: textarea
+    id: observed
+    attributes:
+      label: What happened
+      description: Include checks, failures, and what became easier or harder. Distinguish observed behavior from assumptions.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Reproduction or evidence
+      description: A minimal fixture or command is more useful than a full transcript. State the baseline and method for performance claims.

@@ -14,6 +14,22 @@ Copy this entire `relaycrew` folder into the target project's `.claude/skills/` 
 
 Official references: [skills](https://code.claude.com/docs/en/skills), [subagents](https://code.claude.com/docs/en/sub-agents).
 
+## ChatGPT
+
+The standard folder is the authoring unit. Standalone skills are supported in the ChatGPT desktop app; skills distributed as plugins can also be available across Chat and Work on web, desktop, and mobile. Follow the account's supported skill/plugin installation flow and select the installed skill with `@`. This GitHub repository is not automatically a published ChatGPT directory plugin, and a ZIP alone does not grant tools or enable background workers. Public plugin-directory availability requires the platform's separate distribution/review process.
+
+When the ChatGPT session can access the project and execute code, use those actual tools. In a session limited to supplied text or files, use the planning or review parts and clearly label execution gaps. Do not claim that a normal chat has spawned independent agents or modified a repository.
+
+Official references: [build skills](https://learn.chatgpt.com/docs/build-skills), [plugins](https://learn.chatgpt.com/docs/plugins).
+
+## VS Code with GitHub Copilot
+
+Project Agent Skills can be placed in `.agents/skills/relaycrew/`. Confirm discovery through the host's skills UI before relying on automatic activation. Delegation remains a separate host capability. See the [Agent Skills quickstart](https://agentskills.io/skill-creation/quickstart).
+
+## OpenCode
+
+Use `.opencode/skills/relaycrew/`, or the documented `.agents/skills/` compatibility location. The native skill mechanism loads `SKILL.md` on demand. Use delegation only if the current session exposes it; otherwise work sequentially. See [OpenCode Agent Skills](https://opencode.ai/docs/skills/).
+
 ## Other hosts or delegation unavailable
 
 Load `SKILL.md` through the host's supported mechanism. Run the workflow sequentially when native delegation is unavailable or disallowed. Distinguish separate reasoning passes in one agent from independent worker execution. The optional planner works offline, independently of any host.

@@ -2,11 +2,11 @@
 
 ## English post
 
-I built RelayCrew, a small Agent Skill for Codex and Claude Code.
+I built RelayCrew: parallel AI coding with clear ownership.
 
-The idea: use a small team when tasks are independent, give each worker a focused handoff, and keep conflicting edits in sequence. The optional offline planner checks dependencies, file claims, and shared resources. It has zero npm dependencies and needs no API key.
+The idea: use a small team when tasks are independent, give each worker a focused handoff, and keep conflicting edits in sequence. The optional offline planner checks dependencies, file claims, shared resources, and failed-task holds. It has zero npm dependencies and needs no API key.
 
-There is a runnable example, tests, and a solo fallback when native delegation is unavailable. This is an early release; I would particularly value examples where coordination helped, or where staying solo was better.
+There are runnable examples, a saved two-worker coding evaluation, and a solo fallback when native delegation is unavailable. The small-task baseline also passed without the skill, so I am not claiming a general speedup. This is an early release; I would particularly value examples where coordination helped, or where staying solo was better.
 
 Try it: https://github.com/ScriptNegative/relaycrew
 

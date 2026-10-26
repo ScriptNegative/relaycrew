@@ -1,10 +1,10 @@
 ---
 name: relaycrew
-description: Coordinate coding work with a small, context-bounded agent team. Use for independent investigations, multi-part changes, or implementation followed by independent review; choose solo execution for small or tightly coupled tasks.
+description: Coordinate parallel coding work, independent investigations, and implementation followed by independent review with a small agent team. Use when a coding task benefits from separate workstreams, explicit file ownership, or focused handoffs; keep small dependent edits solo unless the user requests a team.
 license: MIT
 metadata:
   author: ScriptNegative
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # RelayCrew
@@ -13,9 +13,11 @@ Spend context on the work, and add workers only when they have independent work 
 
 ## Choose the smallest useful team
 
-Inspect enough of the project to identify the acceptance checks and shared interfaces. Keep a small fix or a dependent chain in the main agent. For separable work, retain one coordinator and start with at most two active workers, within the host's actual capacity and the user's budget. A larger queue can run in waves; more workers are not a quality metric.
+Inspect enough of the project to identify the acceptance checks and shared interfaces. In automatic mode, keep a small fix or a dependent chain in the main agent. Respect an explicit request for solo, team, or review mode. For separable work, retain one coordinator and start with at most two active workers, within the host's actual capacity and the user's budget. A larger queue can run in waves; more workers are not a quality metric. Read [options](references/options.md) when the user requests a mode, budget, review, or checkpoint customization.
 
 Use native delegation only when available and permitted by the host and the user's instructions. Otherwise execute the same tasks sequentially and report solo mode. Never invent agents, tool names, or isolation. This skill does not grant permission to publish, deploy, buy services, alter access, or contact other people.
+
+Check actual file, editing, execution, and delegation capabilities before promising an outcome. Without source access, request the necessary artifacts or provide a clearly labeled plan. Without execution tools, distinguish a reasoned review from tested behavior. The workflow does not require a terminal; the optional planner does.
 
 Read [host notes](references/hosts.md) only when choosing how to delegate in Codex or Claude Code. Do not install an agent runtime to make the skill work.
 
@@ -45,7 +47,7 @@ Include relevant repository rules and inherited user constraints. Let workers re
 
 ## Integrate evidence before continuing
 
-Run only ready tasks with compatible ownership. A planned wave is not a runtime guarantee: a worker timeout, failed check, partial edit, or changed interface invalidates dependent work. Inspect the actual diff, update the plan, and resume only the affected tasks after prerequisites are verified. Preserve useful partial work; do not retry an unchanged failure repeatedly.
+Run only ready tasks with compatible ownership. A planned wave is not a runtime guarantee: a worker timeout, failed check, partial edit, or changed interface invalidates dependent work. Inspect the actual diff, update the plan, and resume only the affected tasks after prerequisites are verified. Before transferring ownership, stop the previous worker and confirm that it has stopped writing. Preserve useful partial work; do not retry an unchanged failure repeatedly. For a long run, checkpoint verified completions and failures; the planner can hold dependents while scheduling unrelated work.
 
 Ask workers for concise evidence with file locations and actual check results. A worker saying "done" is not proof. Reconcile disagreements against source and reproducible behavior. For an independent review, pass the requirement and resulting diff without the implementer's conclusions; findings must identify a concrete failure or missing check.
 

@@ -2,95 +2,176 @@
 
 # RelayCrew
 
-**A lightweight coding skill for small AI teams, focused handoffs, and fewer file conflicts.**
+## Parallel AI coding. Clear ownership.
 
-Give the API and UI work to separate agents. Keep edits to the same file in sequence. Send a short brief to each worker, then verify the combined result. RelayCrew brings that workflow to Codex and Claude Code without a new agent framework.
+Turn one coding request into focused handoffs and a coordinated result. **RelayCrew is a portable Agent Skill** that helps small AI teams divide work, avoid overlapping edits, and verify the combined change.
 
-The core skill is plain Markdown. The optional offline planner uses Node.js built-ins only. No package install, service account, API key, hooks, or background process is required by RelayCrew. Your coding assistant still uses its normal subscription or API allowance.
+Keep the coding assistant you already use. The core is Markdown; an optional offline planner uses Node.js built-ins. No RelayCrew account, API key, server, or background process.
 
-## Try the planner in 30 seconds
+**[Download the skill](https://github.com/ScriptNegative/relaycrew/releases/latest) · [Try a real coding task](evals/README.md) · [See the evidence](evals/results.md)**
+
+## The problem
+
+Two agents change the same lockfile. A worker misses an interface decision. Review starts before a failed prerequisite is fixed. Parallel progress becomes integration cleanup.
+
+Native subagents can start the work. The boundaries and handoffs still need a plan.
+
+## The solution
+
+RelayCrew gives the coordinating agent a small repeatable workflow: choose the smallest useful team, assign explicit ownership, send focused briefs, and check the integrated result. The optional planner makes declared overlaps and dependency holds visible before dispatch.
+
+Small tasks stay solo in automatic mode. A larger independent queue runs in bounded waves.
+
+## How it works
+
+1. **Agree on the contract.** Identify the required outcome and shared interfaces.
+2. **Divide compatible work.** Give each worker clear read/write paths and checks.
+3. **Relay the essentials.** Send relevant facts and source locations in a short brief.
+4. **Verify, then continue.** Hold failed dependencies and inspect the combined change.
+
+Choose auto, solo, team, or review mode in your prompt. Adjust the worker ceiling, briefing target, and checkpoints when useful. [Options and example prompts](skills/relaycrew/references/options.md).
+
+## Quick demo
+
+Node.js 18+ is enough. No npm install is needed:
 
 ```sh
 git clone https://github.com/ScriptNegative/relaycrew.git
 cd relaycrew
-node skills/relaycrew/scripts/plan.mjs examples/feature.plan.json
+node skills/relaycrew/scripts/plan.mjs examples/shared-lockfile.plan.json --format markdown
 ```
-
-The example describes a search feature. Its proposed waves are:
 
 ```text
-Wave 1   api + ui       Separate writes, shared frozen contract
-Wave 2   docs           Reads the completed API
-Wave 3   review         Reads the integrated result
+Wave 1: api-deps + docs
+Wave 2: ui-deps
 ```
 
-The JSON output also explains conflicting claims and renders a compact brief for each task. The example is a planning fixture; it does not implement a search application or launch agents.
+The two dependency updates both claim the lockfile, so they run in sequence. Separate documentation work can proceed alongside the first update. The output explains the overlap.
 
-## Install the skill
+Try two other patterns:
 
-Copy the **entire** [`skills/relaycrew`](skills/relaycrew) directory into your project's skill directory:
+```sh
+node skills/relaycrew/scripts/plan.mjs examples/feature.plan.json --format markdown
+node skills/relaycrew/scripts/plan.mjs examples/failure-resume.plan.json --format markdown
+```
 
-| Assistant | Destination | Invoke |
+The second holds documentation and review behind a failed API task while unrelated UI work remains eligible. These commands plan work; they do not launch agents.
+
+## Use cases
+
+| Task | Useful pattern |
+| --- | --- |
+| API and frontend feature | Freeze the interface, split implementation, check the integrated result |
+| Several plausible bug causes | Independent read-only investigations before choosing a fix |
+| Dependency changes sharing a lockfile | One owner at a time, with explicit ordering |
+| Interrupted implementation | Verify completed state, hold failed prerequisites, resume compatible work |
+| A change needing another perspective | Independent read-only review when native delegation permits it |
+| A tiny dependent edit | Solo execution without creating a team |
+
+## Installation
+
+Download the ZIP from [Releases](https://github.com/ScriptNegative/relaycrew/releases/latest), or copy the complete [`skills/relaycrew`](skills/relaycrew) folder from this repository. Keep the bundled references and script together.
+
+| Host | Project installation or route | Invocation |
 | --- | --- | --- |
 | Codex | `.agents/skills/relaycrew/` | `$relaycrew` |
 | Claude Code, local project | `.claude/skills/relaycrew/` | `/relaycrew` |
+| VS Code with Copilot | `.agents/skills/relaycrew/` | Confirm discovery in the host's skills UI |
+| OpenCode | `.opencode/skills/relaycrew/` or its documented compatibility directory | Ask the host to load `relaycrew` |
+| ChatGPT | Supported desktop skill flow, or a separately distributed plugin | Select the installed skill with `@` |
+| Other compatible agents | Their supported Agent Skills loader | Host-specific |
 
-For example, from the target project on macOS or Linux, after cloning RelayCrew alongside it:
+For example, from a target project with this repository cloned alongside it:
 
 ```sh
 mkdir -p .agents/skills
 cp -R ../relaycrew/skills/relaycrew .agents/skills/
 ```
 
-PowerShell, for Codex:
+PowerShell:
 
 ```powershell
 New-Item -ItemType Directory -Force .agents/skills | Out-Null
 Copy-Item -Recurse ../relaycrew/skills/relaycrew .agents/skills/
 ```
 
-For Claude Code, replace `.agents/skills` with `.claude/skills`. If the destination already exists, review and replace that folder deliberately; do not nest another copy inside it. Restart or reload skills as required by your host. Cloud sessions may use different loading rules; see [host notes](skills/relaycrew/references/hosts.md).
+Replace the destination for your host. If the folder already exists, review and replace it deliberately. Reload skills if the host requires it. [Host notes and official documentation](skills/relaycrew/references/hosts.md) distinguish local, cloud, and ChatGPT distribution paths.
 
-Then ask:
-
-```text
-Use RelayCrew to implement this feature. Use at most two workers when native
-delegation is available and permitted. Agree on shared interfaces first,
-assign exclusive write paths, and verify the integrated result.
-```
-
-## What makes it useful
-
-- **A team sized to the work.** Small fixes stay solo. Larger queues run in bounded waves.
-- **Context capsules.** Workers receive relevant paths, decisions, and acceptance checks, rather than copied transcripts.
-- **Read/write awareness.** The planner separates conflicting file claims, including directory descendants, and exclusive shared resources.
-- **Evidence at handoff.** Dependent tasks resume after verified results; failures require replanning.
-- **Portable fallback.** The same workflow runs sequentially if native delegation is unavailable.
-
-There are no fixed personas, model recommendations, or recursive swarms. Workers are defined by the task they need to complete.
-
-## Limits and validation
-
-RelayCrew is an instruction workflow with an optional static planner. It does **not** provide filesystem locks, an agent runtime, or a hard token budget. The planner trusts declared claims, cannot detect undeclared side effects or path aliases, and does not execute checks. File overlap determines concurrency, while `after` determines semantic order. The coordinator must enforce ownership and verify success before dispatching dependent tasks.
-
-The default two-worker ceiling and 2,400-character capsules are adjustable guidance. They do not prove lower token use, lower cost, or faster execution. No comparative model benchmark or live Claude Code delegation run is claimed for this release.
-
-Run the dependency-free tests with Node.js 18+:
+Optional community installer, with Node.js 22.20+ and its own installation/telemetry behavior:
 
 ```sh
-node --test tests/plan.test.mjs
+npx skills add ScriptNegative/relaycrew --skill relaycrew
 ```
 
-Tests cover scheduling, dependency cycles, read/write conflicts, directory claims, shared resources, Windows path normalization, malformed inputs, capsule limits, and the CLI example. These validate the planner, not model behavior. See the [planner format](skills/relaycrew/references/planner.md) and [behavioral evaluation cases](evals/README.md).
+That command uses the separate [Vercel Skills CLI](https://github.com/vercel-labs/skills); manual installation requires no installer. Choose your target host in its prompt.
 
-## Contribute a real workflow
+Then give your assistant a task:
 
-Try it on a task you already need to do. Open an issue with the assistant and version, task split, observed result, and a minimal example. Remove private source and credentials. Useful early contributions include reproducible scheduling bugs, examples where solo execution was better, and measured comparisons with a stated baseline.
+```text
+Use RelayCrew in team mode with at most two workers for this feature.
+Agree on shared interfaces, assign exclusive write paths, and verify the
+integrated result. Use only delegation that this host actually permits.
+```
 
-If it helps your workflow, a star makes the project easier to find again. Feedback and usable examples matter more than a badge.
+## Real coding examples and evidence
 
-## License and references
+The [evaluation fixtures](evals/README.md) include CSV export and an offline event report. They start as incomplete modules with frozen contracts and acceptance tests so another user can try the same task.
 
-MIT · [ScriptNegative](https://github.com/ScriptNegative).
+A Codex team run used two independent implementers and a coordinating integrator; all 23 resulting checks passed. A small CSV run stayed solo. The CSV baseline also passed without the skill. These are exploratory feasibility checks, not proof of faster or cheaper work. [Results and limitations](evals/results.md).
 
-Packaging follows the [Agent Skills specification](https://agentskills.io/specification). Host installation follows the official [Codex skills](https://learn.chatgpt.com/docs/build-skills) and [Claude Code skills](https://code.claude.com/docs/en/skills) documentation. RelayCrew is an independent project, with no affiliation or endorsement implied.
+The planner and copied-package tests run in [GitHub Actions](https://github.com/ScriptNegative/relaycrew/actions) on Node 18/22 on Linux and Node 22 on Windows.
+
+## Before and after the plan
+
+| Unstructured task split | RelayCrew workflow |
+| --- | --- |
+| Two workers both claim the lockfile | Declared overlap is explained; the plan separates their waves |
+| Every worker receives a copied transcript | A focused brief points to the relevant contract, files, and checks |
+| A downstream task starts after an upstream failure | Failed task state holds its transitive dependents |
+| A worker's “done” is the integration gate | The coordinator inspects evidence and runs the acceptance checks |
+
+This comparison describes workflow behavior, not a measured speed or cost improvement.
+
+## FAQ
+
+**Is RelayCrew an agent framework?**
+
+It is an instruction workflow with an optional static planner. Native agents and tools come from the host you already use.
+
+**Does it work with any agent?**
+
+The package follows Agent Skills conventions and avoids hardcoded tool APIs. Installation, delegation, editing, and execution capabilities vary by host. Codex behavior has been exercised in the published runs; Claude Code, ChatGPT surfaces, Copilot, and OpenCode setup is documented, with live runtime verification still limited. A plain chat can use planning or review instructions without becoming an execution environment.
+
+**Does it prevent every conflict?**
+
+The planner only sees declared literal paths and resources. It does not lock files, resolve path aliases, or discover hidden side effects. The coordinator must enforce ownership.
+
+**Does it save tokens or time?**
+
+No general savings claim has been established. Short briefs and a small team are workflow choices. Actual usage must include all workers and be compared against a disclosed baseline.
+
+**What happens when a task fails?**
+
+Record verified `completed` and `failed` task IDs. The planner holds dependent work and can continue unrelated tasks. `--brief ID` only emits a capsule for the next runnable wave. [Planner format and recovery](skills/relaycrew/references/planner.md).
+
+**Can I use it without Node.js or delegation?**
+
+Yes for the instruction workflow, within the tools your host provides. Node is needed only for the optional planner. Without native delegation, disclose solo execution. Without source or execution access, provide a plan or reasoned review and state the gap.
+
+**Does RelayCrew add a service charge?**
+
+The project is MIT licensed and has no service account. Your assistant's normal subscription or API usage still applies.
+
+## Contribute
+
+Try one real task and share what happened. Include the host/version, task split, minimal plan, and checks; remove private source and credentials. Reproducible failure cases, host validation, useful workflows, and measured comparisons are especially helpful. See [contribution guidance](CONTRIBUTING.md).
+
+Run the local checks with Node.js 18+:
+
+```sh
+node --test tests/plan.test.mjs tests/package.test.mjs
+```
+
+If RelayCrew helps, a star makes it easier to find again. A concrete observation helps make it better.
+
+MIT · [ScriptNegative](https://github.com/ScriptNegative) · Independent project using the [Agent Skills standard](https://agentskills.io/specification).

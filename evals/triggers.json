@@ -1,0 +1,22 @@
+[
+  {"query":"Use a small agent team to implement the API and UI against docs/search.md, then check the integrated change.","should_trigger":true},
+  {"query":"Two coding agents keep changing package-lock.json at once. Help me divide ownership before the next run.","should_trigger":true},
+  {"query":"Coordinate independent investigations of the parser failure and cache failure without editing the code yet.","should_trigger":true},
+  {"query":"Use RelayCrew in solo mode for this dependent refactor.","should_trigger":true},
+  {"query":"I want a fresh reviewer after implementation, with only the requirement and final diff.","should_trigger":true},
+  {"query":"Our API task failed, but docs for another module can continue. Replan the coding work and hold its dependents.","should_trigger":true},
+  {"query":"Split these repo changes between two workers and keep the generated index under one owner.","should_trigger":true},
+  {"query":"Help me write focused task handoffs so every coding worker gets only the interface facts it needs.","should_trigger":true},
+  {"query":"Use RelayCrew to resume the verified tasks in this checkpoint and reconcile partial edits.","should_trigger":true},
+  {"query":"Can the schema tests and frontend implementation run in parallel? Their read and write paths overlap.","should_trigger":true},
+  {"query":"Explain what a multi-agent system is; I do not need a coding workflow.","should_trigger":false},
+  {"query":"Rename this local variable in one function.","should_trigger":false},
+  {"query":"What settings enable native subagents in Codex? Please quote the current product documentation.","should_trigger":false},
+  {"query":"Create an illustration of a robot software team.","should_trigger":false},
+  {"query":"Compare Claude and ChatGPT subscription prices.","should_trigger":false},
+  {"query":"Build a distributed task queue service with Redis; I need runtime infrastructure.","should_trigger":false},
+  {"query":"Check the spelling of this README paragraph.","should_trigger":false},
+  {"query":"Explain a Git merge conflict in this one file and what each marker means.","should_trigger":false},
+  {"query":"Draft a job description for a human software engineering team.","should_trigger":false},
+  {"query":"Show me the output of this deterministic function for the given input.","should_trigger":false}
+]

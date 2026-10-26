@@ -1,0 +1,12 @@
+{
+  "max_workers": 2,
+  "completed": ["contract"],
+  "failed": ["api"],
+  "tasks": [
+    {"id":"contract","goal":"Agree on the response schema","writes":["docs/api.md"],"checks":["Schema approved against the requirement"]},
+    {"id":"api","goal":"Implement the API","reads":["docs/api.md"],"writes":["src/api"],"after":["contract"],"checks":["API contract tests pass"]},
+    {"id":"ui","goal":"Build against frozen fixtures","reads":["docs/api.md"],"writes":["src/ui"],"after":["contract"],"checks":["UI fixture tests pass"]},
+    {"id":"docs","goal":"Document the actual API","reads":["src/api"],"writes":["docs/quickstart.md"],"after":["api"],"checks":["Documented request works"]},
+    {"id":"review","goal":"Review the integrated result","reads":["src/api","src/ui","docs/quickstart.md"],"after":["api","ui","docs"],"checks":["Requirement and combined behavior agree"]}
+  ]
+}

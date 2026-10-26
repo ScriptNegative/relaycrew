@@ -1,0 +1,12 @@
+# RelayCrew forward-test execution record
+
+- Outcome: implemented the frozen CSV and download-response contract. Both public function names and signatures are preserved.
+- Mode and ownership: one evaluator agent did all implementation and verification; zero additional workers were spawned. CSV serialization, the response builder, tests, and this record were owned by that agent and edited sequentially. The task is small and the response builder depends on the serializer, so RelayCrew's smallest-useful-team rule favored solo execution. No shared mutable service or generated index was involved.
+- Actual steps: read RelayCrew's main skill, the contract, both source stubs, and the supplied tests; searched for repository rules; confirmed Node v22.14.0; ran the supplied baseline tests; implemented CSV encoding and the response builder; added three focused edge-case tests; read the changed source and tests; ran the combined suite.
+- Baseline check: `node --test tests/contract.test.mjs` exited 1, with 0 passing and 8 failing tests. The failures came from the two unimplemented functions.
+- Final check: `node --test` exited 0, with 11 passing and 0 failing tests. Coverage observed: labels and ordering, empty datasets, Unicode, null/undefined, false and zero, String conversion including BigInt/Symbol/custom conversion, comma/quote/CR/LF escaping, trailing CRLF, unchanged formulas, frozen inputs, response status/headers, and exact body equality.
+- Changed files: `src/csv.mjs`, `src/download.mjs`, `tests/edge-cases.test.mjs`, and `evaluation.md`. The frozen contract and supplied tests were left intact. All task writes stayed in this fixture.
+- Restrictions observed: no dependencies installed, external services contacted, publishing, commits, or skill modifications. Only Node v22.14.0 was exercised; Node 18 and other hosts were not tested.
+- Blockers: none.
+- Skill friction: no RelayCrew instruction caused wasted work or unresolved ambiguity. A broad read-only rule search returned unrelated paths; that was the evaluator's search choice. Host notes and the optional planner were not read or used because delegation was not selected.
+- Supported skill conclusions: solo fallback worked for this small dependent change. This run provides no evidence about the planner, worker handoffs, isolation, multi-agent integration, cost savings, or other hosts. No concrete skill correction is justified by this execution.
