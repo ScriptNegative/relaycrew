@@ -1,0 +1,61 @@
+{
+  "max_workers": 2,
+  "tasks": [
+    {
+      "id": "api",
+      "goal": "Implement API (SYNTHETIC EVALUATION ONLY)",
+      "reads": [],
+      "writes": [
+        "src/api"
+      ],
+      "after": [],
+      "checks": [
+        "API tests pass"
+      ]
+    },
+    {
+      "id": "ui",
+      "goal": "Implement UI (SYNTHETIC EVALUATION ONLY)",
+      "reads": [],
+      "writes": [
+        "src/ui"
+      ],
+      "after": [],
+      "checks": [
+        "UI tests pass"
+      ]
+    },
+    {
+      "id": "docs",
+      "goal": "Document API examples (SYNTHETIC EVALUATION ONLY)",
+      "reads": [
+        "src/api"
+      ],
+      "writes": [
+        "docs/api.md"
+      ],
+      "after": [
+        "api"
+      ],
+      "checks": [
+        "Examples match API"
+      ]
+    },
+    {
+      "id": "review",
+      "goal": "Review integrated API and UI (SYNTHETIC EVALUATION ONLY)",
+      "reads": [
+        "src/api",
+        "src/ui"
+      ],
+      "writes": [],
+      "after": [
+        "api",
+        "ui"
+      ],
+      "checks": [
+        "Integrated checks pass"
+      ]
+    }
+  ]
+}

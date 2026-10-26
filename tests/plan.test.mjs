@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { readFile, writeFile, mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { plan, next, markdown } from '../skills/relaycrew/scripts/plan.mjs';
+import { plan, next, markdown, validate } from '../skills/relaycrew/scripts/plan.mjs';
 
 const task = (id, extra = {}) => ({ id, goal: `Complete ${id}`, checks: ['Verify the outcome'], ...extra });
 const schedule = (tasks, extra = {}) => plan({ tasks, ...extra });
@@ -401,4 +401,118 @@ test('CLI accepts one UTF-8 BOM and continues to reject malformed JSON', async (
       }
     });
   }
+});
+
+test('active work keeps its slot while an independently ready task fills a free one', () => {
+  const tasks = [task('parse'), task('summarize'), task('docs', { after: ['parse'] }), task('review', { after: ['summarize'] })];
+  const input = { tasks, completed: ['parse'], in_progress: ['summarize'] };
+  const result = next(input);
+  assert.equal(result.status, 'ready');
+  assert.deepEqual(result.task_ids, ['docs']);
+  assert.deepEqual(result.in_progress, ['summarize']);
+  assert.deepEqual(result.briefs.map(brief => brief.id), ['docs']);
+  assert.deepEqual(plan(input).waves, [['docs'], ['review']]);
+  assert.deepEqual(next({ ...input, max_workers: 1 }).task_ids, []);
+  assert.equal(next({ ...input, max_workers: 1 }).status, 'waiting');
+});
+
+test('active file and resource claims hold incompatible new work', () => {
+  const tasks = [
+    task('active', { writes: ['src/API'], reads: ['config'], resources: ['Test-DB'] }),
+    task('reader', { reads: ['src/api/index.ts'] }),
+    task('writer', { writes: ['src/api/other.ts'] }),
+    task('config', { writes: ['config/test.json'] }),
+    task('database', { resources: ['test-db'] }),
+    task('docs', { writes: ['docs'] })
+  ];
+  const input = { tasks, in_progress: ['active'], max_workers: 3 };
+  assert.deepEqual(next(input).task_ids, ['docs']);
+  const projection = plan(input);
+  assert.deepEqual(projection.waves[0], ['docs']);
+  assert.equal(projection.waves.flat().includes('active'), false);
+  assert.deepEqual(new Set(projection.waves.flat()), new Set(['reader', 'writer', 'config', 'database', 'docs']));
+});
+
+test('active readers can share reads but prevent a new overlapping writer', () => {
+  const input = { tasks: [task('active', { reads: ['src'] }), task('reader', { reads: ['src/a'] }), task('writer', { writes: ['src/b'] })], in_progress: ['active'] };
+  assert.deepEqual(next(input).task_ids, ['reader']);
+  assert.deepEqual(next({ ...input, completed: ['reader'] }).task_ids, []);
+  assert.equal(next({ ...input, completed: ['reader'] }).status, 'waiting');
+});
+
+test('a full projection exposes the initial wait barrier and projects active completion only later', () => {
+  const input = { tasks: [task('active'), task('dependent', { after: ['active'] })], in_progress: ['active'] };
+  assert.equal(next(input).status, 'waiting');
+  assert.deepEqual(next(input).task_ids, []);
+  const result = plan(input);
+  assert.deepEqual(result.waves, [[], ['dependent']]);
+  assert.deepEqual(result.briefs.map(brief => brief.id), ['dependent']);
+  assert.match(markdown(result), /Wave 1: wait for active work/);
+  assert.match(markdown(result), /Recorded in progress: active/);
+  assert.deepEqual(plan({ tasks: [task('active')], in_progress: ['active'] }).waves, [[]]);
+});
+
+test('waiting takes precedence over held failures until active work stops', () => {
+  const input = { tasks: [task('active'), task('failed'), task('blocked', { after: ['failed'] })], failed: ['failed'], in_progress: ['active'] };
+  assert.equal(next(input).status, 'waiting');
+  assert.equal(next({ ...input, completed: ['active'], in_progress: [] }).status, 'held');
+  assert.equal(next({ tasks: [task('active')], completed: ['active'], in_progress: [] }).status, 'complete');
+});
+
+test('rejects impossible active task state before planning or rendering briefs', () => {
+  const tasks = [task('a', { writes: ['src'] }), task('b', { reads: ['src/a'] }), task('dependent', { after: ['a'] })];
+  const cases = [
+    [{ in_progress: ['missing'] }, /Unknown state/],
+    [{ in_progress: null }, /in_progress/],
+    [{ in_progress: 'a' }, /in_progress/],
+    [{ in_progress: ['a'], completed: ['a'] }, /in_progress cannot also/],
+    [{ in_progress: ['a'], failed: ['a'] }, /in_progress cannot also/],
+    [{ in_progress: ['dependent'] }, /incomplete prerequisite/],
+    [{ in_progress: ['a', 'b'], max_workers: 1 }, /exceeds max_workers/],
+    [{ in_progress: ['a', 'b'] }, /Conflicting in_progress tasks/]
+  ];
+  for (const [state, message] of cases) for (const api of [plan, next, validate]) {
+    assert.throws(() => api({ tasks, ...state }), message);
+  }
+  assert.throws(() => next({ tasks: [task('a', { resources: ['db'] }), task('b', { resources: ['DB'] })], in_progress: ['a', 'b'] }), /Conflicting in_progress tasks/);
+});
+
+test('validation returns normalized state without rendering oversized pending or active capsules', () => {
+  const input = { tasks: [task('a', { context: 'x'.repeat(3000), writes: ['./src\\file/'] })] };
+  const before = JSON.stringify(input);
+  const result = validate(input);
+  assert.deepEqual(Object.keys(result), ['tasks', 'max_workers', 'max_brief_chars', 'completed', 'failed', 'in_progress']);
+  assert.equal(result.max_workers, 2);
+  assert.equal(result.max_brief_chars, 2400);
+  assert.deepEqual(result.tasks[0].writes, ['src/file']);
+  assert.deepEqual(result.in_progress, []);
+  assert.throws(() => next(input), /brief is/);
+  const active = { ...input, in_progress: ['a'] };
+  assert.equal(next(active).status, 'waiting');
+  assert.deepEqual(plan(active).briefs, []);
+  assert.equal(JSON.stringify(input), before);
+});
+
+test('empty active state is explicit while absent state keeps the legacy output shape', () => {
+  const input = { tasks: [task('a')] };
+  for (const api of [plan, next]) {
+    const legacy = api(input);
+    assert.equal(Object.hasOwn(legacy, 'in_progress'), false);
+    assert.deepEqual(api({ ...input, in_progress: [] }), { ...legacy, in_progress: [] });
+  }
+});
+
+test('active CLI reports waiting and refuses to emit an active handoff', async () => {
+  await withPlanFile({ tasks: [task('a')], in_progress: ['a'] }, file => {
+    const run = cli(file, '--next', '--format', 'markdown');
+    assert.equal(run.status, 0, run.stderr);
+    assert.match(run.stdout, /Status: waiting/);
+    assert.match(run.stdout, /Recorded in progress: a/);
+    assert.match(run.stdout, /Active work still reserves capacity or claims/);
+    assert.doesNotMatch(run.stdout, /No pending tasks remain/);
+    const brief = cli(file, '--brief', 'a');
+    assert.equal(brief.status, 1);
+    assert.equal(brief.stdout, '');
+    assert.match(brief.stderr, /recorded as in_progress/);
+  });
 });

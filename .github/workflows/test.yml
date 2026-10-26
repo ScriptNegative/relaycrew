@@ -28,7 +28,7 @@ jobs:
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: ${{ matrix.node }}
-      - run: node --test tests/plan.test.mjs tests/package.test.mjs
+      - run: node --test tests/plan.test.mjs tests/session-core.test.mjs tests/session-cli.test.mjs tests/package.test.mjs
       - name: Replay saved team implementation
         run: node --test
         working-directory: evals/runs/event-team

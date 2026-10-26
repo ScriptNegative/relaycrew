@@ -8,6 +8,8 @@ Turn one coding request into focused handoffs and a coordinated result. **RelayC
 
 Keep the coding assistant you already use. The core is Markdown; an optional offline planner uses Node.js built-ins. No RelayCrew account, API key, server, or background process.
 
+**New in v0.4:** resume interrupted work with reserved active tasks, reviewable reports, and a local checkpoint that rejects outdated attempt results. [See recovery in practice](skills/relaycrew/references/sessions.md).
+
 **[Download the skill](https://github.com/ScriptNegative/relaycrew/releases/latest) · [Try a real coding task](evals/README.md) · [See the evidence](evals/results.md)**
 
 ## The problem
@@ -65,6 +67,25 @@ node skills/relaycrew/scripts/plan.mjs examples/feature.plan.json --next --forma
 
 This emits only `api` and `ui`, leaving `docs` and `review` for later. Omit `--format markdown` for a JSON bundle. If no work can proceed, the bundle distinguishes a failure hold from an all-completed checkpoint. The coordinator still verifies state and controls dispatch.
 
+### Keep moving when workers finish at different times
+
+```sh
+node skills/relaycrew/scripts/plan.mjs examples/active-work.plan.json --next --format markdown
+```
+
+Here, `api` is accepted and `ui` is still running. The next handoff is **`docs` only**: it can use the free slot without restarting `ui` or beginning the combined review too early. Active tasks reserve both slots and their declared paths/resources.
+
+For a run that needs to survive a restart, create an optional local checkpoint:
+
+```sh
+node skills/relaycrew/scripts/session.mjs init examples/feature.plan.json checkpoint.json
+node skills/relaycrew/scripts/session.mjs next examples/feature.plan.json checkpoint.json
+```
+
+Record a `start` event before dispatch. Each attempt gets an ID; returned evidence stays pending until the coordinator checks it and accepts the stopped worker's result. After a confirmed stop, failure and retry create a fresh attempt; late results from the old attempt are rejected. The helper also rejects changed plan definitions and stale checkpoint updates. [Events, recovery, and limits](skills/relaycrew/references/sessions.md).
+
+The helper tracks coordination state. It does not launch workers, stop an old writer, inspect actual edits, or prove a reported test passed.
+
 ## Use cases
 
 | Task | Useful pattern |
@@ -72,7 +93,7 @@ This emits only `api` and `ui`, leaving `docs` and `review` for later. Omit `--f
 | API and frontend feature | Freeze the interface, split implementation, check the integrated result |
 | Several plausible bug causes | Independent read-only investigations before choosing a fix |
 | Dependency changes sharing a lockfile | One owner at a time, with explicit ordering |
-| Interrupted implementation | Verify completed state, hold failed prerequisites, resume compatible work |
+| Interrupted implementation | Keep active claims reserved, inspect returned evidence, resume with attempt tracking |
 | A change needing another perspective | Independent read-only review when native delegation permits it |
 | A tiny dependent edit | Solo execution without creating a team |
 
@@ -144,7 +165,7 @@ This comparison describes workflow behavior, not a measured speed or cost improv
 
 **Is RelayCrew an agent framework?**
 
-It is an instruction workflow with an optional static planner. Native agents and tools come from the host you already use.
+It is an instruction workflow with an optional offline planner and local session checkpoint. Native agents and tools come from the host you already use.
 
 **Does it work with any agent?**
 
@@ -160,7 +181,7 @@ No general savings claim has been established. Short briefs and a small team are
 
 **What happens when a task fails?**
 
-Record verified `completed` and `failed` task IDs. The planner holds dependent work and can continue unrelated tasks. `--next` bundles the next wave's capsules; `--brief ID` emits one eligible capsule and explains whether a denied task is failed, blocked, completed, or waiting for a later wave. [Planner format and recovery](skills/relaycrew/references/planner.md).
+The planner can use `completed`, `failed`, and `in_progress` task IDs to hold dependents and reserve active work while continuing independent tasks. For durable recovery, the optional checkpoint keeps current attempt IDs, requires a confirmed stop before release, and separates reported completion from acceptance. Changed plans and stale attempt results are rejected. These records rely on the coordinator checking actual work. [Planner format](skills/relaycrew/references/planner.md) · [Session recovery](skills/relaycrew/references/sessions.md).
 
 **Can I use it without Node.js or delegation?**
 
@@ -177,7 +198,7 @@ Try one real task and share what happened. Include the host/version, task split,
 Run the local checks with Node.js 18+:
 
 ```sh
-node --test tests/plan.test.mjs tests/package.test.mjs
+npm test
 ```
 
 If RelayCrew helps, a star makes it easier to find again. A concrete observation helps make it better.

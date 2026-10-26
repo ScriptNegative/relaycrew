@@ -1,0 +1,11 @@
+{
+  "max_workers": 2,
+  "completed": ["api"],
+  "in_progress": ["ui"],
+  "tasks": [
+    {"id":"api","goal":"Implement the agreed API","writes":["src/api"],"checks":["API contract tests pass"]},
+    {"id":"ui","goal":"Implement the agreed UI","writes":["src/ui"],"checks":["UI interaction tests pass"]},
+    {"id":"docs","goal":"Document the accepted API","reads":["src/api"],"writes":["docs/api.md"],"after":["api"],"checks":["Examples match the accepted API"]},
+    {"id":"review","goal":"Review the combined feature","reads":["src/api","src/ui"],"after":["api","ui"],"checks":["Integrated feature checks pass"]}
+  ]
+}

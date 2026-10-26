@@ -53,6 +53,13 @@ test('a copied skill runs from a different directory with no package installatio
     assert.match(readable.stdout,/Current wave: api \+ ui/);
     assert.ok(bundle.briefs.every(brief=>readable.stdout.includes(brief.text)));
     assert.doesNotMatch(readable.stdout,/## Handoff: (docs|review)/);
+    const sessionScript=path.join(scratch,'relaycrew','scripts','session.mjs');
+    const checkpoint=path.join(scratch,'checkpoint.json');
+    const initialized=spawnSync(process.execPath,[sessionScript,'init',path.join(root,'examples','feature.plan.json'),checkpoint],{cwd:scratch,encoding:'utf8'});
+    assert.equal(initialized.status,0,initialized.stderr);
+    const sessionHandoffs=spawnSync(process.execPath,[sessionScript,'next',path.join(root,'examples','feature.plan.json'),checkpoint],{cwd:scratch,encoding:'utf8'});
+    assert.equal(sessionHandoffs.status,0,sessionHandoffs.stderr);
+    assert.deepEqual(JSON.parse(sessionHandoffs.stdout).task_ids,['api','ui']);
   } finally {
     const resolved=path.resolve(scratch);
     assert.ok(resolved.startsWith(`${tempRoot}${path.sep}`) && path.basename(resolved).startsWith('relaycrew-package-'));
@@ -68,4 +75,8 @@ test('failure and lockfile demonstrations produce their documented next waves', 
   const locks=plan(JSON.parse(await readFile(path.join(root,'examples','shared-lockfile.plan.json'),'utf8')));
   assert.deepEqual(locks.waves,[['api-deps','docs'],['ui-deps']]);
   assert.ok(locks.conflicts.some(conflict=>conflict.reasons.some(reason=>reason.includes('package-lock.json'))));
+  const {next}=await import('../skills/relaycrew/scripts/plan.mjs');
+  const active=next(JSON.parse(await readFile(path.join(root,'examples','active-work.plan.json'),'utf8')));
+  assert.deepEqual(active.task_ids,['docs']);
+  assert.deepEqual(active.in_progress,['ui']);
 });

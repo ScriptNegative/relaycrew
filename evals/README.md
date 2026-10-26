@@ -24,6 +24,8 @@ See [results](results.md) and the saved [team run](runs/event-team/evaluation.md
 
 Fixtures are deliberately incomplete and should fail before the task is implemented. The root automated test command targets `tests/` explicitly so it does not mistake those expected failures for product regressions.
 
+The [0.4 recovery evaluation](runs/session-recovery/evaluation.md) records public-CLI behavior with synthetic worker evidence. Its plan, checkpoint, results, and sanitized transcript are included. It is separate from the real coding runs above and does not establish native worker recovery or performance gains.
+
 ## Further evaluation
 
 [`evals.json`](evals.json) defines output scenarios and [`triggers.json`](triggers.json) defines labeled activation queries. The labels are proposed expectations, not completed trigger metrics. Use independent clean sessions, preserve raw results, and compare against the same task without the skill or with a pinned previous version.
