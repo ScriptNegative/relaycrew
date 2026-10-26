@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-labelledby="title desc">
+  <title id="title">RelayCrew</title>
+  <desc id="desc">Small teams. Focused context. A coordinator connects two workers, then a verified result.</desc>
+  <rect width="1280" height="360" rx="20" fill="#101c2c"/>
+  <circle cx="1210" cy="12" r="235" fill="#152b3e"/>
+  <text x="64" y="103" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" letter-spacing="4" fill="#81ded0">A CODING SKILL FOR AI TEAMS</text>
+  <text x="60" y="190" font-family="Segoe UI,Arial,sans-serif" font-size="78" font-weight="700" fill="#ffffff">RelayCrew</text>
+  <text x="64" y="245" font-family="Segoe UI,Arial,sans-serif" font-size="27" fill="#b9cadb">Small teams. Focused context.</text>
+  <text x="64" y="303" font-family="Segoe UI,Arial,sans-serif" font-size="17" fill="#91a9bc">MARKDOWN CORE  /  ZERO RUNTIME DEPENDENCIES</text>
+  <g fill="none" stroke="#4e8e98" stroke-width="3">
+    <path d="M787 177 C827 177 826 116 862 116"/>
+    <path d="M787 177 C827 177 826 238 862 238"/>
+    <path d="M1006 116 C1042 116 1036 177 1070 177"/>
+    <path d="M1006 238 C1042 238 1036 177 1070 177"/>
+  </g>
+  <g font-family="Segoe UI,Arial,sans-serif" font-size="18" text-anchor="middle">
+    <rect x="670" y="143" width="117" height="68" rx="12" fill="#244052" stroke="#427387"/>
+    <text x="728" y="183" fill="#fff">coordinate</text>
+    <rect x="862" y="82" width="144" height="68" rx="12" fill="#173f44" stroke="#54aeaa"/>
+    <text x="934" y="122" fill="#b2f5e9">worker A</text>
+    <rect x="862" y="204" width="144" height="68" rx="12" fill="#173f44" stroke="#54aeaa"/>
+    <text x="934" y="244" fill="#b2f5e9">worker B</text>
+    <rect x="1070" y="143" width="136" height="68" rx="12" fill="#253e56" stroke="#668db0"/>
+    <text x="1138" y="183" fill="#e0edff">verify</text>
+  </g>
+</svg>

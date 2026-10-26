@@ -1,0 +1,13 @@
+{
+  "name": "relaycrew",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A lightweight Agent Skill with an offline task and file-claim planner",
+  "license": "MIT",
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "test": "node --test tests/plan.test.mjs",
+    "demo": "node skills/relaycrew/scripts/plan.mjs examples/feature.plan.json"
+  }
+}
